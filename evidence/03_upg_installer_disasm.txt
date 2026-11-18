@@ -1,0 +1,416 @@
+=== libmtkapp.so UPG Format & Whitelist Strings ===
+  0x5ae80c: b'nand_%d'
+  0x5b0ba4: b'mtd10'
+  0x5aedf8: b'smth'
+  0x5af0f0: b'tar zxf %s -C %s 2>/dev/null'
+  0x5af0c0: b'/ro_data/smarthome/'
+  0x554e08: b'mkdir %s'
+  0x5b0153: b'Upgrade NG \n'
+  0x5804b5: b'Upgrade Successful'
+
+=== libmtkapp.so PMTD Target Strings (.rodata @ 0x5b0b54..0x5b0c20) ===
+  PMTD[ 0] @ 0x5b0b54: 'mtd0'
+  PMTD[ 1] @ 0x5b0b5c: 'mtd1'
+  PMTD[ 2] @ 0x5b0b64: 'mtd2'
+  PMTD[ 3] @ 0x5b0b6c: 'mtd3'
+  PMTD[ 4] @ 0x5b0b74: 'mtd4'
+  PMTD[ 5] @ 0x5b0b7c: 'mtd5'
+  PMTD[ 6] @ 0x5b0b84: 'mtd6'
+  PMTD[ 7] @ 0x5b0b8c: 'mtd7'
+  PMTD[ 8] @ 0x5b0b94: 'mtd8'
+  PMTD[ 9] @ 0x5b0b9c: 'mtd9'
+  PMTD[10] @ 0x5b0ba4: 'mtd10'
+  PMTD[11] @ 0x5b0bac: 'mtd11'
+  PMTD[12] @ 0x5b0bb4: 'mtd12'
+  PMTD[13] @ 0x5b0bbc: 'mtd13'
+  PMTD[14] @ 0x5b0bc4: 'mtdsdm14'
+  PMTD[15] @ 0x5b0bd0: 'mtdsdm15'
+  PMTD[16] @ 0x5b0bdc: 'mtdsdm16'
+  PMTD[17] @ 0x5b0be8: 'mtdsdm17'
+  PMTD[18] @ 0x5b0bf4: 'mtdsdm18'
+  PMTD[19] @ 0x5b0c00: 'mtdsdm19'
+  PMTD[20] @ 0x5b0c0c: 'mtdsdm20'
+
+=== libmtkapp.so sub_404f28 (METHOD device path builder) (0x404f28..0x405040) ===
+  0x404f28: push     {r4, r5, r6, r7, r8, lr}
+  0x404f2c: sub      sp, sp, #0x68
+  0x404f30: add      r5, sp, #0x5c
+  0x404f34: mov      r6, r2
+  0x404f38: mov      r8, r0
+  0x404f3c: mov      r7, r1
+  0x404f40: ldr      r4, [pc, #0x104]
+  0x404f44: mov      r0, r5
+  0x404f48: mov      r1, #0
+  0x404f4c: mov      r2, #0xc
+  0x404f50: bl       #0x10b3b4
+  0x404f54: cmp      r6, #0
+  0x404f58: add      r4, pc, r4
+  0x404f5c: beq      #0x404fa4
+  0x404f60: cmp      r6, #1
+  0x404f64: beq      #0x404fd4
+  0x404f68: cmp      r6, #2
+  0x404f6c: beq      #0x404fbc
+  0x404f70: cmp      r6, #4
+  0x404f74: bne      #0x405008
+  0x404f78: ldr      r1, [pc, #0xd0]
+  0x404f7c: mov      r0, r5
+  0x404f80: mov      r2, r7
+  0x404f84: add      r1, r4, r1
+  0x404f88: bl       #0xfc0fc
+  0x404f8c: mov      r0, r8
+  0x404f90: mov      r1, r5
+  0x404f94: bl       #0xfcb10
+  0x404f98: mov      r0, #0
+  0x404f9c: add      sp, sp, #0x68
+  0x404fa0: pop      {r4, r5, r6, r7, r8, pc}
+  0x404fa4: ldr      r1, [pc, #0xa8]
+  0x404fa8: mov      r0, r5
+  0x404fac: mov      r2, r7
+  0x404fb0: add      r1, r4, r1
+  0x404fb4: bl       #0xfc0fc
+  0x404fb8: b        #0x404f8c
+  0x404fbc: ldr      r1, [pc, #0x94]
+  0x404fc0: mov      r0, r5
+  0x404fc4: mov      r2, r7
+  0x404fc8: add      r1, r4, r1
+  0x404fcc: bl       #0xfc0fc
+  0x404fd0: b        #0x404f8c
+  0x404fd4: ldr      r1, [pc, #0x80]
+  0x404fd8: mov      r0, sp
+  0x404fdc: mov      r2, #0x5c
+  0x404fe0: add      r1, r4, r1
+  0x404fe4: bl       #0x10ce48
+  0x404fe8: cmp      r7, #0x16
+  0x404fec: bhi      #0x405028
+  0x404ff0: add      r3, sp, #0x68
+  0x404ff4: mov      r0, r5
+  0x404ff8: add      r7, r3, r7, lsl #2
+  0x404ffc: ldr      r1, [r7, #-0x68]
+  0x405000: bl       #0xff624
+  0x405004: b        #0x404f8c
+  0x405008: ldr      r0, [pc, #0x50]
+  0x40500c: movw     r2, #0xaf3
+  0x405010: ldr      r1, [pc, #0x4c]
+  0x405014: add      r0, r4, r0
+  0x405018: add      r1, r4, r1
+  0x40501c: bl       #0xfc1a4
+  0x405020: mvn      r0, #0
+  0x405024: b        #0x404f9c
+  0x405028: ldr      r1, [pc, #0x38]
+  0x40502c: mov      r2, r7
+  0x405030: ldr      r0, [pc, #0x34]
+  0x405034: add      r1, r4, r1
+  0x405038: add      r0, r4, r0
+  0x40503c: add      r1, r1, #0x48
+
+=== libmtkapp.so sub_4074c0 (tar zxf vs busybox unzip gate) (resolved PC/GOT refs @ 0x4074f8..0x4075b0) ===
+  0x407504: ldr      r1, [pc, #0xa4]      -> 0x5af0c0: b'/ro_data/smarthome/'
+  0x407524: ldr      r1, [pc, #0x88]      -> 0x5af0f0: b'tar zxf %s -C %s 2>/dev/null'
+  0x407540: ldr      r5, [pc, #0x70]      -> 0x5ae118: b'_phm_upg_view_internet_manual_start_nfy_hdlr'
+  0x407544: ldr      r0, [pc, #0x70]      -> 0x5af110: b"[PHM_UPG] <%s> tar from '%s' to '%s'\n"
+  0x407574: ldr      r0, [pc, #0x44]      -> 0x5af138: b'[PHM_UPG] <%s>, cmd = %s, err = %d\n'
+  0x407590: ldr      r1, [pc, #0x2c]      -> 0x5af0d4: b'busybox unzip -oq %s -d %s'
+
+=== libmtkapp.so sub_407d4c (rm -rf -> mkdir -> tar) (resolved PC/GOT refs @ 0x407d9c..0x408190) ===
+  0x407db0: ldr      sb, [pc, #0x8d0]     -> 0x5ae118: b'_phm_upg_view_internet_manual_start_nfy_hdlr'
+  0x407db8: ldr      r1, [pc, #0x8cc]     -> 0x554970: b'rm -rf %s'
+  0x407dc0: ldr      r8, [pc, #0x8c8]     -> 0x5af138: b'[PHM_UPG] <%s>, cmd = %s, err = %d\n'
+  0x407e08: ldr      r0, [pc, #0x884]     -> 0x59ee7c: b'[Info]%30s == %s\t!!!!!!!!!!!!!!!!!!!!!!!!!! [%s][%5d] \n'
+  0x407e14: ldr      r1, [pc, #0x87c]     -> 0x5af418: b's_update_folder'
+  0x407e18: ldr      r3, [pc, #0x87c]     -> 0x5ae754: b'phm_upg.c'
+  0x407e2c: ldr      r1, [pc, #0x86c]     -> 0x5aede8: b'keys'
+  0x407e48: ldr      r3, [pc, #0x838]     -> 0x5ae118: b'_phm_upg_view_internet_manual_start_nfy_hdlr'
+  0x407e78: ldr      r1, [pc, #0x824]     -> 0x5af428: b'%s/drmkey'
+  0x407e80: ldr      r2, [pc, #0x820]     -> 0x5aecc8: b'/tmp/upgrade'
+  0x407e90: ldr      r1, [pc, #0x814]     -> 0x554e08: b'mkdir %s'
+  0x407eac: ldr      r0, [pc, #0x7fc]     -> 0x5af434: b'[PHM_UPG] %s, cmd = %s\n'
+  0x407f60: ldr      lr, [pc, #0x750]     -> 0x5778b4: b'idfile'
+  0x407f6c: ldr      r3, [pc, #0x748]     -> 0x575974: b'..'
+  0x407f7c: ldr      r3, [pc, #0x73c]     -> 0x550ec4: b'%s/%s'
+  0x407f88: ldr      r3, [pc, #0x734]     -> 0x596df4: b'PSTVK003'
+  0x408048: ldr      r0, [pc, #0x678]     -> 0x5af4ac: b'[%s] _phm_upg_model_drmkey_for_pstvk003 return %d\n'
+  0x408084: ldr      r1, [pc, #0x5fc]     -> 0x5ae118: b'_phm_upg_view_internet_manual_start_nfy_hdlr'
+  0x40808c: ldr      r0, [pc, #0x638]     -> 0x5af488: b"<PHM_UPG> %s, delete '%s' fail!\n"
+  0x4080a4: ldr      r1, [pc, #0x624]     -> 0x5aede0: b'demo'
+  0x4080c0: ldr      r1, [pc, #0x60c]     -> 0x567368: b'logo'
+  0x4080dc: ldr      r1, [pc, #0x5f4]     -> 0x5aedf8: b'smth'
+  0x408108: ldr      r0, [pc, #0x5cc]     -> 0x5af360: b'[%s][line=%d]malloc buffer error!!!\n'
+  0x408124: ldr      r0, [pc, #0x5b4]     -> 0x5af470: b'[PHM_UPG] %s, err = %d\n'
+  0x40813c: ldr      r1, [pc, #0x5a0]     -> 0x5af69c: b'rm -r %s'
+  0x40815c: ldr      r1, [pc, #0x548]     -> 0x554e08: b'mkdir %s'
+
+=== libmtkapp.so AES/RSA key file loader (reads raw 33-byte AES_Prod files) (0x4060d0..0x4061b0) ===
+  0x4060d0: bl       #0xfca38
+  0x4060d4: subs     fp, r0, #0
+  0x4060d8: bne      #0x406260
+  0x4060dc: ldr      r8, [pc, #0x240]
+  0x4060e0: mov      r0, sl
+  0x4060e4: bl       #0x405eb0
+  0x4060e8: mov      r7, r0
+  0x4060ec: mov      r0, sl
+  0x4060f0: add      r8, r4, r8
+  0x4060f4: mov      r1, r8
+  0x4060f8: bl       #0x1109b8
+  0x4060fc: subs     r6, r0, #0
+  0x406100: beq      #0x406298
+  0x406104: mov      r0, r7
+  0x406108: bl       #0x107e50
+  0x40610c: subs     sb, r0, #0
+  0x406110: beq      #0x4062b0
+  0x406114: mov      r1, #1
+  0x406118: mov      r2, r7
+  0x40611c: mov      r3, r6
+  0x406120: bl       #0x108180
+  0x406124: cmp      r0, r7
+  0x406128: mov      sl, r0
+  0x40612c: bne      #0x40621c
+  0x406130: mov      r0, r6
+  0x406134: bl       #0x10dea4
+  0x406138: mov      r0, sp
+  0x40613c: bl       #0x405eb0
+  0x406140: mov      r1, r8
+  0x406144: mov      r6, r0
+  0x406148: mov      r0, sp
+  0x40614c: bl       #0x1109b8
+  0x406150: subs     r7, r0, #0
+  0x406154: beq      #0x4062e4
+  0x406158: mov      r0, r6
+  0x40615c: bl       #0x107e50
+  0x406160: subs     r5, r0, #0
+  0x406164: beq      #0x4062c8
+  0x406168: mov      r1, #1
+  0x40616c: mov      r2, r6
+  0x406170: mov      r3, r7
+  0x406174: bl       #0x108180
+  0x406178: cmp      r0, r6
+  0x40617c: mov      r8, r0
+  0x406180: bne      #0x406240
+  0x406184: mov      r0, r7
+  0x406188: bl       #0x10dea4
+  0x40618c: mov      r3, r8
+  0x406190: mov      r0, sb
+  0x406194: mov      r1, sl
+  0x406198: mov      r2, r5
+  0x40619c: bl       #0x10d118
+  0x4061a0: subs     r8, r0, #0
+  0x4061a4: moveq    r7, r8
+  0x4061a8: moveq    r6, r8
+  0x4061ac: bne      #0x406278
+
+=== libmtkapp.so _phm_upg_model_start_upgrade bank switch skip (0x40ae50..0x40af20) ===
+  0x40ae50: add      sb, r4, r4, lsl #3
+  0x40ae54: lsl      sb, sb, #5
+  0x40ae58: add      r5, r7, sb
+  0x40ae5c: ldrb     r3, [r5, #0x67d]
+  0x40ae60: cmp      r3, #0
+  0x40ae64: beq      #0x40aed8
+  0x40ae68: ldrb     r3, [r5, #0x67c]
+  0x40ae6c: cmp      r3, #0
+  0x40ae70: beq      #0x40aed8
+  0x40ae74: ldr      r3, [r5, #0x570]
+  0x40ae78: cmp      r3, #2
+  0x40ae7c: bhi      #0x40b7f4
+  0x40ae80: add      r1, sb, #0x560
+  0x40ae84: ldr      r0, [sp, #0x34]
+  0x40ae88: add      r1, r1, #8
+  0x40ae8c: mov      r2, #4
+  0x40ae90: add      r1, r7, r1
+  0x40ae94: bl       #0xfcef4
+  0x40ae98: cmp      r0, #0
+  0x40ae9c: beq      #0x40aed8
+  0x40aea0: ldr      r3, [r5, #0x678]
+  0x40aea4: cmp      r3, #0
+  0x40aea8: moveq    r3, #1
+  0x40aeac: streq    r3, [sp, #0x18]
+  0x40aeb0: beq      #0x40aed8
+  0x40aeb4: cmp      r3, #1
+  0x40aeb8: streq    r3, [sp, #0x24]
+  0x40aebc: beq      #0x40aed8
+  0x40aec0: cmp      r3, #3
+  0x40aec4: moveq    sl, #1
+  0x40aec8: beq      #0x40aed8
+  0x40aecc: cmp      r3, #2
+  0x40aed0: moveq    sl, #1
+  0x40aed4: streq    sl, [sp, #0x18]
+  0x40aed8: add      r4, r4, #1
+  0x40aedc: ldrb     r2, [r7, r8]
+  0x40aee0: uxtb     r4, r4
+  0x40aee4: cmp      r4, #0x13
+  0x40aee8: movhi    r3, #0
+  0x40aeec: movls    r3, #1
+  0x40aef0: cmp      r2, r4
+  0x40aef4: movls    r3, #0
+  0x40aef8: cmp      r3, #0
+  0x40aefc: bne      #0x40ae50
+  0x40af00: ldr      ip, [sp, #0x1c]
+  0x40af04: cmp      ip, #0
+  0x40af08: beq      #0x40bad0
+  0x40af0c: ldr      r1, [sp, #0x18]
+  0x40af10: ldr      r2, [sp, #0x24]
+  0x40af14: and      r4, r1, r2
+  0x40af18: cmp      fp, #1
+  0x40af1c: beq      #0x40bb78
+
+=== libdtv_common.so DLM Crypto Constants ===
+  0x18e0b0: b'#DH@FiRm'
+  0x18e250: b'reserved mtk inc'
+  0x18e7d0: b'New MTK Signature'
+  0x18e818: b'New Philips Signature'
+  0x18e764: b'Validate codefile HMAC\n'
+
+=== libdtv_common.so dlm_locate_codefile_hdr (0x94102909*4 key & #DH@FiRm) (0x098b60..0x098ce0) ===
+  0x098b60: push     {r4, r5, r6, r7, r8, sb, sl, fp, lr}
+  0x098b64: movw     r3, #0x2909
+  0x098b68: ldr      r4, [pc, #0x20c]
+  0x098b6c: sub      sp, sp, #0x4c
+  0x098b70: add      r5, sp, #0x34
+  0x098b74: movt     r3, #0x9410
+  0x098b78: ldr      r7, [pc, #0x200]
+  0x098b7c: add      sl, sp, #0x24
+  0x098b80: add      r4, pc, r4
+  0x098b84: add      r6, sp, #0x44
+  0x098b88: mov      sb, r0
+  0x098b8c: mov      fp, r1
+  0x098b90: add      r7, r4, r7
+  0x098b94: mov      r1, #0
+  0x098b98: ldr      ip, [r7, #4]
+  0x098b9c: mov      r2, #0x10
+  0x098ba0: str      r3, [sp, #0x44]
+  0x098ba4: mov      r0, sl
+  0x098ba8: add      r3, r5, #8
+  0x098bac: str      ip, [sp, #0x10]
+  0x098bb0: add      ip, r5, #4
+  0x098bb4: str      r3, [sp, #0x18]
+  0x098bb8: str      ip, [sp, #0x14]
+  0x098bbc: bl       #0x379d0
+  0x098bc0: add      ip, r5, #0xc
+  0x098bc4: mov      r1, r6
+  0x098bc8: mov      r2, #4
+  0x098bcc: mov      r0, r5
+  0x098bd0: str      ip, [sp, #0x1c]
+  0x098bd4: bl       #0x3845c
+  0x098bd8: mov      r1, r6
+  0x098bdc: mov      r2, #4
+  0x098be0: ldr      r0, [sp, #0x14]
+  0x098be4: bl       #0x3845c
+  0x098be8: mov      r1, r6
+  0x098bec: mov      r2, #4
+  0x098bf0: ldr      r0, [sp, #0x18]
+  0x098bf4: bl       #0x3845c
+  0x098bf8: mov      r2, #4
+  0x098bfc: mov      r1, r6
+  0x098c00: ldr      r0, [sp, #0x1c]
+  0x098c04: bl       #0x3845c
+  0x098c08: mov      r0, sb
+  0x098c0c: mov      r1, fp
+  0x098c10: mov      r2, #0x90
+  0x098c14: bl       #0x97600
+  0x098c18: subs     r8, r0, #0
+  0x098c1c: beq      #0x98c2c
+  0x098c20: mov      r0, r8
+  0x098c24: add      sp, sp, #0x4c
+  0x098c28: pop      {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+  0x098c2c: ldr      r0, [pc, #0x150]
+  0x098c30: add      r0, r4, r0
+  0x098c34: bl       #0x367e8
+  0x098c38: ldr      r3, [pc, #0x148]
+  0x098c3c: mov      r2, #0x70
+  0x098c40: ldr      r1, [r7, #4]
+  0x098c44: add      ip, r4, r3
+  0x098c48: mov      r0, ip
+  0x098c4c: str      ip, [sp, #0xc]
+  0x098c50: bl       #0x34dcc
+  0x098c54: ldr      r0, [r7, #4]
+  0x098c58: mov      r3, r5
+  0x098c5c: mov      r1, r8
+  0x098c60: mov      r2, #0x70
+  0x098c64: str      sl, [sp]
+  0x098c68: str      r8, [sp, #4]
+  0x098c6c: bl       #0x37370
+  0x098c70: ldr      ip, [sp, #0xc]
+  0x098c74: mov      r2, #0x70
+  0x098c78: ldr      r1, [r7, #4]
+  0x098c7c: mov      r0, ip
+  0x098c80: bl       #0x34dcc
+  0x098c84: ldr      r3, [sp, #0x10]
+  0x098c88: mov      r2, #8
+  0x098c8c: add      r0, r3, #4
+  0x098c90: ldr      r3, [pc, #0xf4]
+  0x098c94: add      r3, r4, r3
+  0x098c98: mov      r1, r3
+  0x098c9c: str      r3, [sp, #0x10]
+  0x098ca0: bl       #0x3a8a4
+  0x098ca4: cmp      r0, #0
+  0x098ca8: ldreq    r3, [pc, #0xe0]
+  0x098cac: ldreq    r3, [r4, r3]
+  0x098cb0: streq    r8, [r3]
+  0x098cb4: beq      #0x98c20
+  0x098cb8: ldr      r0, [pc, #0xd4]
+  0x098cbc: add      r0, r4, r0
+  0x098cc0: bl       #0x367e8
+  0x098cc4: mov      r0, sb
+  0x098cc8: mov      r1, fp
+  0x098ccc: mov      r2, #0x110
+  0x098cd0: bl       #0x97600
+  0x098cd4: subs     r8, r0, #0
+  0x098cd8: bne      #0x98c20
+  0x098cdc: mov      r1, r8
+
+=== libdtv_common.so x_dlm_download_by_tag (MD5(key/iv) & 'reserved mtk inc') (0x0995b4..0x099698) ===
+  0x0995b4: ldr      r3, [pc, #0x648]
+  0x0995b8: ldr      fp, [r4, r3]
+  0x0995bc: ldr      r3, [fp]
+  0x0995c0: cmp      r3, #0
+  0x0995c4: beq      #0x995f8
+  0x0995c8: add      r7, r7, #0x1c
+  0x0995cc: mov      r0, r7
+  0x0995d0: bl       #0x38390
+  0x0995d4: ldr      r3, [pc, #0x62c]
+  0x0995d8: mov      r0, r7
+  0x0995dc: ldr      r1, [fp]
+  0x0995e0: ldr      r3, [r4, r3]
+  0x0995e4: ldr      r2, [r3]
+  0x0995e8: bl       #0x39efc
+  0x0995ec: mov      r0, r5
+  0x0995f0: mov      r1, r7
+  0x0995f4: bl       #0x37214
+  0x0995f8: ldr      r3, [pc, #0x60c]
+  0x0995fc: ldr      r7, [r4, r3]
+  0x099600: ldr      r3, [r7]
+  0x099604: cmp      r3, #0
+  0x099608: beq      #0x99640
+  0x09960c: add      r3, r4, sb
+  0x099610: add      fp, r3, #0x1c
+  0x099614: mov      r0, fp
+  0x099618: bl       #0x38390
+  0x09961c: ldr      r3, [pc, #0x5ec]
+  0x099620: mov      r0, fp
+  0x099624: ldr      r1, [r7]
+  0x099628: ldr      r3, [r4, r3]
+  0x09962c: ldr      r2, [r3]
+  0x099630: bl       #0x39efc
+  0x099634: mov      r0, r8
+  0x099638: mov      r1, fp
+  0x09963c: bl       #0x37214
+  0x099640: mov      ip, #0
+  0x099644: add      r7, sl, #0xc
+  0x099648: mov      r1, ip
+  0x09964c: mov      r2, #0x10
+  0x099650: mov      r3, r5
+  0x099654: mov      r0, r7
+  0x099658: stm      sp, {r8, ip}
+  0x09965c: bl       #0x37370
+  0x099660: ldr      r1, [pc, #0x5ac]
+  0x099664: mov      r0, r7
+  0x099668: mov      r2, #0x10
+  0x09966c: add      r1, r4, r1
+  0x099670: bl       #0x3a8a4
+  0x099674: subs     r7, r0, #0
+  0x099678: bne      #0x99d84
+  0x09967c: add      r0, sl, #0x1c
+  0x099680: mov      r1, r7
+  0x099684: mov      r2, #0x20
+  0x099688: mov      r3, r5
+  0x09968c: str      r8, [sp]
+  0x099690: str      r7, [sp, #4]
+  0x099694: bl       #0x37370

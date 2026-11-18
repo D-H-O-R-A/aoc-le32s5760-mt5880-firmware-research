@@ -1,0 +1,44 @@
+File: ../build/Autorun.upg (19905 bytes)
+  Outer 128B prefix: 'Autorun.upg'
+  [PASS] RSA-2048 PKCS#1 v1.5 signature matches SHA256(data[0x80:-256]) = d425f0dc6da71abc9a43a052ddccec23d6f2992423b7b23a506aa032c57a52a4
+  [PASS] DLM Header AES-128-CBC (09291094*4): vendor='TPV', magic=b'#DH@FiRm', id='IDTV0801_002224_9_001_23_001_225', model='LE32S5760/20', body_len=19521, flags=0x0
+  [PASS] Body MD5 matches MD5(enc_hdr + 0x00*32 + chunks) = b0b05a0e5385873caf37542dcd150775
+  [PASS] Chunk 'ixml': flags=0, len=440, magic='reserved mtk inc', sha256=19ebca2599852ad9700ce01d98536734519c0a93bed467ca62cbaf8bf25d6fb7
+  [PASS] Chunk 'smth': flags=0, len=18817, magic='reserved mtk inc', sha256=52c7f99fa479c3c81dc6c38b930d72651c3bf1bc9488078cbb0f50af6976a806
+
+--- Decoded 'ixml' Manifest ---
+<?xml version="1.0" encoding="UTF-8"?>
+<UPGRADE>
+  <SYS_INFO>
+    <MANUFACTURER>TPV</MANUFACTURER>
+    <MODEL>LE32S5760/20</MODEL>
+    <SERIAL_NUM>000000</SERIAL_NUM>
+    <MODE>UPG</MODE>
+    <VERSION>002.001.205.146</VERSION>
+  </SYS_INFO>
+  <SW>
+    <TAG>smth</TAG>
+    <METHOD>FILE</METHOD>
+    <PATH>/3rd_rw/nettv</PATH>
+    <FILE_NAME>smth</FILE_NAME>
+    <VERSION>002.001.205.146</VERSION>
+    <ENABLE>YES</ENABLE>
+  </SW>
+</UPGRADE>
+  Parsed <SW>: TAG='smth', METHOD='FILE', PATH='/3rd_rw/nettv'
+
+--- Payload Tarball Entries ---
+  - root:root   2463 opera_new.ini
+  d root:root      0 browser
+  d root:root      0 download
+  d root:root      0 custom
+  - root:root   1906 custom/urlfilter.ini
+  - root:root    775 custom/user.css
+  d root:root      0 custom/userjs
+  - root:root    517 custom/userjs/google.js
+  - root:root    506 custom/userjs/iplayer_rider4-45.js
+  - root:root   1629 custom/userjs/legacyKeyHandling.js
+  - root:root  10338 custom/userjs/load.js
+  - root:root  19987 custom/userjs/ooif.js
+  - root:root   6074 custom/userjs/spatnav_youtube.js
+  - root:root  25421 custom/userjs/user.js

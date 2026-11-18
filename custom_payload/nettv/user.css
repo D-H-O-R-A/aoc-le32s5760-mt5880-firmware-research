@@ -1,0 +1,32 @@
+/* AOC LE32S5760 Custom TV Styles + Safe Ad Selector Hiding */
+op[code=VK_ENTER] { content: "OK"; }
+op[code=VK_MENU] { content: "OPTIONS"; }
+op[code=VK_UP] { content: "\2191"; }
+op[code=VK_DOWN] { content: "\2193"; }
+op[code=VK_LEFT] { content: "\2190"; }
+op[code=VK_RIGHT] { content: "\2192"; }
+op[code=VK_BACK] { content: "BACK"; }
+op[code=VK_INFO] { content: "INFO"; }
+
+.video-ads,
+.ytp-ad-module,
+.ytp-ad-overlay-container,
+.ytp-ad-player-overlay,
+.advertisement,
+#ad-banner,
+.banner-ad,
+.tv-ad-banner,
+.smart-ad,
+#portal-ad-box,
+.nettv-ad-banner,
+.ad_unit,
+.ad-slot,
+.sponsored-post,
+.sponsor-box,
+[data-ad-slot] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+}

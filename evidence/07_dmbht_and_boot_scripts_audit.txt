@@ -1,0 +1,246 @@
+=== NFSB + SquashFS + dm-bht Verification: 3rdA (97,738,752 bytes) ===
+  NFSB Header      : version=2, depth=2, algo='md5', blk_sectors=8 (4096 B)
+  Geometry         : fs_off=0x1000 (8 sec), fs_size=0x5cd7000 (190136 sec = 23767 x 4KB)
+  Hash Tree Size   : 385024 B (752 sec = 94 pages: 1 parent + 93 leaf)
+  SquashFS @ 0x1000 : magic=b'hsqs' v4.0, inodes=3305, blk_sz=131072, comp_id=0x110003, used=97,347,681 B
+  Leaf MD5 Match   : True (23,767 / 23,767 4KB blocks verified)
+  Level-0 Match    : True (93 leaf pages verified, zero-pad=True)
+  Signed Root MD5  : 666e1b26ae2e81a681c4f510bd98bfca
+  Computed Root    : 666e1b26ae2e81a681c4f510bd98bfca (EXACT MATCH=True)
+
+=== NFSB + SquashFS + dm-bht Verification: rfsA (51,466,240 bytes) ===
+  NFSB Header      : version=2, depth=2, algo='md5', blk_sectors=8 (4096 B)
+  Geometry         : fs_off=0x1000 (8 sec), fs_size=0x30e2000 (100112 sec = 12514 x 4KB)
+  Hash Tree Size   : 204800 B (400 sec = 50 pages: 1 parent + 49 leaf)
+  SquashFS @ 0x1000 : magic=b'hsqs' v4.0, inodes=1329, blk_sz=131072, comp_id=0x110003, used=51,255,766 B
+  Leaf MD5 Match   : True (12,514 / 12,514 4KB blocks verified)
+  Level-0 Match    : True (49 leaf pages verified, zero-pad=True)
+  Signed Root MD5  : 6cc5d821e2e914aec01a1db58fcca389
+  Computed Root    : 6cc5d821e2e914aec01a1db58fcca389 (EXACT MATCH=True)
+
+=== Boot Script Excerpt: etc/rc.d/rc.local.partial (19 total lines) ===
+  L003: echo "Running rc.local..."
+  L005: stty -F /dev/ttyMT3 115200
+  L007: mkdir /tmp/mnt
+  L008: touch /tmp/resolv.conf
+  L009: echo "127.0.0.1 localhost.localdomain localhost" > /tmp/hosts
+  L011: ifconfig lo 127.0.0.1
+  L015: if [ -f /etc/sysctl.conf ];then
+  L016:     sysctl -p /etc/sysctl.conf
+  L017: fi
+  L018: mkdir -p /tmp/lib/dibbler
+  L019: mkdir -p /tmp/dibbler
+
+=== Boot Script Excerpt: etc/scripts/dmverity_mount_3rda.sh (96 total lines) ===
+  L077: if [ ! -f /tmp/3rd_mounted ]; then
+  L078:     echo "# mount 3rd DMVERITY(SquashFS read-only)"
+  L079:     dmsetup -r -j 254 -m 1 create dm-1 --table "0 0 verity /dev/mtdblock9"
+  L080:     if $TIME mount -t squashfs /dev/mapper/dm-1 /3rd; then
+  L081:         touch /tmp/3rd_mounted
+  L082:     else
+  L083:         echo "error! 3rd partition can't be mounted!!!"
+  L084:         exit -1
+  L085:     fi
+  L086: else
+  L087:     echo "3rd partition is already mounted!!!"
+  L088: fi
+  L090: if [ -f /3rd/skype/auto_detect_camera.sh ]; then
+  L091:     if [ ! -f /tmp/auto_detect_camera_started ]; then
+  L092:         /3rd/skype/auto_detect_camera.sh &
+  L093:         touch /tmp/auto_detect_camera_started
+  L094:     fi
+  L095: fi
+
+=== Boot Script Excerpt: etc/scripts/dmverity_mount_3rdb.sh (96 total lines) ===
+  L077: if [ ! -f /tmp/3rd_mounted ]; then
+  L078:     echo "# mount 3rdb DMVERITY(SquashFS read-only)"
+  L079:     dmsetup -r -j 254 -m 1 create dm-1 --table "0 0 verity /dev/mtdblock10"
+  L080:     if $TIME mount -t squashfs /dev/mapper/dm-1 /3rd; then
+  L081:         touch /tmp/3rd_mounted
+  L082:     else
+  L083:         echo "error! 3rd partition can't be mounted!!!"
+  L084:         exit -1
+  L085:     fi
+  L086: else
+  L087:     echo "3rd partition is already mounted!!!"
+  L088: fi
+  L090: if [ -f /3rd/skype/auto_detect_camera.sh ]; then
+  L091:     if [ ! -f /tmp/auto_detect_camera_started ]; then
+  L092:         /3rd/skype/auto_detect_camera.sh &
+  L093:         touch /tmp/auto_detect_camera_started
+  L094:     fi
+  L095: fi
+
+=== Boot Script Excerpt: etc/scripts/ubi_mount_3rd_rw.sh (110 total lines) ===
+  L077: #UBIFS config
+  L079: #
+  L080: # attach filesystem
+  L081: #
+  L082: if [ ! -f /tmp/3rd_rw_attached ]; then
+  L083:     echo "# mount 3rd_rw"
+  L084:     if $TIME ubiattach /dev/ubi_ctrl -m 12 -d 4; then
+  L085:         touch /tmp/3rd_rw_attached
+  L086:     else
+  L087:         echo "error! 3rd_rw partition can't be attached!!!"
+  L088:         # exit -1
+  L089:     fi
+  L090: else
+  L091:     echo "3rd_rw partition is already attached!!!"
+  L092: fi
+  L094: #
+  L095: # mount filesystem
+  L096: #
+  L097: if [ -f /tmp/3rd_rw_attached ]; then
+  L098:     if [ ! -f /tmp/3rd_rw_mounted ]; then
+  L099:             if $TIME mount -t ubifs -o no_chk_data_crc -o bulk_read ubi4:3rd_rw /3rd_rw; then
+  L100:                 touch /tmp/3rd_rw_mounted
+  L101:             else
+  L102:                 echo "error! 3rd_rw partition can't be mounted!!!"
+  L103:                 # exit -2
+  L104:             fi
+  L105:     else
+  L106:         echo "3rd_rw partition is already mounted!!!"
+  L107:     fi
+  L108: fi
+
+=== Boot Script Excerpt: etc/scripts/ubi_mount_perm.sh (113 total lines) ===
+  L077: #UBIFS config
+  L079: FS_SETTING=-rw
+  L080: if [ -f /etc/config/usig_recovery ];then
+  L081:     FS_SETTING=-rw
+  L082: fi
+  L085: #
+  L086: # attach filesystem
+  L087: #
+  L088: if [ ! -f /tmp/perm_attached ]; then
+  L089:     echo "# mount perm"
+  L090:     if $TIME ubiattach /dev/ubi_ctrl -m 11 -d 2; then
+  L091:         touch /tmp/perm_attached
+  L092:     else
+  L093:         echo "error! perm partition can't be attached!!!"
+  L094:         exit -1
+  L095:     fi
+  L096: else
+  L097:     echo "perm partition is already attached!!!"
+  L098: fi
+  L101: #
+  L102: # mount filesystem
+  L103: #
+  L104: if [ ! -f /tmp/perm_mounted ]; then
+  L105:     if $TIME mount $FS_SETTING -t ubifs -o no_chk_data_crc -o bulk_read ubi2:perm /perm;then
+  L106:         touch /tmp/perm_mounted
+  L107:     else
+  L108:         echo "error! perm partition can't be mounted!!!"
+  L109:         exit -2
+  L110:     fi
+  L111: else
+  L112:     echo "perm partition is already mounted!!!"
+  L113: fi
+
+=== Boot Script Excerpt: etc/scripts/ubi_mount_ro_data.sh (108 total lines) ===
+  L077: #UBIFS config
+  L079: #
+  L080: # attach filesystem
+  L081: #
+  L082: if [ ! -f /tmp/ro_data_attached ]; then
+  L083:     echo "# mount ro_data"
+  L084:     if $TIME ubiattach /dev/ubi_ctrl -m 13 -d 3; then
+  L085:         touch /tmp/ro_data_attached
+  L086:     else
+  L087:         echo "error! ro_data partition can't be attached!!!"
+  L088:         exit -1
+  L089:     fi
+  L090: else
+  L091:     echo "ro_data partition is already attached!!!"
+  L092: fi
+  L094: #
+  L095: # mount filesystem
+  L096: #
+  L097: if [ ! -f /tmp/ro_data_mounted ]; then
+  L098:     if $TIME mount -r -t ubifs -o no_chk_data_crc -o bulk_read ubi3:ro_data /ro_data; then
+  L099:         touch /tmp/ro_data_mounted
+  L100:     else
+  L101:         echo "error! ro_data partition can't be mounted!!!"
+  L102:         exit -2
+  L103:     fi
+  L105: else
+  L106:     echo "ro_data partition is already mounted!!!"
+  L107: fi
+
+=== Boot Script Excerpt: basic/autorun.sh (155 total lines) ===
+  L076: echo "1 0 0 1920 1080" > /tmp/am_view_port
+  L078: #export LD_LIBRARY_PATH=/basic:/3rd/flash/stagecraft-1.1.863.20090910/lib:/3rd/netflix/flash-app/lib:/basic/lib:/3rd/lib:/3rd/qt/lib:/3rd/qt/plugins/imageformat:/basic/alsa/lib:/basic/dbus/lib:$LD_LIBRARY_PATH
+  L079: if [ -f /basic/ginga/ginga_totvs ]; then
+  L080: #Ginga TOTVS
+  L081: export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/basic/ginga/lib:/3rd/ginga/lib:/3rd/ginga/cvm/lib:/basic:/basic/lib:/3rd/lib:/3rd/qt/lib:/3rd/qt/plugins/imageformats:/3rd/skype:/3rd/opera/opera_dir/video
+  L082: fi
+  L084: if [ -f /basic/ginga/ginga_tbr ]; then
+  L085: #Ginga TBR
+  L086: export LD_LIBRARY_PATH=/basic/ginga/lib:/3rd/ginga/lib:/3rd/ginga/lib/ncl/ginga:/3rd/ginga/lib/ncl/ginga/converters:/3rd/ginga/lib/ncl/ginga/dp:/basic:/basic/lib:/3rd/lib:/3rd/qt/lib:/3rd/qt/plugins/imageformats:/3rd/skype:/3rd/opera/opera_dir/video
+  L087: fi
+  L089: export QTDIR=/3rd/qt
+  L090: export HOME=/3rd_rw
+  L091: export LD_LIBRARY_PATH=/3rd/nsd/lib:$LD_LIBRARY_PATH
+  L093: if [ -f /basic/btusb.ko ]; then
+  L094: 	echo "==find BT driver, inserting.....="
+  L095: 	insmod /basic/btusb.ko 
+  L096: fi
+  L098: if [ -f /basic/lib/preloadable_libiconv.so ]; then
+  L099:   export LD_PRELOAD=/basic/lib/preloadable_libiconv.so
+  L100: fi
+  L102: #Skype
+  L103: export HOME=/3rd
+  L104: export QTDIR=/3rd/qt/
+  L105: export PATH=$PATH:$QTDIR:$QTDIR/plugins
+  L107: #QT, for Netflix 3.0
+  L108: export QWS_DISPLAY=directfb
+  L109: export QT_DEBUG_PLUGINS=0
+  L110: export QT_PLUGIN_PATH=/3rd/qt/plugins
+  L111: export QT_QWS_FONTDIR=/3rd/qt/lib/fonts
+  L112: export QWS_MOUSE_PROTO=None
+  L113: #nettv debug 
+  L114: export PATH=$PATH:/3rd_rw/nettv
+  L115: export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/3rd_rw/nettv:/3rd/qt/qt_lib
+  L117: #nettv
+  L118: export FREETYPE_FONT_SET=YES
+  L119: export OPERA_DIR=/usr/opera/opera_dir
+  L120: export OPERA_HOME=/usr/opera/opera_home
+  L121: export OPERA_FONTS=/usr/opera/fonts
+  L122: export PATH=$PATH:/usr/opera
+  L123: export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/3rd/nettv:/basic/nettv
+  L124: export LD_RRELOAD=/3rd/nettv/libuvabackend-tpvision.so
+  L126: #dmsapp
+  L127: export LD_LIBRARY_PATH=/3rd/dmsapp:$LD_LIBRARY_PATH
+  L129: if [ -f /etc/config/core_dump ] || [ -f /etc/config/cli ] || [ -f /etc/config/debug ]; then
+  L130: echo /tmp/core_%e_sig%s_pid%p > /proc/sys/kernel/core_pattern
+  L131: ulimit -c unlimited
+  L132: fi
+  L134: #for driver validation begin
+  L135: if [ -x /basic/ut_drv ]; then
+  L136: /basic/ut_drv -input_fifo &
+  L137: /basic/tty_man
+  L138: exit 0
+  L139: fi
+  L140: #end
+  L142: if [ -x /basic/app_man -a -f /basic/am_config ]; then
+  L143: cd /basic; \
+  L144: /basic/app_man -c /basic/am_config -s /basic/am_start.ini -input_fifo &
+  L145: /basic/tty_man
+  L146: else
+  L147: if [ -x /basic/dtv_svc ]; then
+  L148: /basic/dtv_svc -input_fifo &
+  L149: /basic/tty_man
+  L150: if [ -x /basic/mtkapp ]; then
+  L151: sleep 3
+  L152: /basic/mtkapp &
+  L153: fi
+  L154: fi
+  L155: fi
+
+=== Configuration Delta: stock opera.ini vs custom opera_new.ini ===
+  [Network] URL Filter File: stock='$OPERA_HOME/urlfilter.ini'  -->  custom='/3rd_rw/nettv/custom/urlfilter.ini'
+  [Security Prefs] Enable TLS v1.1: stock='0'  -->  custom='1'
+  [Security Prefs] Enable TLS v1.2: stock='0'  -->  custom='1'
+  [User Agent] Spoof UserAgent ID: stock='1'  -->  custom='2'
+  [User Prefs] Local CSS File: stock='$OPERA_DIR/styles/user.css'  -->  custom='/3rd_rw/nettv/custom/user.css'
+  [User Prefs] User JavaScript File: stock='$OPERA_DIR/userjs'  -->  custom='/3rd_rw/nettv/custom/userjs'

@@ -1,0 +1,42 @@
+=== 1. Proprietary App Engine Fingerprints ===
+  [Opera TV (libopera_hbbtv.so)] (15717224 bytes):
+    Opera/9.80 -> ['Opera/9.80 (%s%s%s)', 'Opera/9.80 (%s; Opera TV Store/6213%s%s)']
+    20140526 -> ['20140526_1239_jenkins_38e', '20140526_1239_jenkins_b91d']
+    Enable TLS v1.1 -> ['Enable TLS v1.1']
+    Enable TLS v1.2 -> ['Enable TLS v1.2']
+    User JavaScript File -> ['User JavaScript File']
+  [Netflix (nrd-app/netflix)] (10201088 bytes):
+    OpenSSL 1.0. -> ['OpenSSL 1.0.0d 8 Feb 2011']
+    20150420 -> ['20150420_194932/TPV_linux_REL_PHILIPS_2K14/vm_linux/chilin', '20150420_194932/TPV_linux_REL_PHILIPS_2K14/vm_linux/dtv_li', '20150420_194932/TPV_linux_REL_PHILIPS_2K14/vm_linux/oss/li']
+    Gibbon -> ['Gibbon Configuration!', 'Gibbon DirectFB surface format options', 'Gibbon DiskCachePath must not be empty!']
+  [NetTV Launcher (libnettv.so)] (2749744 bytes):
+    /3rd_rw/nettv/opera_new.ini -> ['/3rd_rw/nettv/opera_new.ini', '/3rd_rw/nettv/opera_new.ini /tmp/opera_home/opera.ini ; sync']
+    cp -f /3rd_rw/nettv/opera_new.ini -> ['cp -f /3rd_rw/nettv/opera_new.ini /tmp/opera_home/opera.ini ; sync']
+  [Service Init (dtv_svc)] (4255100 bytes):
+    /3rd_rw/upgrade/customer_version -> ['/3rd_rw/upgrade/customer_version']
+    cp -rf /3rd/nettv/opera/* /3rd_rw/nettv/opera -> ['cp -rf /3rd/nettv/opera/* /3rd_rw/nettv/opera;']
+
+=== 2. BusyBox Applet & Binary Inventory (extracted/appfs1/bin) ===
+  Count: 73 Tools: agetty, arping, awk, basename, bash, blkid, blkid.static, busybox, cat, chmod, chrt, cp, date, depmod, df, dibbler-client, dirname, dmesg, dmsetup, du, echo, find, fw_printenv, getopt, grep, gzip, head, hostname, ifconfig, insmod, kill, ln, login, losetup, ls, lsmod, mkdir, mknod, modprobe, mount, mount.static, mountpoint, mv, nice, ping, ping6, ps, pwd, reboot, rm, rmmod, route, sed, sh, sleep, sort, stty, sync, sysctl, tar, top, touch, ubiattach, ubidetach, ubiformat, ubimkvol, ubinfo, udhcpc, umount, umount.static, vi, which, xargs
+  Check missing pidof     : present=False
+  Check missing pgrep     : present=False
+  Check missing renice    : present=False
+  Check missing ionice    : present=False
+  Check missing chown     : present=False
+  Check missing killall   : present=False
+  Check missing unzip     : present=False
+  Check missing python    : present=False
+  Check missing python3   : present=False
+  Check missing curl      : present=False
+
+=== 3. SystemManager ELF NEEDED & SMConfig Keys ===
+  SM string 'sm_config.ini'                @ 0x250879
+  SM string 'tpvlib'                       @ 0x2508b8
+  SM string 'dynqml'                       @ 0x2508d8
+  SM string 'qrc:/HomeScreen/HSMain.qml'   @ 0x256824
+  SM string 'res/HomeScreen/HSMain.qml'    @ 0x256809
+
+=== 4. Custom Payload Validation ===
+  [PASS] custom_payload/patches/run.sh: sh -n + BusyBox applet compliance
+  [PASS] custom_payload/nettv/user.js: node --check passed
+  [PASS] 18 custom QML files validated (Latin-1/ASCII safe, balanced braces)

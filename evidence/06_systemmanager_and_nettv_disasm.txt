@@ -1,0 +1,424 @@
+=== ELF Audit: SystemManager (9,438,748 bytes) ===
+  e_type=2 (ET_EXEC), entry=0x00018d18, soname=None
+  RPATH/RUNPATH: /home/mtkvm/qtbuild/osslibrary/451_vfp_ca9/qt-4.8.3-dfb1.4.1/lib
+  Sections: .dynsym@0x9ef4(off=0x1ef4,sz=0x3640), .text@0x18d18(off=0x10d18,sz=0x22f348), .rodata@0x248068(off=0x240068,sz=0x6436ac), .dynamic@0x90f248(off=0x8ff248,sz=0x170), .got@0x90f3b8(off=0x8ff3b8,sz=0xcc8), .data@0x910080(off=0x900080,sz=0x18), .bss@0x910098(off=0x900098,sz=0x1500)
+  DT_NEEDED (17): libQtDeclarative.so.4, libQtScript.so.4, libQtSql.so.4, libQtXml.so.4, libQtGui.so.4, libdirectfb.so, libpng.so.3, libjpeg.so.62, libfreetype.so.6, libz.so.1, libQtNetwork.so.4, libQtCore.so.4, libpthread.so.0, libstdc++.so.6, libm.so.6, libgcc_s.so.1, libc.so.6
+
+=== ELF Audit: dtv_svc (4,255,100 bytes) ===
+  e_type=2 (ET_EXEC), entry=0x000329d8, soname=None
+  Sections: .dynsym@0xd8fc(off=0x58fc,sz=0xbe90), .text@0x329d8(off=0x2a9d8,sz=0x2fe7f0), .rodata@0x3311d0(off=0x3291d0,sz=0x56b3c), .dynamic@0x410f48(off=0x400f48,sz=0x228), .got@0x411170(off=0x401170,sz=0x2760), .data@0x4138d0(off=0x4038d0,sz=0xaeac), .bss@0x41e780(off=0x40e77c,sz=0x9fe90)
+  DT_NEEDED (41): libhttplive.so, libsmartfs.so, libdtv_common.so, libpng.so.3, libjpeg.so.62, libfreetype.so.6, libz.so.1, libsecurestorage.so, libmtal.so, libdirectfb.so, librpc_ipc.so, libconfig_parser.so, libpthread.so.0, librt.so.1, libdl.so.2, libnetwork_detect.so, libmw_if2.so, libginga_tbr_pic.so, libcmpb.so, libhandle_app.so, libmtkapp.so, libapp_if.so, libcrypto.so.1.0.0, libssl.so.1.0.0, libcurl.so.4, libcares.so.2, libBasicUsageEnvironment.so, libgroupsock.so, libliveMedia.so, libUsageEnvironment.so, libwfd.so, libhdcp2x.so, libtommath.so, libtomcrypt.so, libexpat.so.1, libmtkdrm.so, libsqlite_3_7_2.so, libnettv_proxy.so, libcursor.so, libgcc_s.so.1, libc.so.6
+
+=== ELF Audit: libnettv.so (2,749,744 bytes) ===
+  e_type=3 (ET_DYN), entry=0x000acc10, soname=None
+  Sections: .dynsym@0xc89c(off=0xc89c,sz=0x1d160), .text@0xacc10(off=0xacc10,sz=0x181500), .rodata@0x22e118(off=0x22e118,sz=0x3afbe), .dynamic@0x29dd80(off=0x295d80,sz=0x200), .got@0x29df80(off=0x295f80,sz=0x5268), .data@0x2a31e8(off=0x29b1e8,sz=0x3dec), .bss@0x2a6fd8(off=0x29efd4,sz=0xa0a58)
+  DT_NEEDED (36): libSSPK.so, libmtkdrm.so, libmarlin.so, libhttplive.so, libexpat.so.1, libcurl.so.4, libssl.so.1.0.0, libcrypto.so.1.0.0, libdirectfb.so, libpthread.so.0, libdl.so.2, libcares.so.2, libsecurestorage.so, libmtal.so, libpng.so.3, libcmpb.so, libdtv_common.so, libhandle_app.so, libapp_if.so, librpc_ipc.so, libapp_if_rpc.so, libjpeg.so.62, libfreetype.so.6, libxml2.so.2, libWVPlaybackAPI.so, libWVStreamControlAPI.so, libmtk_hw_decrypt.so, libz.so.1, libcursor.so, libplayready.so, libPRGlue.so, libuvabackend-mtk.so, libuvadrmbackend-clearkey.so, libuvadrmbackend-playready.so, libgcc_s.so.1, libc.so.6
+
+=== ELF Audit: libopera_hbbtv.so (15,717,224 bytes) ===
+  e_type=3 (ET_DYN), entry=0x000b3fa8, soname='libopera_hbbtv.so'
+  Sections: .dynsym@0x2458(off=0x2458,sz=0x4d00), .text@0xb3fa8(off=0xb3fa8,sz=0xae21bc), .rodata@0xb96170(off=0xb96170,sz=0xb1af4), .dynamic@0xf038a8(off=0xefb8a8,sz=0x118), .got@0xf039c0(off=0xefb9c0,sz=0xec8), .data@0xf04888(off=0xefc888,sz=0x588), .bss@0xf04e10(off=0xefce10,sz=0x6144)
+  DT_NEEDED (7): libpthread.so.0, libdl.so.2, libopera_hbbtv_appman.so, libstdc++.so.6, libm.so.6, libgcc_s.so.1, libc.so.6
+
+=== ELF Audit: browser.out (803,228 bytes) ===
+  e_type=2 (ET_EXEC), entry=0x000118d0, soname=None
+  Sections: .dynsym@0x95d0(off=0x15d0,sz=0x3070), .text@0x118d0(off=0x98d0,sz=0x848e8), .rodata@0x961c0(off=0x8e1c0,sz=0x2d2cf), .dynamic@0xd26f8(off=0xc26f8,sz=0x180), .got@0xd2878(off=0xc2878,sz=0x284), .data@0xd2afc(off=0xc2afc,sz=0x111c), .bss@0xd3c18(off=0xc3c18,sz=0x9fa8)
+  DT_NEEDED (20): libc.so.6, libm.so.6, librt.so.1, libstdc++.so.6, libdirectfb.so, libjpeg.so.62, libpng.so.3, libz.so.1, libfreetype.so.6, libpng12.so.0, libopera_hbbtv.so, libopera_hbbtv_appman.so, libuva.so, libuvabackend-capi.so, libuvabackend-tpvision.so, libhtvLib.so, libTrace.so, libpthread.so.0, libgcc_s.so.1, libdl.so.2
+
+=== ELF Audit: netflix (10,201,088 bytes) ===
+  e_type=2 (ET_EXEC), entry=0x002355c8, soname=None
+  RPATH/RUNPATH: $ORIGIN:/release/auto/p4/w/20150420_194932/TPV_linux_REL_PHILIPS_2K14/vm_linux/third_party/cust_app/TPV_Vision/TPV/mbtaudio:/release/auto/p4/w/20150420_194932/TPV_linux_REL_PHILIPS_2K14/vm_linux/oss/library/gnuarm-4.5.1_vfp_ca9/c-ares/cares-1.7.4/lib:/rele
+  Sections: .dynsym@0x2e214(off=0x26214,sz=0x58060), .text@0x2355c8(off=0x22d5c8,sz=0x62a580), .rodata@0x85fb50(off=0x857b50,sz=0x411e8), .dynamic@0x9c5520(off=0x9b5520,sz=0x1e0), .got@0x9c5700(off=0x9b5700,sz=0x3840), .data@0x9c8f40(off=0x9b8f40,sz=0x1304), .bss@0x9ca248(off=0x9ba244,sz=0x5a94)
+  DT_NEEDED (31): libdl.so.2, librt.so.1, libapp_client.so, libmng.so.1, libwebp.so.4, libpng.so.3, libjpeg.so.62, libJavaScriptCore.so, libWTF.so, libcares.so.2, libfreetype.so.6, libdirectfb.so, libpthread.so.0, libz.so.1, libcurl.so.4, libssl.so.1.0.0, libcrypto.so.1.0.0, libexpat.so.1, libsecurestorage.so, libcmpb.so, librpc_ipc.so, libhandle_app.so, libapp_if.so, libapp_if_rpc.so, libmtal.so, libplayready.so, libstdc++.so.6, libm.so.6, libgcc_s.so.1, libc.so.6, libdtv_common.so
+
+=== ELF Audit: wrp_leanback (17,740 bytes) ===
+  e_type=2 (ET_EXEC), entry=0x00008bec, soname=None
+  Sections: .dynsym@0x82d8(off=0x2d8,sz=0x2d0), .text@0x8bec(off=0xbec,sz=0x1d0c), .rodata@0xa900(off=0x2900,sz=0xbf8), .dynamic@0x13604(off=0x3604,sz=0x198), .got@0x1379c(off=0x379c,sz=0x84), .data@0x13820(off=0x3820,sz=0x7a8), .bss@0x13fc8(off=0x3fc8,sz=0x4)
+  DT_NEEDED (23): libapp_if.so, libdtv_common.so, libhandle_app.so, librpc_ipc.so, libapp_if_rpc.so, libsecurestorage.so, libmtal.so, libcurl.so.4, libcares.so.2, libssl.so.1.0.0, libcrypto.so.1.0.0, libexpat.so.1, libdirectfb.so, libpng.so.3, libjpeg.so.62, libfreetype.so.6, libz.so.1, libpthread.so.0, librt.so.1, libstdc++.so.6, libm.so.6, libgcc_s.so.1, libc.so.6
+
+=== ELF Audit: libmtkapp.so (32,794,624 bytes) ===
+  e_type=3 (ET_DYN), entry=0x001132f8, soname=None
+  Sections: .dynsym@0x1966c(off=0x1966c,sz=0x39c80), .text@0x1132f8(off=0x1132f8,sz=0x43aa84), .rodata@0x54dd88(off=0x54dd88,sz=0x816ec), .dynamic@0x68a8ec(off=0x6828ec,sz=0x188), .got@0x68aa74(off=0x682a74,sz=0xb60c), .data@0x696080(off=0x68e080,sz=0x18b81b9), .bss@0x1f4e240(off=0x1f46239,sz=0x2ed544)
+  DT_NEEDED (21): libdtv_common.so, libpng.so.3, libjpeg.so.62, libfreetype.so.6, libz.so.1, libsecurestorage.so, libmtal.so, libdirectfb.so, libapp_if.so, libpthread.so.0, librt.so.1, libdl.so.2, libcmpb.so, libnettv_proxy.so, libcrypto.so.1.0.0, libssl.so.1.0.0, libcurl.so.4, libcares.so.2, libsmartfs.so, libgcc_s.so.1, libc.so.6
+
+=== ELF Audit: libdtv_common.so (2,153,828 bytes) ===
+  e_type=3 (ET_DYN), entry=0x0003b420, soname=None
+  Sections: .dynsym@0x67d8(off=0x67d8,sz=0xef80), .text@0x3b420(off=0x3b420,sz=0x148f28), .rodata@0x184350(off=0x184350,sz=0x4963c), .dynamic@0x209d58(off=0x201d58,sz=0x158), .got@0x209eb0(off=0x201eb0,sz=0x2720), .data@0x20c5d0(off=0x2045d0,sz=0x91f8), .bss@0x2157c8(off=0x20d7c8,sz=0x5b80c)
+  DT_NEEDED (16): libpthread.so.0, libpng.so.3, libjpeg.so.62, libfreetype.so.6, libz.so.1, libdirectfb.so, libstdc++.so.6, libmtal.so, libcrypto.so.1.0.0, libssl.so.1.0.0, libcurl.so.4, libcares.so.2, libsmartfs.so, libsecurestorage.so, libgcc_s.so.1, libc.so.6
+
+
+=== SystemManager main path initialization (0x1619e4..0x161a70) ===
+  0x1619e4: push     {r4, r5, r6, r7, r8, sb, sl, lr}
+  0x1619e8: mov      r6, r1
+  0x1619ec: sub      sp, sp, #0x60
+  0x1619f0: mvn      r1, #0
+  0x1619f4: add      r8, sp, #0x5c
+  0x1619f8: add      r4, sp, #0x58
+  0x1619fc: str      r0, [sp, #4]
+  0x161a00: ldr      r0, [r6]
+  0x161a04: bl       #0x172ec
+  0x161a08: mov      r1, r4
+  0x161a0c: str      r0, [sp, #0x58]
+  0x161a10: mov      r0, r8
+  0x161a14: bl       #0x16ee4
+  0x161a18: ldr      r3, [sp, #0x58]
+  0x161a1c: ldrex    r2, [r3]
+  0x161a20: sub      r2, r2, #1
+  0x161a24: strex    r1, r2, [r3]
+  0x161a28: teq      r1, #0
+  0x161a2c: bne      #0x161a1c
+  0x161a30: cmp      r2, #0
+  0x161a34: beq      #0x161ec8
+  0x161a38: add      r4, sp, #0x54
+  0x161a3c: mov      r1, r8
+  0x161a40: mov      r0, r4
+  0x161a44: bl       #0x17e44
+  0x161a48: add      r5, sp, #0x50
+  0x161a4c: mov      r1, r4
+  0x161a50: mov      r0, r5
+  0x161a54: bl       #0x175ec
+  0x161a58: ldr      r0, [pc, #0x6d8] ; *(0x162138)->0x910aac
+  0x161a5c: mov      r1, r5
+  0x161a60: bl       #0x1857c
+  0x161a64: ldr      r3, [sp, #0x50]
+  0x161a68: ldrex    r2, [r3]
+  0x161a6c: sub      r2, r2, #1
+
+=== SystemManager SMConfig initialization (0x16e428..0x16e4b8) ===
+  0x16e428: add      r8, sp, #0x154
+  0x16e42c: add      fp, sp, #0x15c
+  0x16e430: mov      r0, r8
+  0x16e434: bl       #0x16ab8
+  0x16e438: ldr      r3, [sp, #0x154]
+  0x16e43c: str      r3, [sp, #0x150]
+  0x16e440: ldrex    r2, [r3]
+  0x16e444: add      r2, r2, #1
+  0x16e448: strex    r1, r2, [r3]
+  0x16e44c: teq      r1, #0
+  0x16e450: bne      #0x16e440
+  0x16e454: add      r7, sp, #0x118
+  0x16e458: ldr      r1, [pc, #0x474] ; *(0x16e8d4)->0x258878 b'/sm_config.ini'
+  0x16e45c: mov      r0, r7
+  0x16e460: mvn      r2, #0
+  0x16e464: add      r5, sp, #0x150
+  0x16e468: bl       #0x171e4
+  0x16e46c: add      r5, sp, #0x150
+  0x16e470: mov      r1, r7
+  0x16e474: mov      r0, r5
+  0x16e478: bl       #0x18468
+  0x16e47c: ldr      r3, [sp, #0x118]
+  0x16e480: ldrex    r2, [r3]
+  0x16e484: sub      r2, r2, #1
+  0x16e488: strex    r1, r2, [r3]
+  0x16e48c: teq      r1, #0
+  0x16e490: bne      #0x16e480
+  0x16e494: cmp      r2, #0
+  0x16e498: beq      #0x16e66c
+  0x16e49c: add      fp, sp, #0x15c
+  0x16e4a0: mov      r1, r5
+  0x16e4a4: mov      r0, fp
+  0x16e4a8: bl       #0x1857c
+  0x16e4ac: ldr      r3, [sp, #0x150]
+  0x16e4b0: ldrex    r2, [r3]
+  0x16e4b4: sub      r2, r2, #1
+
+=== SystemManager dynqml==0 (qrc:/HomeScreen/HSMain.qml) (0x1db58c..0x1db620) ===
+  0x1db58c: bl       #0x16e958
+  0x1db590: cmp      r0, #0
+  0x1db594: bne      #0x1db7a4
+  0x1db598: ldr      r0, [pc, #0x978] ; *(0x1dbf18)->0x25e824 b'qrc:/HomeScreen/HSMain.qml'
+  0x1db59c: mvn      r1, #0
+  0x1db5a0: bl       #0x172ec
+  0x1db5a4: add      r6, sp, #0x54
+  0x1db5a8: add      r5, sp, #0x50
+  0x1db5ac: str      r0, [sp, #0x50]
+  0x1db5b0: mov      r1, r5
+  0x1db5b4: mov      r0, r6
+  0x1db5b8: bl       #0x16f74
+  0x1db5bc: mov      r0, r4
+  0x1db5c0: mov      r1, r6
+  0x1db5c4: bl       #0x16794
+  0x1db5c8: mov      r0, r6
+  0x1db5cc: bl       #0x182e8
+  0x1db5d0: ldr      r3, [sp, #0x50]
+  0x1db5d4: ldrex    r2, [r3]
+  0x1db5d8: sub      r2, r2, #1
+  0x1db5dc: strex    r1, r2, [r3]
+  0x1db5e0: teq      r1, #0
+  0x1db5e4: bne      #0x1db5d4
+  0x1db5e8: cmp      r2, #0
+  0x1db5ec: beq      #0x1dbb88
+  0x1db5f0: mov      r0, r4
+  0x1db5f4: bl       #0x17820
+  0x1db5f8: mov      ip, #0
+  0x1db5fc: ldr      r1, [pc, #0x918] ; *(0x1dbf1c)->0x25e840 b'2closeHS(int)'
+  0x1db600: mov      r2, r4
+  0x1db604: ldr      r3, [pc, #0x914] ; *(0x1dbf20)->0x25e850 b'1onCloseHS(int)'
+  0x1db608: mov      r5, r0
+  0x1db60c: str      ip, [sp]
+  0x1db610: bl       #0x17898
+  0x1db614: mov      ip, #0
+  0x1db618: mov      r0, r5
+  0x1db61c: ldr      r1, [pc, #0x900] ; *(0x1dbf24)->0x25e860 b'2launch(int)'
+
+=== SystemManager dynqml==1 (/res/HomeScreen/HSMain.qml) (0x1db7a4..0x1db840) ===
+  0x1db7a4: add      r7, sp, #0x58
+  0x1db7a8: mov      r0, r7
+  0x1db7ac: bl       #0x16ab8
+  0x1db7b0: ldr      r3, [sp, #0x58]
+  0x1db7b4: str      r3, [sp, #0x5c]
+  0x1db7b8: ldrex    r2, [r3]
+  0x1db7bc: add      r2, r2, #1
+  0x1db7c0: strex    r1, r2, [r3]
+  0x1db7c4: teq      r1, #0
+  0x1db7c8: bne      #0x1db7b8
+  0x1db7cc: add      r5, sp, #8
+  0x1db7d0: ldr      r1, [pc, #0x79c] ; *(0x1dbf74)->0x25e808 b'/res/HomeScreen/HSMain.qml'
+  0x1db7d4: mov      r0, r5
+  0x1db7d8: mvn      r2, #0
+  0x1db7dc: add      r6, sp, #0x5c
+  0x1db7e0: bl       #0x171e4
+  0x1db7e4: add      r6, sp, #0x5c
+  0x1db7e8: mov      r1, r5
+  0x1db7ec: mov      r0, r6
+  0x1db7f0: bl       #0x18468
+  0x1db7f4: ldr      r3, [sp, #8]
+  0x1db7f8: ldrex    r2, [r3]
+  0x1db7fc: sub      r2, r2, #1
+  0x1db800: strex    r1, r2, [r3]
+  0x1db804: teq      r1, #0
+  0x1db808: bne      #0x1db7f8
+  0x1db80c: cmp      r2, #0
+  0x1db810: beq      #0x1dbba0
+  0x1db814: add      r5, sp, #0x60
+  0x1db818: mov      r1, r6
+  0x1db81c: mov      r0, r5
+  0x1db820: bl       #0x18210
+  0x1db824: mov      r0, r4
+  0x1db828: mov      r1, r5
+  0x1db82c: bl       #0x16794
+  0x1db830: mov      r0, r5
+  0x1db834: bl       #0x182e8
+  0x1db838: ldr      r3, [sp, #0x5c]
+  0x1db83c: ldrex    r2, [r3]
+
+=== dtv_svc mount_3rd_rw & customer_version Opera copy (0x036190..0x036320) ===
+  0x036190: ldr      r0, [pc, #0x364] ; *(0x364fc)->0x3316bc b'sh /etc/scripts/mount_3rd_rw.sh'
+  0x036194: ldr      r6, [pc, #0x364] ; *(0x36500)->0x3316dc b'/dev/mtd12'
+  0x036198: add      r0, r4, r0
+  0x03619c: bl       #0x319e8
+  0x0361a0: add      r6, r4, r6
+  0x0361a4: mov      r1, #0xc
+  0x0361a8: movw     r2, #0x1b6
+  0x0361ac: mov      r0, r5
+  0x0361b0: str      r1, [sp]
+  0x0361b4: movt     r2, #0x404
+  0x0361b8: mov      r3, #0x62
+  0x0361bc: mov      r1, r6
+  0x0361c0: bl       #0x326b4
+  0x0361c4: subs     r5, r0, #0
+  0x0361c8: bne      #0x36318
+  0x0361cc: ldr      sl, [pc, #0x330] ; *(0x36504)->0x3316e8 b'/3rd_rw'
+  0x0361d0: movw     r2, #0x1b6
+  0x0361d4: ldr      sb, [pc, #0x32c] ; *(0x36508)->0x3316f0 b'/3rd_rw/upgrade/customer_version'
+  0x0361d8: add      r8, sp, #0x14
+  0x0361dc: add      r7, sp, #0x34
+  0x0361e0: add      sl, r4, sl
+  0x0361e4: mov      r1, sl
+  0x0361e8: add      fp, r4, sb
+  0x0361ec: bl       #0x32450
+  0x0361f0: mov      r1, r6
+  0x0361f4: mov      r2, r5
+  0x0361f8: mov      r3, sl
+  0x0361fc: mov      r0, r5
+  0x036200: bl       #0x328d0
+  0x036204: add      r3, sp, #0x38
+  0x036208: add      r2, r8, #4
+  0x03620c: str      r5, [r3], #4
+  0x036210: mov      r1, #0x1e
+  0x036214: str      r5, [r2], #4
+  0x036218: mov      r0, r7
+  0x03621c: str      r5, [r3], #4
+  0x036220: str      r5, [r2], #4
+  0x036224: str      r5, [r3], #4
+  0x036228: str      r5, [r2], #4
+  0x03622c: str      r5, [r3], #4
+  0x036230: str      r5, [r2], #4
+  0x036234: str      r5, [r3], #4
+  0x036238: str      r5, [r2], #4
+  0x03623c: str      r5, [r3], #4
+  0x036240: str      r5, [r2], #4
+  0x036244: strh     r5, [r3], #2
+  0x036248: str      r5, [r2]
+  0x03624c: strb     r5, [r3]
+  0x036250: str      r5, [sp, #0x5c]
+  0x036254: str      r5, [sp, #0x58]
+  0x036258: str      r5, [sp, #0x34]
+  0x03625c: str      r5, [sp, #0x14]
+  0x036260: str      r5, [sp, #0x54]
+  0x036264: bl       #0x3140c
+  0x036268: mov      r0, r7
+  0x03626c: bl       #0x30b78
+  0x036270: add      ip, sp, #0x5c
+  0x036274: mov      r6, r0
+  0x036278: mov      r1, fp
+  0x03627c: mov      r0, r5
+  0x036280: mov      r2, #2
+  0x036284: movw     r3, #0x1b6
+  0x036288: stm      sp, {r5, ip}
+  0x03628c: bl       #0x30a40
+  0x036290: cmp      r0, #0
+  0x036294: beq      #0x363c0
+  0x036298: cmn      r0, #6
+  0x03629c: bne      #0x35e20
+  0x0362a0: ldr      r0, [pc, #0x264] ; *(0x3650c)->0x331714 b'rm -rf /3rd_rw/nettv/opera;'
+  0x0362a4: add      r0, r4, r0
+  0x0362a8: bl       #0x34618
+  0x0362ac: cmp      r0, #0
+  0x0362b0: beq      #0x35e20
+  0x0362b4: ldr      r0, [pc, #0x254] ; *(0x36510)->0x331730 b'mkdir -p /3rd_rw/nettv/opera;'
+  0x0362b8: add      r0, r4, r0
+  0x0362bc: bl       #0x34618
+  0x0362c0: cmp      r0, #0
+  0x0362c4: beq      #0x35e20
+  0x0362c8: ldr      r0, [pc, #0x244] ; *(0x36514)->0x331750 b'cp -rf /3rd/nettv/opera/* /3rd_rw/nettv/opera;'
+  0x0362cc: add      r0, r4, r0
+  0x0362d0: bl       #0x34618
+  0x0362d4: cmp      r0, #0
+  0x0362d8: beq      #0x35e20
+  0x0362dc: bl       #0x32564
+  0x0362e0: mov      ip, #0
+  0x0362e4: add      r1, r4, sb
+  0x0362e8: mov      r0, ip
+  0x0362ec: str      ip, [sp]
+  0x0362f0: mov      r2, #0x42
+  0x0362f4: add      ip, sp, #0x58
+  0x0362f8: movw     r3, #0x1b6
+  0x0362fc: str      ip, [sp, #4]
+  0x036300: bl       #0x30a40
+  0x036304: cmp      r0, #0
+  0x036308: beq      #0x3642c
+  0x03630c: mov      r0, #0
+  0x036310: bl       #0x312c8
+  0x036314: b        #0x35e20
+  0x036318: ldr      r0, [pc, #0x1b0] ; *(0x364d0)->0x331338 b'sys_start.c'
+  0x03631c: mov      r2, #6
+
+=== libnettv.so _imnettv_copydata opera_new.ini hook (0x188b48..0x188d20) ===
+  0x188b48: bl       #0xab1f0
+  0x188b4c: ldr      r0, [pc, #0x5ec] ; *(0x189140)->0x249c1b b'mkdir /tmp/opera_home'
+  0x188b50: bl       #0xa4cd4
+  0x188b54: ldr      r0, [pc, #0x5e8] ; *(0x189144)->0x249c31 b'cp -f /usr/opera/opera_home/*  /tmp/opera_home'
+  0x188b58: bl       #0xa4cd4
+  0x188b5c: mov      r1, #0
+  0x188b60: mov      r4, r0
+  0x188b64: ldr      r0, [pc, #0x5dc] ; *(0x189148)->0x249c60 b'/tmp/opera_home/*'
+  0x188b68: bl       #0x9fbf8
+  0x188b6c: ldr      r3, [pc, #0x56c] ; *(0x1890e0)->0x000000
+  0x188b70: ldr      r3, [r3]
+  0x188b74: tst      r3, #0x40
+  0x188b78: beq      #0x188b9c
+  0x188b7c: ldr      ip, [pc, #0x588] ; *(0x18910c)->0x2498bd b'success'
+  0x188b80: cmn      r4, #1
+  0x188b84: ldr      r3, [pc, #0x57c] ; *(0x189108)->0x2498b8 b'fail'
+  0x188b88: mov      r1, #0xfb
+  0x188b8c: ldr      r0, [pc, #0x5b8] ; *(0x18914c)->0x249c72 b'[%d:%s]> [P]========>>copy data files from /usr/opera/opera_home'
+  0x188b90: ldr      r2, [pc, #0x550] ; *(0x1890e8)->0x247388 b'_imnettv_copydata'
+  0x188b94: movne    r3, ip
+  0x188b98: bl       #0xa1848
+  0x188b9c: ldr      r3, [pc, #0x548] ; *(0x1890ec)->0x000000
+  0x188ba0: ldr      r0, [r3]
+  0x188ba4: bl       #0xab1f0
+  0x188ba8: ldr      r0, [pc, #0x5a0] ; *(0x189150)->0x249cca b'rm -f /mnt/browser/opssl6.dat'
+  0x188bac: bl       #0xa4cd4
+  0x188bb0: ldr      r0, [pc, #0x59c] ; *(0x189154)->0x249ce8 b'cp -f /mnt/browser/op*.dat  /tmp/opera_home; sync'
+  0x188bb4: bl       #0xa4cd4
+  0x188bb8: ldr      r3, [pc, #0x520] ; *(0x1890e0)->0x000000
+  0x188bbc: mov      lr, r0
+  0x188bc0: ldr      r3, [r3]
+  0x188bc4: tst      r3, #0x20
+  0x188bc8: beq      #0x188bec
+  0x188bcc: ldr      ip, [pc, #0x534] ; *(0x189108)->0x2498b8 b'fail'
+  0x188bd0: cmn      lr, #1
+  0x188bd4: ldr      r3, [pc, #0x530] ; *(0x18910c)->0x2498bd b'success'
+  0x188bd8: movw     r1, #0x10b
+  0x188bdc: ldr      r0, [pc, #0x574] ; *(0x189158)->0x249d1a b'[%d:%s]> [P]========>>copy opera data files from /mnt/broser to '
+  0x188be0: ldr      r2, [pc, #0x500] ; *(0x1890e8)->0x247388 b'_imnettv_copydata'
+  0x188be4: moveq    r3, ip
+  0x188be8: bl       #0xa1848
+  0x188bec: ldr      r3, [pc, #0x4f8] ; *(0x1890ec)->0x000000
+  0x188bf0: ldr      r0, [r3]
+  0x188bf4: bl       #0xab1f0
+  0x188bf8: ldr      r0, [pc, #0x55c] ; *(0x18915c)->0x249d6e b'cp -f /mnt/browser/op*.pem  /tmp ; sync'
+  0x188bfc: bl       #0xa4cd4
+  0x188c00: ldr      r3, [pc, #0x4d8] ; *(0x1890e0)->0x000000
+  0x188c04: mov      lr, r0
+  0x188c08: ldr      r3, [r3]
+  0x188c0c: tst      r3, #0x20
+  0x188c10: beq      #0x188c34
+  0x188c14: ldr      ip, [pc, #0x4ec] ; *(0x189108)->0x2498b8 b'fail'
+  0x188c18: cmn      lr, #1
+  0x188c1c: ldr      r3, [pc, #0x4e8] ; *(0x18910c)->0x2498bd b'success'
+  0x188c20: movw     r1, #0x10f
+  0x188c24: ldr      r0, [pc, #0x534] ; *(0x189160)->0x249d96 b'[%d:%s]> [P]========>>copy opera pem files from /mnt/broser to /'
+  0x188c28: ldr      r2, [pc, #0x4b8] ; *(0x1890e8)->0x247388 b'_imnettv_copydata'
+  0x188c2c: moveq    r3, ip
+  0x188c30: bl       #0xa1848
+  0x188c34: ldr      r3, [pc, #0x4b0] ; *(0x1890ec)->0x000000
+  0x188c38: ldr      r0, [r3]
+  0x188c3c: bl       #0xab1f0
+  0x188c40: ldr      r0, [pc, #0x51c] ; *(0x189164)->0x249ddf b'chmod 666 /tmp/opera_home/* '
+  0x188c44: bl       #0xa4cd4
+  0x188c48: ldr      r3, [pc, #0x490] ; *(0x1890e0)->0x000000
+  0x188c4c: ldr      r3, [r3]
+  0x188c50: tst      r3, #8
+  0x188c54: beq      #0x188c68
+  0x188c58: ldr      r0, [pc, #0x508] ; *(0x189168)->0x249dfc b'[%d:%s]> [P]========>>YTLB certification support, opera.ini R/W\n'
+  0x188c5c: movw     r1, #0x119
+  0x188c60: ldr      r2, [pc, #0x480] ; *(0x1890e8)->0x247388 b'_imnettv_copydata'
+  0x188c64: bl       #0xa1848
+  0x188c68: ldr      r3, [pc, #0x47c] ; *(0x1890ec)->0x000000
+  0x188c6c: ldr      r0, [r3]
+  0x188c70: bl       #0xab1f0
+  0x188c74: ldr      r0, [pc, #0x4f0] ; *(0x18916c)->0x249e3d b'/3rd_rw/nettv/opera_new.ini'
+  0x188c78: mov      r1, #0
+  0x188c7c: bl       #0xa6744
+  0x188c80: cmp      r0, #0
+  0x188c84: bne      #0x188d10
+  0x188c88: ldr      r3, [pc, #0x450] ; *(0x1890e0)->0x000000
+  0x188c8c: ldr      r3, [r3]
+  0x188c90: tst      r3, #8
+  0x188c94: beq      #0x188ca8
+  0x188c98: ldr      r0, [pc, #0x4d0] ; *(0x189170)->0x249e59 b'[%d:%s]> [P]========>>3rd_rw r/w file opera.ini exsit!! copy to '
+  0x188c9c: mov      r1, #0x11c
+  0x188ca0: ldr      r2, [pc, #0x440] ; *(0x1890e8)->0x247388 b'_imnettv_copydata'
+  0x188ca4: bl       #0xa1848
+  0x188ca8: ldr      r3, [pc, #0x43c] ; *(0x1890ec)->0x000000
+  0x188cac: ldr      r0, [r3]
+  0x188cb0: bl       #0xab1f0
+  0x188cb4: ldr      r0, [pc, #0x4b8] ; *(0x189174)->0x249eb0 b'cp -f /3rd_rw/nettv/opera_new.ini /tmp/opera_home/opera.ini ; sy'
+  0x188cb8: bl       #0xa4cd4
+  0x188cbc: mov      r4, r0
+  0x188cc0: ldr      r0, [pc, #0x4b0] ; *(0x189178)->0x249ef3 b'chmod 666 /tmp/opera_home/opera.ini'
+  0x188cc4: bl       #0xa4cd4
+  0x188cc8: ldr      r3, [pc, #0x410] ; *(0x1890e0)->0x000000
+  0x188ccc: ldr      r3, [r3]
+  0x188cd0: tst      r3, #8
+  0x188cd4: beq      #0x188d04
+  0x188cd8: ldr      r3, [pc, #0x428] ; *(0x189108)->0x2498b8 b'fail'
+  0x188cdc: cmn      r4, #1
+  0x188ce0: ldr      r2, [pc, #0x424] ; *(0x18910c)->0x2498bd b'success'
+  0x188ce4: movw     r1, #0x11f
+  0x188ce8: ldr      r0, [pc, #0x420] ; *(0x189110)->0x249a59 b'[%d:%s]> [P]========>>copy %s  %s!!\n'
+  0x188cec: moveq    r4, r3
+  0x188cf0: ldr      r3, [pc, #0x474] ; *(0x18916c)->0x249e3d b'/3rd_rw/nettv/opera_new.ini'
+  0x188cf4: movne    r4, r2
+  0x188cf8: ldr      r2, [pc, #0x3e8] ; *(0x1890e8)->0x247388 b'_imnettv_copydata'
+  0x188cfc: str      r4, [sp]
+  0x188d00: bl       #0xa1848
+  0x188d04: ldr      r3, [pc, #0x3e0] ; *(0x1890ec)->0x000000
+  0x188d08: ldr      r0, [r3]
+  0x188d0c: bl       #0xab1f0
+  0x188d10: ldr      r0, [pc, #0x464] ; *(0x18917c)->0x249f17 b'7,NETTV'
+  0x188d14: ldr      r1, [pc, #0x3c4] ; *(0x1890e0)->0x000000
+  0x188d18: bl       #0xa3d14
+  0x188d1c: cmp      r0, #1

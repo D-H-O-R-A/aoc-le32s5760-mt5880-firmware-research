@@ -1,0 +1,786 @@
+uboot.bin length: 1314592 bytes
+Preloader SW secure flag @ 0xfb0053bc (file +0x53bc): 1
+LZHS header @ 0xa040: a8262000592406008400000000000000
+  decompressed_size=2107048 bytes (0x2026a8), compressed_size=402521 bytes (0x62459), csum=0x84
+  U-Boot RSA signature @ +0x6c4b0..+0x6c5b0 (prefix): 405b8a78fbc01db4da0b1f386c7740ba8c3c9b2b6096b25db5be2232c3a5af31
+  U-Boot RSA cert      @ +0x6c5b0..+0x6c6b0 (prefix): c1365b00d84dd3d65fe855f6a0864e8398345de66d180d21e629429627a1b595
+
+=== Preloader Main U-Boot Loader & Halt on RSA Failure (Thumb @ 0xfb00048c..0xfb000534) ===
+  0xfb00048c: mov.w    r2, #0x100
+  0xfb000490: mov.w    r0, #0x100000
+  0xfb000494: mov.w    r1, #0xa000
+  0xfb000498: strb.w   ip, [r3]
+  0xfb00049c: bl       #0xfb00130c
+  0xfb0004a0: mov      r1, r6
+  0xfb0004a2: ldr      r0, [pc, #0x98] ; [0xfb00053c] = 0xfb00506c
+  0xfb0004a4: bl       #0xfb0003f8
+  0xfb0004a8: ldr      r6, [r6]
+  0xfb0004aa: ldr      r0, [pc, #0x94] ; [0xfb000540] = 0xfb005078
+  0xfb0004ac: mov      r1, r6
+  0xfb0004ae: bl       #0xfb0003f8
+  0xfb0004b2: movs     r2, #0x44
+  0xfb0004b4: str      r6, [r4]
+  0xfb0004b6: movt     r2, #0x10
+  0xfb0004ba: movs     r3, #0x48
+  0xfb0004bc: ldr      r2, [r2]
+  0xfb0004be: movw     r1, #0xa050
+  0xfb0004c2: movt     r3, #0x10
+  0xfb0004c6: str      r1, [r4, #8]
+  0xfb0004c8: ldr      r0, [pc, #0x78] ; [0xfb000544] = 0xfb005084
+  0xfb0004ca: str      r2, [r4, #4]
+  0xfb0004cc: ldrb     r3, [r3]
+  0xfb0004ce: mov      r1, r3
+  0xfb0004d0: strb     r3, [r5, #-0x1]!
+  0xfb0004d4: bl       #0xfb0003f8
+  0xfb0004d8: ldr      r2, [r4, #4]
+  0xfb0004da: mov.w    r0, #0x100000
+  0xfb0004de: mov.w    r1, #0xa000
+  0xfb0004e2: add.w    r2, r2, #0x300
+  0xfb0004e6: bl       #0xfb00130c
+  0xfb0004ea: movw     r3, #0x8074
+  0xfb0004ee: movw     ip, #0x80e0
+  0xfb0004f2: bfi      r3, r4, #0x10, #0x10
+  0xfb0004f6: bfi      ip, r4, #0x10, #0x10
+  0xfb0004fa: ldr.w    lr, [r3]
+  0xfb0004fe: movs     r0, #0x50
+  0xfb000500: movt     r0, #0x10
+  0xfb000504: mov.w    r1, #0xd00000
+  0xfb000508: mov      r2, r6
+  0xfb00050a: mov      r3, r5
+  0xfb00050c: str.w    lr, [ip]
+  0xfb000510: bl       #0xfb00144c
+  0xfb000514: cmp      r0, #2
+  0xfb000516: beq      #0xfb00052a
+  0xfb000518: cbz      r0, #0xfb000522
+  0xfb00051a: ldr      r0, [pc, #0x2c] ; [0xfb000548] = 0xfb0050a8
+  0xfb00051c: bl       #0xfb0005ac
+  0xfb000520: b        #0xfb000520
+  0xfb000522: ldr      r0, [pc, #0x28] ; [0xfb00054c] = 0xfb0050b8
+  0xfb000524: bl       #0xfb0005ac
+  0xfb000528: b        #0xfb000520
+  0xfb00052a: ldr      r0, [pc, #0x24] ; [0xfb000550] = 0xfb005094
+  0xfb00052c: bl       #0xfb0005ac
+  0xfb000530: b        #0xfb000520
+  0xfb000532: nop      
+
+=== Preloader eFuse (0xf0008664) + RSA Verify + HW LZHS (0xf00080b0) (Thumb @ 0xfb00144c..0xfb00153c) ===
+  0xfb00144c: push     {r3, r4, r5, r6, r7, lr}
+  0xfb00144e: mov      r7, r3
+  0xfb001450: ldr      r3, [pc, #0xec] ; [0xfb001540] = 0xf0008664
+  0xfb001452: mov      r4, r0
+  0xfb001454: mov      r5, r1
+  0xfb001456: mov      r6, r2
+  0xfb001458: ldr      r3, [r3]
+  0xfb00145a: tst.w    r3, #0x100000
+  0xfb00145e: beq      #0xfb001480
+  0xfb001460: ldr      r3, [pc, #0xe0] ; [0xfb001544] = 0xfb0053bc
+  0xfb001462: ldr      r3, [r3]
+  0xfb001464: cbz      r3, #0xfb001480
+  0xfb001466: ldr      r3, [r4, #-0xc]
+  0xfb00146a: add.w    r0, r0, #0x10
+  0xfb00146e: sub.w    r1, r4, #0x10
+  0xfb001472: adds     r0, r0, r3
+  0xfb001474: bic      r0, r0, #0xf
+  0xfb001478: bl       #0xfb0034f0
+  0xfb00147c: cmp      r0, #0
+  0xfb00147e: bne      #0xfb001536
+  0xfb001480: ldr      r3, [pc, #0xc4] ; [0xfb001548] = 0xf0008078
+  0xfb001482: adds     r6, #8
+  0xfb001484: ldr      r2, [r3]
+  0xfb001486: bic      r2, r2, #0x300
+  0xfb00148a: str      r2, [r3]
+  0xfb00148c: orr.w    r3, r6, r5
+  0xfb001490: tst.w    r3, #7
+  0xfb001494: ldrb     r2, [r7]
+  0xfb001496: bne      #0xfb00153a
+  0xfb001498: ldr      r3, [pc, #0xb0] ; [0xfb00154c] = 0xf00081d0
+  0xfb00149a: movs     r1, #0x18
+  0xfb00149c: str      r1, [r3]
+  0xfb00149e: ldr      r1, [r3]
+  0xfb0014a0: ands     r0, r1, #0x20
+  0xfb0014a4: bne      #0xfb00149e
+  0xfb0014a6: ldr      r3, [pc, #0xa8] ; [0xfb001550] = 0xf00080b0
+  0xfb0014a8: mov.w    r1, #0x600
+  0xfb0014ac: cmp.w    r4, #-0x8000000
+  0xfb0014b0: str      r1, [r3]
+  0xfb0014b2: sub.w    r1, r1, #0x200
+  0xfb0014b6: str      r1, [r3]
+  0xfb0014b8: bls      #0xfb0014c4
+  0xfb0014ba: add.w    r1, r1, #0x1000
+  0xfb0014be: str      r1, [r3]
+  0xfb0014c0: movs     r3, #1
+  0xfb0014c2: b        #0xfb0014ca
+  0xfb0014c4: lsrs     r4, r4, #3
+  0xfb0014c6: str      r1, [r3]
+  0xfb0014c8: mov      r3, r0
+  0xfb0014ca: ldr      r1, [pc, #0x88] ; [0xfb001554] = 0xf00080b4
+  0xfb0014cc: lsrs     r0, r5, #3
+  0xfb0014ce: adds     r6, r6, r5
+  0xfb0014d0: lsrs     r6, r6, #3
+  0xfb0014d2: str      r4, [r1]
+  0xfb0014d4: adds     r1, #4
+  0xfb0014d6: str      r0, [r1]
+  0xfb0014d8: adds     r1, #4
+  0xfb0014da: str      r6, [r1]
+  0xfb0014dc: mov.w    r1, #0x1c00
+  0xfb0014e0: cbnz     r3, #0xfb0014e6
+  0xfb0014e2: mov.w    r1, #0xc00
+  0xfb0014e6: ldr      r3, [pc, #0x68] ; [0xfb001550] = 0xf00080b0
+  0xfb0014e8: ldr      r0, [pc, #0x64] ; [0xfb001550] = 0xf00080b0
+  0xfb0014ea: str      r1, [r3]
+  0xfb0014ec: movs     r3, #0
+  0xfb0014ee: ldr      r1, [pc, #0x68] ; [0xfb001558] = 0x40000001
+  0xfb0014f0: b        #0xfb0014f8
+  0xfb0014f2: adds     r3, #1
+  0xfb0014f4: cmp      r3, r1
+  0xfb0014f6: beq      #0xfb00153a
+  0xfb0014f8: ldr.w    ip, [r0]
+  0xfb0014fc: tst.w    ip, #0x100
+  0xfb001500: beq      #0xfb0014f2
+  0xfb001502: ldr      r3, [pc, #0x48] ; [0xfb00154c] = 0xf00081d0
+  0xfb001504: movs     r1, #0
+  0xfb001506: str      r1, [r3]
+  0xfb001508: ldr      r4, [r3]
+  0xfb00150a: ands     r4, r4, #0x20
+  0xfb00150e: bne      #0xfb001508
+  0xfb001510: ldr      r3, [pc, #0x3c] ; [0xfb001550] = 0xf00080b0
+  0xfb001512: ldr      r3, [r3]
+  0xfb001514: and      r3, r3, #0xff
+  0xfb001518: cmp      r3, r2
+  0xfb00151a: bne      #0xfb00153a
+  0xfb00151c: ldr      r3, [pc, #0x3c] ; [0xfb00155c] = 0xf0008074
+  0xfb00151e: ldr      r2, [r3]
+  0xfb001520: adds     r3, #0x78
+  0xfb001522: str      r2, [r3]
+  0xfb001524: subs     r3, #0xb8
+  0xfb001526: str      r4, [r3]
+  0xfb001528: mov.w    r2, #-1
+  0xfb00152c: adds     r3, #4
+  0xfb00152e: str      r2, [r3]
+  0xfb001530: blx      r5
+  0xfb001532: mov      r0, r4
+  0xfb001534: b        #0xfb00153c
+  0xfb001536: movs     r0, #2
+  0xfb001538: b        #0xfb00153c
+  0xfb00153a: movs     r0, #1
+
+vmlinux.bin uImage hdr: magic=0x27051956, size=4432548 B, load=0x00007fc0, ep=0x00008000 (stripping 0x40 hdr -> base=0xc0008000)
+
+=== Linux Kernel nfsb_header accessors & nfsb_rsa_check (ARM @ 0xc0028d44..0xc0029048) ===
+  0xc0028d44: ldrb     r2, [r0, #6]
+  0xc0028d48: ldrb     r3, [r0, #5]
+  0xc0028d4c: orr      r3, r3, r2, lsl #8
+  0xc0028d50: ldrb     r2, [r0, #7]
+  0xc0028d54: ldrb     r0, [r0, #8]
+  0xc0028d58: orr      r3, r3, r2, lsl #16
+  0xc0028d5c: orr      r0, r3, r0, lsl #24
+  0xc0028d60: rev      r0, r0
+  0xc0028d64: lsl      r0, r0, #9
+  0xc0028d68: bx       lr
+  0xc0028d6c: ldrb     r2, [r0, #0xa]
+  0xc0028d70: ldrb     r3, [r0, #9]
+  0xc0028d74: orr      r3, r3, r2, lsl #8
+  0xc0028d78: ldrb     r2, [r0, #0xb]
+  0xc0028d7c: ldrb     r0, [r0, #0xc]
+  0xc0028d80: orr      r3, r3, r2, lsl #16
+  0xc0028d84: orr      r0, r3, r0, lsl #24
+  0xc0028d88: rev      r0, r0
+  0xc0028d8c: lsl      r0, r0, #9
+  0xc0028d90: bx       lr
+  0xc0028d94: ldrb     r2, [r0, #0x1f]
+  0xc0028d98: ldrb     r3, [r0, #0x1e]
+  0xc0028d9c: orr      r3, r3, r2, lsl #8
+  0xc0028da0: ldrb     r2, [r0, #0x20]
+  0xc0028da4: ldrb     r0, [r0, #0x21]
+  0xc0028da8: orr      r3, r3, r2, lsl #16
+  0xc0028dac: orr      r0, r3, r0, lsl #24
+  0xc0028db0: rev      r0, r0
+  0xc0028db4: lsl      r0, r0, #9
+  0xc0028db8: bx       lr
+  0xc0028dbc: ldrb     r0, [r0, #0xd]
+  0xc0028dc0: bx       lr
+  0xc0028dc4: add      r0, r0, #0xe
+  0xc0028dc8: bx       lr
+  0xc0028dcc: ldrb     r2, [r0, #0x23]
+  0xc0028dd0: ldrb     r3, [r0, #0x22]
+  0xc0028dd4: orr      r3, r3, r2, lsl #8
+  0xc0028dd8: ldrb     r2, [r0, #0x24]
+  0xc0028ddc: ldrb     r0, [r0, #0x25]
+  0xc0028de0: orr      r3, r3, r2, lsl #16
+  0xc0028de4: orr      r0, r3, r0, lsl #24
+  0xc0028de8: rev      r0, r0
+  0xc0028dec: bx       lr
+  0xc0028df0: add      r0, r0, #0x26
+  0xc0028df4: bx       lr
+  0xc0028df8: push     {r4, r5, r6, r7, r8, sb, sl, fp, lr}
+  0xc0028dfc: mov      r8, r0
+  0xc0028e00: sub      sp, sp, #0x1c
+  0xc0028e04: mov      sb, r1
+  0xc0028e08: mov      fp, r2
+  0xc0028e0c: mov      r1, #8
+  0xc0028e10: ldr      r0, [pc, #0x230] ; *(0xc0029048)=0xc03a527e (b'sha256')
+  0xc0028e14: mov      r2, #0xe
+  0xc0028e18: bl       #0xc017d7a8
+  0xc0028e1c: cmn      r0, #0x1000
+  0xc0028e20: mov      r6, r0
+  0xc0028e24: bls      #0xc0028e4c
+  0xc0028e28: mov      sl, #0
+  0xc0028e2c: ldr      r0, [pc, #0x218] ; *(0xc002904c)=0xc03a5285 (b'<3>Failed to load transform for sha256: ')
+  0xc0028e30: mov      r1, r6
+  0xc0028e34: mov      r8, sl
+  0xc0028e38: bl       #0xc0313cd4
+  0xc0028e3c: mov      r7, sl
+  0xc0028e40: mvn      r4, #0
+  0xc0028e44: mov      r5, sl
+  0xc0028e48: b        #0xc0029010
+  0xc0028e4c: str      r0, [sp, #0x10]
+  0xc0028e50: mov      sl, #0
+  0xc0028e54: ldr      r0, [r0, #0x18]
+  0xc0028e58: mov      r1, #0xd0
+  0xc0028e5c: str      sl, [sp, #0x14]
+  0xc0028e60: bl       #0xc00a2c2c
+  0xc0028e64: subs     r5, r0, #0
+  0xc0028e68: bne      #0xc0028e88
+  0xc0028e6c: ldr      r0, [pc, #0x1dc] ; *(0xc0029050)=0xc03a52b2 (b'<3>Failed to allocate digest memory.\n')
+  0xc0028e70: mov      sl, r5
+  0xc0028e74: bl       #0xc0313cd4
+  0xc0028e78: mov      r8, r5
+  0xc0028e7c: mov      r7, r5
+  0xc0028e80: mvn      r4, #0
+  0xc0028e84: b        #0xc0029010
+  0xc0028e88: add      r7, sp, #0x18
+  0xc0028e8c: ldr      r3, [r7, #-8]!
+  0xc0028e90: ldr      r3, [r3, #4]
+  0xc0028e94: mov      r0, r7
+  0xc0028e98: blx      r3
+  0xc0028e9c: subs     r4, r0, #0
+  0xc0028ea0: ldrne    r0, [pc, #0x1ac] ; *(0xc0029054)=0xc03a52d8 (b'<3>crypto_hash_init failure: %d\n')
+  0xc0028ea4: bne      #0xc0028f14
+  0xc0028ea8: ldr      r1, [pc, #0x1a8] ; *(0xc0029058)=0xc0469f80
+  0xc0028eac: add      r3, r8, #0x40000000
+  0xc0028eb0: lsr      r3, r3, #0xc
+  0xc0028eb4: ldr      r2, [sp]
+  0xc0028eb8: ldr      r1, [r1]
+  0xc0028ebc: add      r3, r1, r3, lsl #5
+  0xc0028ec0: ands     sl, r3, #3
+  0xc0028ec4: beq      #0xc0028ed4
+  0xc0028ec8: ldr      r0, [pc, #0x18c] ; *(0xc002905c)=0xc03a52f9 (b'/share/Release_code_use/Roy/release/vm_l')
+  0xc0028ecc: mov      r1, #0x3f
+  0xc0028ed0: bl       #0xc0031098
+  0xc0028ed4: and      r2, r2, #3
+  0xc0028ed8: mov      r0, r7
+  0xc0028edc: orr      r3, r3, r2
+  0xc0028ee0: mov      r2, #0x67
+  0xc0028ee4: str      r3, [sp]
+  0xc0028ee8: lsl      r3, r8, #0x14
+  0xc0028eec: str      r2, [sp, #8]
+  0xc0028ef0: mov      r1, sp
+  0xc0028ef4: lsr      r3, r3, #0x14
+  0xc0028ef8: str      r3, [sp, #4]
+  0xc0028efc: ldr      r3, [sp, #0x10]
+  0xc0028f00: ldr      r3, [r3, #8]
+  0xc0028f04: blx      r3
+  0xc0028f08: subs     r4, r0, #0
+  0xc0028f0c: beq      #0xc0028f28
+  0xc0028f10: ldr      r0, [pc, #0x148] ; *(0xc0029060)=0xc03a535b (b'<3>crypto_hash_update failure: %d\n')
+  0xc0028f14: mov      r1, r4
+  0xc0028f18: mov      r8, sl
+  0xc0028f1c: bl       #0xc0313cd4
+  0xc0028f20: mov      r7, sl
+  0xc0028f24: b        #0xc0029010
+  0xc0028f28: ldr      r3, [sp, #0x10]
+  0xc0028f2c: mov      r0, r7
+  0xc0028f30: mov      r1, r5
+  0xc0028f34: ldr      r3, [r3, #0xc]
+  0xc0028f38: blx      r3
+  0xc0028f3c: subs     r4, r0, #0
+  0xc0028f40: ldrne    r0, [pc, #0x11c] ; *(0xc0029064)=0xc03a537e (b'<3>crypto_hash_final failure: %d\n')
+  0xc0028f44: bne      #0xc0028f14
+  0xc0028f48: mov      r0, #0x80
+  0xc0028f4c: bl       #0xc01894b8
+  0xc0028f50: subs     r7, r0, #0
+  0xc0028f54: ldreq    r0, [pc, #0x10c] ; *(0xc0029068)=0xc03a53a0 (b'<3>Failed to allocate signature memory.\n')
+  0xc0028f58: beq      #0xc0028f74
+  0xc0028f5c: add      r1, r8, #0x67
+  0xc0028f60: mov      r2, #0x80
+  0xc0028f64: bl       #0xc0189820
+  0xc0028f68: subs     r7, r0, #0
+  0xc0028f6c: bne      #0xc0028f84
+  0xc0028f70: ldr      r0, [pc, #0xf4] ; *(0xc002906c)=0xc03a53c9 (b'<3>Failed to set signature bytes.\n')
+  0xc0028f74: bl       #0xc0313cd4
+  0xc0028f78: mov      sl, r7
+  0xc0028f7c: mov      r8, r7
+  0xc0028f80: b        #0xc0029010
+  0xc0028f84: mov      r1, sb
+  0xc0028f88: mov      r2, fp
+  0xc0028f8c: bl       #0xc0189f2c
+  0xc0028f90: subs     r8, r0, #0
+  0xc0028f94: bne      #0xc0028fa8
+  0xc0028f98: ldr      r0, [pc, #0xd0] ; *(0xc0029070)=0xc03a53ec (b'<3>rsa_encryptdecrypt failure\n')
+  0xc0028f9c: mov      sl, r8
+  0xc0028fa0: bl       #0xc0313cd4
+  0xc0028fa4: b        #0xc0029010
+  0xc0028fa8: bl       #0xc0189600
+  0xc0028fac: subs     r8, r0, #0
+  0xc0028fb0: bne      #0xc0028fc4
+  0xc0028fb4: ldr      r0, [pc, #0xb8] ; *(0xc0029074)=0xc03a540b (b'<3>mpuint_trim failure\n')
+  0xc0028fb8: mov      sl, #0
+  0xc0028fbc: bl       #0xc0313cd4
+  0xc0028fc0: b        #0xc0029010
+  0xc0028fc4: mov      r0, #0x20
+  0xc0028fc8: bl       #0xc01894b8
+  0xc0028fcc: subs     sl, r0, #0
+  0xc0028fd0: ldreq    r0, [pc, #0xa0] ; *(0xc0029078)=0xc03a5423 (b'<3>Failed to allocate digest integer mem')
+  0xc0028fd4: beq      #0xc0028ff0
+  0xc0028fd8: mov      r1, r5
+  0xc0028fdc: mov      r2, #0x20
+  0xc0028fe0: bl       #0xc0189820
+  0xc0028fe4: subs     sl, r0, #0
+  0xc0028fe8: bne      #0xc0028ff8
+  0xc0028fec: ldr      r0, [pc, #0x88] ; *(0xc002907c)=0xc03a5451 (b'<3>Failed to set digest bytes.\n')
+  0xc0028ff0: bl       #0xc0313cd4
+  0xc0028ff4: b        #0xc0029010
+  0xc0028ff8: mov      r0, r8
+  0xc0028ffc: mov      r1, sl
+  0xc0029000: bl       #0xc01897c4
+  0xc0029004: cmp      r0, #0
+  0xc0029008: movne    r4, #0
+  0xc002900c: mvneq    r4, #0
+  0xc0029010: mov      r0, sl
+  0xc0029014: bl       #0xc0189530
+  0xc0029018: mov      r0, r8
+  0xc002901c: bl       #0xc0189530
+  0xc0029020: mov      r0, r7
+  0xc0029024: bl       #0xc0189530
+  0xc0029028: mov      r0, r5
+  0xc002902c: bl       #0xc00a1a0c
+  0xc0029030: mov      r0, r6
+  0xc0029034: mov      r1, r6
+  0xc0029038: bl       #0xc017d280
+  0xc002903c: mov      r0, r4
+  0xc0029040: add      sp, sp, #0x1c
+  0xc0029044: pop      {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+
+=== Linux Kernel dm_mount_root_nfsb (rfsA/rfsB) (ARM @ 0xc0009594..0xc0009990) ===
+  0xc0009594: pop      {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+  0xc0009598: andgt    r2, r2, r4, asr #3
+  0xc000959c: mlasgt   sl, sl, sp, r4
+  0xc00095a0: ldrdgt   sl, fp, [r6], #-0x84
+  0xc00095a4: eorsgt   r4, sl, sb, asr #27
+  0xc00095a8: eorsgt   r4, sl, sl, lsl #28
+  0xc00095ac: eorsgt   r4, sl, r1, asr lr
+  0xc00095b0: eorsgt   r4, sl, pc, lsl #29
+  0xc00095b4: eorsgt   r4, sl, fp, asr #29
+  0xc00095b8: ldrhtgt  r4, [sl], -r4
+  0xc00095bc: eorsgt   r4, sl, sb, lsl #30
+  0xc00095c0: ldrhtgt  r4, [sl], -sl
+  0xc00095c4: eorsgt   r4, sl, r4, asr #30
+  0xc00095c8: eorsgt   r4, sl, r4, lsl #31
+  0xc00095cc: ldrhtgt  r4, [sl], -sp
+  0xc00095d0: ldrsbtgt r4, [sl], -r4
+  0xc00095d4: ldr      r3, [pc, #0x3b4] ; *(0xc0009990)=0xc046a8d4
+  0xc00095d8: push     {r4, r5, r6, r7, r8, sb, sl, fp, lr}
+  0xc00095dc: mov      r5, r0
+  0xc00095e0: sub      sp, sp, #0x34
+  0xc00095e4: ldr      r0, [r3, #0x20]
+  0xc00095e8: cmp      r0, #0
+  0xc00095ec: beq      #0xc0009604
+  0xc00095f0: mov      r1, #0xd0
+  0xc00095f4: bl       #0xc00a26f0
+  0xc00095f8: subs     r4, r0, #0
+  0xc00095fc: bne      #0xc0009614
+  0xc0009600: b        #0xc000960c
+  0xc0009604: mov      r4, #0x10
+  0xc0009608: b        #0xc0009614
+  0xc000960c: ldr      r0, [pc, #0x380] ; *(0xc0009994)=0xc03a50a9 (b'Failed to allocate NFSB header struct.')
+  0xc0009610: b        #0xc00097a8
+  0xc0009614: ldr      r0, [pc, #0x37c] ; *(0xc0009998)=0xc03a50d0 (b'<6>Checking for NFSB mount.\n')
+  0xc0009618: bl       #0xc0313cd4
+  0xc000961c: ldr      r0, [pc, #0x378] ; *(0xc000999c)=0xc03a50ed (b'/dev/nfsb')
+  0xc0009620: bl       #0xc00b2698
+  0xc0009624: lsr      r2, r5, #0x14
+  0xc0009628: and      r3, r5, #0xff
+  0xc000962c: ldr      r0, [pc, #0x368] ; *(0xc000999c)=0xc03a50ed (b'/dev/nfsb')
+  0xc0009630: movw     r1, #0x6180
+  0xc0009634: orr      r2, r3, r2, lsl #8
+  0xc0009638: ldr      r3, [pc, #0x360] ; *(0xc00099a0)=0x000fff00
+  0xc000963c: and      r3, r5, r3
+  0xc0009640: orr      r2, r2, r3, lsl #12
+  0xc0009644: bl       #0xc00b2564
+  0xc0009648: cmp      r0, #0
+  0xc000964c: bge      #0xc000965c
+  0xc0009650: ldr      r0, [pc, #0x34c] ; *(0xc00099a4)=0xc03a50f7 (b'<3>nfsb: create_dev failed\n')
+  0xc0009654: bl       #0xc0313cd4
+  0xc0009658: b        #0xc00097a4
+  0xc000965c: mov      r1, #0
+  0xc0009660: ldr      r0, [pc, #0x334] ; *(0xc000999c)=0xc03a50ed (b'/dev/nfsb')
+  0xc0009664: mov      r2, r1
+  0xc0009668: bl       #0xc00a535c
+  0xc000966c: subs     sl, r0, #0
+  0xc0009670: bge      #0xc0009684
+  0xc0009674: ldr      r1, [pc, #0x320] ; *(0xc000999c)=0xc03a50ed (b'/dev/nfsb')
+  0xc0009678: ldr      r0, [pc, #0x328] ; *(0xc00099a8)=0xc03a4ff7 (b'<3>nfsb: open %s failed\n')
+  0xc000967c: bl       #0xc0313cd4
+  0xc0009680: b        #0xc000979c
+  0xc0009684: mov      r1, r4
+  0xc0009688: bl       #0xc0029080
+  0xc000968c: cmn      r0, #1
+  0xc0009690: bne      #0xc00096a4
+  0xc0009694: ldr      r1, [pc, #0x300] ; *(0xc000999c)=0xc03a50ed (b'/dev/nfsb')
+  0xc0009698: ldr      r0, [pc, #0x30c] ; *(0xc00099ac)=0xc03a5010 (b'<3>nfsb: check %s header fail\n')
+  0xc000969c: bl       #0xc0313cd4
+  0xc00096a0: b        #0xc0009794
+  0xc00096a4: mov      r0, #0x80
+  0xc00096a8: bl       #0xc01894b8
+  0xc00096ac: subs     r7, r0, #0
+  0xc00096b0: ldreq    r0, [pc, #0x2f8] ; *(0xc00099b0)=0xc03a502f (b'<3>out of memory\n')
+  0xc00096b4: beq      #0xc00096d0
+  0xc00096b8: ldr      r1, [pc, #0x2f4] ; *(0xc00099b4)=0xc04292f0
+  0xc00096bc: mov      r2, #0x80
+  0xc00096c0: bl       #0xc0189820
+  0xc00096c4: subs     r7, r0, #0
+  0xc00096c8: bne      #0xc00096d8
+  0xc00096cc: ldr      r0, [pc, #0x2e4] ; *(0xc00099b8)=0xc03a5041 (b'<3>mpuint_setbytes failed\n')
+  0xc00096d0: bl       #0xc0313cd4
+  0xc00096d4: b        #0xc000978c
+  0xc00096d8: mov      r0, #0x80
+  0xc00096dc: bl       #0xc01894b8
+  0xc00096e0: subs     r8, r0, #0
+  0xc00096e4: ldreq    r0, [pc, #0x2c4] ; *(0xc00099b0)=0xc03a502f (b'<3>out of memory\n')
+  0xc00096e8: beq      #0xc0009720
+  0xc00096ec: ldr      r1, [pc, #0x2c8] ; *(0xc00099bc)=0xc0429370
+  0xc00096f0: mov      r2, #0x80
+  0xc00096f4: bl       #0xc0189820
+  0xc00096f8: subs     r8, r0, #0
+  0xc00096fc: ldreq    r0, [pc, #0x2b4] ; *(0xc00099b8)=0xc03a5041 (b'<3>mpuint_setbytes failed\n')
+  0xc0009700: beq      #0xc0009720
+  0xc0009704: mov      r0, r4
+  0xc0009708: mov      r1, r7
+  0xc000970c: mov      r2, r8
+  0xc0009710: bl       #0xc0028df8
+  0xc0009714: subs     r6, r0, #0
+  0xc0009718: beq      #0xc0009730
+  0xc000971c: ldr      r0, [pc, #0x29c] ; *(0xc00099c0)=0xc03a505c (b'<3>nfsb: header verification failed\n')
+  0xc0009720: bl       #0xc0313cd4
+  0xc0009724: mov      r0, r8
+  0xc0009728: bl       #0xc0189530
+  0xc000972c: b        #0xc000978c
+  0xc0009730: ldr      r1, [pc, #0x264] ; *(0xc000999c)=0xc03a50ed (b'/dev/nfsb')
+  0xc0009734: ldr      r0, [pc, #0x288] ; *(0xc00099c4)=0xc03a5081 (b'<6>%s: NFSB header found and verified.\n')
+  0xc0009738: bl       #0xc0313cd4
+  0xc000973c: mov      r0, r8
+  0xc0009740: bl       #0xc0189530
+  0xc0009744: mov      r0, r7
+  0xc0009748: bl       #0xc0189530
+  0xc000974c: mov      r0, sl
+  0xc0009750: bl       #0xc00a3fc0
+  0xc0009754: mov      r0, r4
+  0xc0009758: str      r6, [sp, #0x2c]
+  0xc000975c: str      r6, [sp, #0x28]
+  0xc0009760: bl       #0xc0028d44
+  0xc0009764: mov      r8, r0
+  0xc0009768: mov      r0, r4
+  0xc000976c: bl       #0xc0028d6c
+  0xc0009770: add      r1, sp, #0x2c
+  0xc0009774: mov      sl, r0
+  0xc0009778: mov      r0, r6
+  0xc000977c: bl       #0xc02203ac
+  0xc0009780: cmp      r0, #0
+  0xc0009784: beq      #0xc00097b8
+  0xc0009788: b        #0xc00097ac
+  0xc000978c: mov      r0, r7
+  0xc0009790: bl       #0xc0189530
+  0xc0009794: mov      r0, sl
+  0xc0009798: bl       #0xc00a3fc0
+  0xc000979c: ldr      r0, [pc, #0x1f8] ; *(0xc000999c)=0xc03a50ed (b'/dev/nfsb')
+  0xc00097a0: bl       #0xc00b2698
+  0xc00097a4: ldr      r0, [pc, #0x21c] ; *(0xc00099c8)=0xc03a5113 (b'No NFSB image found.')
+  0xc00097a8: bl       #0xc0313b4c
+  0xc00097ac: ldr      r0, [pc, #0x218] ; *(0xc00099cc)=0xc03a5128 (b'<3>Failed to create mapped device\n')
+  0xc00097b0: bl       #0xc0313cd4
+  0xc00097b4: b        #0xc0009974
+  0xc00097b8: ldr      r0, [sp, #0x2c]
+  0xc00097bc: bl       #0xc0221188
+  0xc00097c0: mov      r1, #1
+  0xc00097c4: bl       #0xc0194360
+  0xc00097c8: mov      r1, #1
+  0xc00097cc: add      r0, sp, #0x28
+  0xc00097d0: mov      r2, r1
+  0xc00097d4: ldr      r3, [sp, #0x2c]
+  0xc00097d8: bl       #0xc0221d44
+  0xc00097dc: cmp      r0, #0
+  0xc00097e0: beq      #0xc00097f4
+  0xc00097e4: ldr      r0, [pc, #0x1e4] ; *(0xc00099d0)=0xc03a514b (b'<3>Failed to create table\n')
+  0xc00097e8: mov      r6, #0
+  0xc00097ec: bl       #0xc0313cd4
+  0xc00097f0: b        #0xc000996c
+  0xc00097f4: ldr      r3, [pc, #0x194] ; *(0xc0009990)=0xc046a8d4
+  0xc00097f8: ldr      r0, [r3, #0x20]
+  0xc00097fc: cmp      r0, #0
+  0xc0009800: moveq    r7, #0x10
+  0xc0009804: beq      #0xc0009814
+  0xc0009808: mov      r1, #0xd0
+  0xc000980c: bl       #0xc00a26f0
+  0xc0009810: mov      r7, r0
+  0xc0009814: mov      r0, r4
+  0xc0009818: lsr      sb, r8, #9
+  0xc000981c: lsr      r8, sl, #9
+  0xc0009820: mov      r6, r7
+  0xc0009824: bl       #0xc0028dbc
+  0xc0009828: mov      r2, r0
+  0xc000982c: mov      r0, r4
+  0xc0009830: str      r2, [sp, #0x24]
+  0xc0009834: bl       #0xc0028dc4
+  0xc0009838: mov      fp, r0
+  0xc000983c: mov      r0, r4
+  0xc0009840: bl       #0xc0028dcc
+  0xc0009844: mov      sl, r0
+  0xc0009848: mov      r0, r4
+  0xc000984c: bl       #0xc0028df0
+  0xc0009850: ldr      r2, [sp, #0x24]
+  0xc0009854: mov      r1, #0x100
+  0xc0009858: ldr      r3, [pc, #0x13c] ; *(0xc000999c)=0xc03a50ed (b'/dev/nfsb')
+  0xc000985c: str      sb, [sp]
+  0xc0009860: add      sb, r8, sb
+  0xc0009864: str      r2, [sp, #0xc]
+  0xc0009868: str      r0, [sp, #0x18]
+  0xc000986c: mov      r0, r7
+  0xc0009870: ldr      r2, [pc, #0x15c] ; *(0xc00099d4)=0xc03a5166 (b'%s %u %s %u %u %s %u %s')
+  0xc0009874: stmib    sp, {r3, sb}
+  0xc0009878: asr      sb, r8, #0x1f
+  0xc000987c: str      fp, [sp, #0x10]
+  0xc0009880: str      sl, [sp, #0x14]
+  0xc0009884: bl       #0xc01a1c30
+  0xc0009888: ldr      r0, [sp, #0x28]
+  0xc000988c: mov      r2, #0
+  0xc0009890: ldr      r1, [pc, #0x140] ; *(0xc00099d8)=0xc03a517e (b'verity')
+  0xc0009894: mov      r3, #0
+  0xc0009898: strd     r8, sb, [sp]
+  0xc000989c: str      r7, [sp, #8]
+  0xc00098a0: bl       #0xc0221ff8
+  0xc00098a4: cmp      r0, #0
+  0xc00098a8: ldrne    r0, [pc, #0x12c] ; *(0xc00099dc)=0xc03a5185 (b'<3>Failed to add NFSB target to the tabl')
+  0xc00098ac: bne      #0xc0009908
+  0xc00098b0: ldr      r0, [sp, #0x28]
+  0xc00098b4: bl       #0xc0222290
+  0xc00098b8: cmp      r0, #0
+  0xc00098bc: ldrne    r0, [pc, #0x11c] ; *(0xc00099e0)=0xc03a51b0 (b'<3>Failed to complete NFSB table\n')
+  0xc00098c0: bne      #0xc0009908
+  0xc00098c4: ldr      r0, [sp, #0x2c]
+  0xc00098c8: mov      r1, #2
+  0xc00098cc: bl       #0xc0220d04
+  0xc00098d0: cmp      r0, #0
+  0xc00098d4: ldrne    r0, [pc, #0x108] ; *(0xc00099e4)=0xc03a51d2 (b'<3>Failed to suspend the device pre-bind')
+  0xc00098d8: bne      #0xc0009908
+  0xc00098dc: ldr      r0, [sp, #0x2c]
+  0xc00098e0: ldr      r1, [sp, #0x28]
+  0xc00098e4: bl       #0xc0220b28
+  0xc00098e8: cmp      r0, #0
+  0xc00098ec: ldrne    r0, [pc, #0xf4] ; *(0xc00099e8)=0xc03a51fc (b'<3>Failed to bind the device to the tabl')
+  0xc00098f0: bne      #0xc0009908
+  0xc00098f4: ldr      r0, [sp, #0x2c]
+  0xc00098f8: bl       #0xc0220f3c
+  0xc00098fc: cmp      r0, #0
+  0xc0009900: beq      #0xc0009918
+  0xc0009904: ldr      r0, [pc, #0xe0] ; *(0xc00099ec)=0xc03a5227 (b'<3>Failed to resume the device\n')
+  0xc0009908: bl       #0xc0313cd4
+  0xc000990c: ldr      r0, [sp, #0x28]
+  0xc0009910: bl       #0xc0221340
+  0xc0009914: b        #0xc000996c
+  0xc0009918: ldr      r0, [sp, #0x2c]
+  0xc000991c: bl       #0xc0221188
+  0xc0009920: ldr      r5, [r0, #0xf4]
+  0xc0009924: ldr      r0, [sp, #0x28]
+  0xc0009928: bl       #0xc0221368
+  0xc000992c: mov      r8, r0
+  0xc0009930: ldr      r0, [sp, #0x2c]
+  0xc0009934: mov      sb, r1
+  0xc0009938: bl       #0xc021e820
+  0xc000993c: lsr      r3, r5, #0x14
+  0xc0009940: str      r0, [sp]
+  0xc0009944: mov      r1, r7
+  0xc0009948: ldr      r0, [pc, #0xa0] ; *(0xc00099f0)=0xc03a5247 (b"<6>dm: target '%s' of size %llu on %s(%i")
+  0xc000994c: str      r3, [sp, #4]
+  0xc0009950: bic      r3, r5, #0xff000000
+  0xc0009954: bic      r3, r3, #0xf00000
+  0xc0009958: mov      r2, r8
+  0xc000995c: str      r3, [sp, #8]
+  0xc0009960: mov      r3, sb
+  0xc0009964: bl       #0xc0313cd4
+  0xc0009968: b        #0xc000997c
+  0xc000996c: ldr      r0, [sp, #0x2c]
+  0xc0009970: bl       #0xc021e828
+  0xc0009974: mov      r0, r6
+  0xc0009978: bl       #0xc00a1a0c
+  0xc000997c: mov      r0, r4
+  0xc0009980: bl       #0xc00a1a0c
+  0xc0009984: mov      r0, r5
+  0xc0009988: add      sp, sp, #0x34
+  0xc000998c: pop      {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+
+=== Linux Kernel populate_table_nfsb (3rdA/3rdB) (ARM @ 0xc02243c4..0xc0224658) ===
+  0xc02243c4: mov      r3, #0
+  0xc02243c8: str      r3, [r4, #0x1c]
+  0xc02243cc: ldr      r3, [r5, #0x1c]
+  0xc02243d0: mov      r1, r5
+  0xc02243d4: bic      r3, r3, #0x40
+  0xc02243d8: str      r3, [r5, #0x1c]
+  0xc02243dc: ldr      r0, [r4, #0x18]
+  0xc02243e0: bl       #0xc0223f84
+  0xc02243e4: ldr      r4, [r4, #0x18]
+  0xc02243e8: ldr      r0, [pc, #0x10] ; *(0xc0224400)=0xc0437650
+  0xc02243ec: bl       #0xc0063d1c
+  0xc02243f0: mov      r0, r4
+  0xc02243f4: bl       #0xc021e828
+  0xc02243f8: mov      r0, #0
+  0xc02243fc: pop      {r3, r4, r5, pc}
+  0xc0224400: subgt    r7, r3, r0, asr r6
+  0xc0224404: push     {r4, r5, r6, r7, r8, sb, sl, fp, lr}
+  0xc0224408: add      r2, r1, r2
+  0xc022440c: sub      sp, sp, #0x134
+  0xc0224410: mov      sb, r0
+  0xc0224414: mov      r6, r1
+  0xc0224418: str      r2, [sp, #0x3c]
+  0xc022441c: ldr      r2, [r1, #0x14]
+  0xc0224420: ldr      r3, [r1, #0x10]
+  0xc0224424: cmp      r2, #0
+  0xc0224428: movne    r2, r1
+  0xc022442c: movne    sl, #0
+  0xc0224430: addne    r5, sp, #0x40
+  0xc0224434: bne      #0xc0224638
+  0xc0224438: ldr      r0, [pc, #0x21c] ; *(0xc022465c)=0xc03d22d9 (b'<4>device-mapper: ioctl: populate_table:')
+  0xc022443c: mvn      fp, #0x15
+  0xc0224440: bl       #0xc0313cd4
+  0xc0224444: b        #0xc0224650
+  0xc0224448: add      r4, r2, r3
+  0xc022444c: add      r2, r2, #0x28
+  0xc0224450: cmp      r4, r2
+  0xc0224454: blo      #0xc0224474
+  0xc0224458: add      r7, r4, #0x28
+  0xc022445c: ldr      r1, [sp, #0x3c]
+  0xc0224460: mov      r0, r7
+  0xc0224464: bl       #0xc0223944
+  0xc0224468: subs     fp, r0, #0
+  0xc022446c: beq      #0xc0224480
+  0xc0224470: b        #0xc0224478
+  0xc0224474: mvn      fp, #0x15
+  0xc0224478: ldr      r0, [pc, #0x1e0] ; *(0xc0224660)=0xc03d2318 (b'<4>device-mapper: ioctl: unable to find ')
+  0xc022447c: b        #0xc02244c8
+  0xc0224480: add      r8, r4, #0x18
+  0xc0224484: ldr      r1, [pc, #0x1d8] ; *(0xc0224664)=0xc03a517e (b'verity')
+  0xc0224488: mov      r0, r8
+  0xc022448c: mov      r2, #7
+  0xc0224490: bl       #0xc019f4cc
+  0xc0224494: cmp      r0, #0
+  0xc0224498: bne      #0xc0224600
+  0xc022449c: ldr      r2, [r4, #8]
+  0xc02244a0: ldr      r3, [r4, #0xc]
+  0xc02244a4: orrs     r3, r2, r3
+  0xc02244a8: bne      #0xc0224600
+  0xc02244ac: add      r0, sp, #0x12c
+  0xc02244b0: add      r1, sp, #0x128
+  0xc02244b4: mov      r2, r7
+  0xc02244b8: bl       #0xc0221edc
+  0xc02244bc: subs     fp, r0, #0
+  0xc02244c0: beq      #0xc02244d0
+  0xc02244c4: ldr      r0, [pc, #0x19c] ; *(0xc0224668)=0xc03d2348 (b"<4>device-mapper: ioctl: couldn't split ")
+  0xc02244c8: bl       #0xc0313cd4
+  0xc02244cc: b        #0xc0224650
+  0xc02244d0: ldr      r3, [sp, #0x128]
+  0xc02244d4: mov      r0, r5
+  0xc02244d8: ldr      r1, [r3]
+  0xc02244dc: bl       #0xc0028bd0
+  0xc02244e0: cmp      r0, #0
+  0xc02244e4: bne      #0xc02244f4
+  0xc02244e8: ldr      r0, [pc, #0x17c] ; *(0xc022466c)=0xc03d2392 (b'/share/Release_code_use/Roy/release/vm_l')
+  0xc02244ec: movw     r1, #0x4a8
+  0xc02244f0: bl       #0xc0031098
+  0xc02244f4: mov      r0, r5
+  0xc02244f8: bl       #0xc0028d44
+  0xc02244fc: lsr      r0, r0, #9
+  0xc0224500: str      r0, [sp, #0x34]
+  0xc0224504: mov      r0, r5
+  0xc0224508: bl       #0xc0028d6c
+  0xc022450c: ldr      lr, [pc, #0x15c] ; *(0xc0224670)=0xc046a8d4
+  0xc0224510: lsr      r0, r0, #9
+  0xc0224514: mov      r2, #0
+  0xc0224518: mov      r3, #0
+  0xc022451c: str      r0, [sp, #0x38]
+  0xc0224520: strd     r2, r3, [r4]
+  0xc0224524: mov      r2, r0
+  0xc0224528: asr      r3, r2, #0x1f
+  0xc022452c: strd     r2, r3, [r4, #8]
+  0xc0224530: ldr      r0, [lr, #0x20]
+  0xc0224534: cmp      r0, #0
+  0xc0224538: moveq    r7, #0x10
+  0xc022453c: beq      #0xc022454c
+  0xc0224540: mov      r1, #0xd0
+  0xc0224544: bl       #0xc00a26f0
+  0xc0224548: mov      r7, r0
+  0xc022454c: ldr      r3, [sp, #0x128]
+  0xc0224550: mov      r0, r5
+  0xc0224554: ldr      fp, [r3]
+  0xc0224558: bl       #0xc0028dbc
+  0xc022455c: str      r0, [sp, #0x24]
+  0xc0224560: mov      r0, r5
+  0xc0224564: bl       #0xc0028dc4
+  0xc0224568: mov      r2, r0
+  0xc022456c: mov      r0, r5
+  0xc0224570: str      r2, [sp, #0x2c]
+  0xc0224574: bl       #0xc0028dcc
+  0xc0224578: mov      r1, r0
+  0xc022457c: mov      r0, r5
+  0xc0224580: str      r1, [sp, #0x30]
+  0xc0224584: bl       #0xc0028df0
+  0xc0224588: ldr      r3, [sp, #0x34]
+  0xc022458c: ldr      lr, [sp, #0x38]
+  0xc0224590: ldr      r2, [sp, #0x2c]
+  0xc0224594: ldr      r1, [sp, #0x30]
+  0xc0224598: add      ip, lr, r3
+  0xc022459c: str      r3, [sp]
+  0xc02245a0: ldr      r3, [sp, #0x24]
+  0xc02245a4: str      r2, [sp, #0x10]
+  0xc02245a8: str      r1, [sp, #0x14]
+  0xc02245ac: mov      r1, #0x100
+  0xc02245b0: str      r3, [sp, #0xc]
+  0xc02245b4: mov      r3, fp
+  0xc02245b8: str      r0, [sp, #0x18]
+  0xc02245bc: mov      r0, r7
+  0xc02245c0: ldr      r2, [pc, #0xac] ; *(0xc0224674)=0xc03a5166 (b'%s %u %s %u %u %s %u %s')
+  0xc02245c4: stmib    sp, {fp, ip}
+  0xc02245c8: bl       #0xc01a1c30
+  0xc02245cc: ldrd     r2, r3, [r4, #8]
+  0xc02245d0: mov      r1, r8
+  0xc02245d4: str      r7, [sp, #8]
+  0xc02245d8: mov      r0, sb
+  0xc02245dc: strd     r2, r3, [sp]
+  0xc02245e0: ldrd     r2, r3, [r4]
+  0xc02245e4: bl       #0xc0221ff8
+  0xc02245e8: mov      fp, r0
+  0xc02245ec: ldr      r0, [sp, #0x128]
+  0xc02245f0: bl       #0xc00a1a0c
+  0xc02245f4: mov      r0, r7
+  0xc02245f8: bl       #0xc00a1a0c
+  0xc02245fc: b        #0xc0224620
+  0xc0224600: ldrd     r2, r3, [r4, #8]
+  0xc0224604: mov      r0, sb
+  0xc0224608: str      r7, [sp, #8]
+  0xc022460c: mov      r1, r8
+  0xc0224610: strd     r2, r3, [sp]
+  0xc0224614: ldrd     r2, r3, [r4]
+  0xc0224618: bl       #0xc0221ff8
+  0xc022461c: mov      fp, r0
+  0xc0224620: cmp      fp, #0
+  0xc0224624: ldrne    r0, [pc, #0x4c] ; *(0xc0224678)=0xc03d23ee (b'<4>device-mapper: ioctl: error adding ta')
+  0xc0224628: bne      #0xc02244c8
+  0xc022462c: ldr      r3, [r4, #0x14]
+  0xc0224630: add      sl, sl, #1
+  0xc0224634: mov      r2, r4
+  0xc0224638: ldr      r1, [r6, #0x14]
+  0xc022463c: cmp      sl, r1
+  0xc0224640: blo      #0xc0224448
+  0xc0224644: mov      r0, sb
+  0xc0224648: bl       #0xc0222290
+  0xc022464c: mov      fp, r0
+  0xc0224650: mov      r0, fp
+  0xc0224654: add      sp, sp, #0x134

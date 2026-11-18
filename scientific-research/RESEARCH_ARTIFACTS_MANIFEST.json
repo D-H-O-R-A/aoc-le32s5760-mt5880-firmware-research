@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_utc": "2026-11-18T19:07:10.163483+00:00",
+  "generated_utc": "2026-11-18T19:32:21.469290+00:00",
   "repository": "https://github.com/D-H-O-R-A/aoc-le32s5760-mt5880-firmware-research",
   "baseline_artifact_count": 56,
   "baseline_artifacts": [
@@ -133,8 +133,8 @@
     {
       "category": "scripts",
       "path": "scripts/metadata_extraction.py",
-      "size_bytes": 19747,
-      "sha256": "06c202f943b48003bddd0fa3f7fa7cda224f235a095348753f5edaab6267e2e5"
+      "size_bytes": 19958,
+      "sha256": "07b7a1ad29530641cda51f7b4e0a368793e19cdf1e7432d3901016234bd52932"
     },
     {
       "category": "scripts",

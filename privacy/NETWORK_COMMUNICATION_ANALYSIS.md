@@ -1,42 +1,42 @@
 # Network Communication Analysis (`AOC LE32S5760/20`)
 
-> **Endpoint Inventory CSV:** [EXTERNAL_ENDPOINT_INVENTORY.csv](EXTERNAL_ENDPOINT_INVENTORY.csv) (`291` statically confirmed entries) | **Network Diagram:** [diagrams/NETWORK_ARCHITECTURE.svg](../diagrams/NETWORK_ARCHITECTURE.svg)
+> **Endpoint Inventory CSV:** [EXTERNAL_ENDPOINT_INVENTORY.csv](EXTERNAL_ENDPOINT_INVENTORY.csv) (`291` statically verified URLs) | **Network Diagram:** [diagrams/NETWORK_ARCHITECTURE.svg](../diagrams/NETWORK_ARCHITECTURE.svg)
 
-## 1. Methodological Constraint: Static Binary Observation vs. Uncaptured Wire Traffic
+## 1. Methodological Constraint: Static Strings vs. Uncaptured Wire Traffic
 
-**Important Epistemic Boundary:** Live controlled packet capture (`tcpdump` / `Wireshark` / TLS MITM proxy against physical TV hardware powered on in an isolated lab VLAN) was **NOT performed** in this workspace. Consequently:
-- Every host, URL, protocol, and port listed here and in [EXTERNAL_ENDPOINT_INVENTORY.csv](EXTERNAL_ENDPOINT_INVENTORY.csv) represents a **statically verified artifact compiled into binaries, configuration files, or X.509 CRL/CA stores**.
-- Static presence proves **reachability intent or compiled capability**, NOT active payload transmission, transmission cadence, or personal data content on live networks (see [PRIVACY_ASSESSMENT.md](PRIVACY_ASSESSMENT.md) and [TELEMETRY_ANALYSIS.md](TELEMETRY_ANALYSIS.md)).
+**Explicit Epistemic Boundary:** Live controlled packet capture (`tcpdump` / `Wireshark` / TLS MITM proxy against physical TV hardware on an isolated VLAN) was **NOT performed** in this offline workspace. Accordingly:
+- Every host, URL, IPC endpoint, and trust anchor documented below represents a **statically verified string or library binding** observed inside `appfs1` or `rootfs1`.
+- Static URL presence demonstrates compiled capability or residual config references — **not** verified runtime exfiltration cadence or PII payload contents ([PRIVACY_ASSESSMENT.md](PRIVACY_ASSESSMENT.md), [TELEMETRY_ANALYSIS.md](TELEMETRY_ANALYSIS.md)).
 
 ---
 
-## 2. Network Stack & Interface Daemons Observed
+## 2. Dynamic Network & IPC Bindings Observed Across Core Binaries (`readelf -d`)
 
-| Layer / Binary | File Path | Observed Network Behavior / Config |
+| Daemon / Shared Lib | Dynamic Library Count | Network / HTTP / DRM / Discovery Dependencies (`DT_NEEDED`) |
 |---|---|---|
-| **Kernel Networking** | `scratch/vmlinux.bin` + `star_mac.ko` + `rt5572sta.ko` | IPv4 + IPv6 (`net/ipv6/*`, `sit.c`), `nf_conntrack` + `nf_nat`, `eth0` wired + `ra0` Ralink RT5572 USB Wi-Fi |
-| **IPv4 / IPv6 Address Allocation** | `appfs1/sbin/{udhcpc, dhcpc.script, dns.script}`, `appfs1/bin/dibbler-client`, `etc/scripts/dhcpv6.sh` | DHCPv4 & stateful/stateless DHCPv6 (`dibbler-client`) |
-| **Interface Monitor** | `appfs1/sbin/mnet_down.script` (respawned in `inittab`) | Polls `/tmp/interface_down` every `0.5s`; brings down `eth0` and `ra0` via `ifconfig` |
-| **Firewall** | `rootfs1/bin/iptables/iptables-1.4.15/xtables-multi` | Shipped in `/3rd/bin/iptables`, though no active inbound `DROP` rule script runs in `etc/init.d/rcS` / `rc.local` |
-| **Connectivity Probes** | `appfs1/bin/jsapp`, `dtv_common`, `net_ck.conf` | References `http://www.google.com`, `http://www.bbc.co.uk`, `http://speedtest.oui-0x00199d.com/st.jpg` (`OUI 00-19-9D` = Vizio/TPV/AmTRAN family test probe!) |
-| **LAN Discovery & Casting** | `rootfs1/vendor/dialserver/dialserver`, `libqtdlna.so`, `libmDNSResponderPosix.so`, `libwfd.so` | DIAL SSDP (`239.255.255.250`), local loopback `http://localhost:56789/dialData?app=YouTube`, UPnP/DLNA, mDNS/DNS-SD |
+| **`dtv_svc`** (`4.25 MB`) | `41` | `libssl.so.1.0.0`, `libcrypto.so.1.0.0`, `libcurl.so.4`, `libcares.so.2`, `libhttplive.so`, `libliveMedia.so`, `libnetwork_detect.so`, `libwfd.so`, `libhdcp2x.so`, `libnettv_proxy.so` |
+| **`libnettv.so`** (`2.75 MB`) | `36` | `libcurl.so.4`, `libssl.so.1.0.0`, `libcares.so.2`, `libmarlin.so`, `libhttplive.so`, `libWVPlaybackAPI.so`, `libWVStreamControlAPI.so`, `libplayready.so`, `libSSPK.so` |
+| **`browser.out`** (`Opera`) | `20` | `libopera_hbbtv.so` (`15.7 MB`), `libopera_hbbtv_appman.so`, `libhtvLib.so`, `libuva.so`, `libdirectfb.so` |
+| **`dialserver` & `mDNS`** | — | SSDP multicast strings `239.255.255.250` (`1900`), local loopback `http://localhost:56789/dialData?app=YouTube`, `libmicrohttpd.so.10`, `libmDNSResponderPosix.so`, `libqtdlna.so` (`1.52 MB`) |
+
+Additionally, `/etc/inittab` continuously respawns `/sbin/mnet_down.script` (`polling /tmp/interface_down` every `0.5s` to tear down `eth0`/`ra0`), while `etc/scripts/dhcpv6.sh` manages `dibbler-client` over IPv6 alongside IPv4 `udhcpc`. Although `rootfs1/bin/iptables/iptables-1.4.15/xtables-multi` is bundled, no active inbound `DROP` rule script runs in `etc/init.d/rcS` / `rc.local`.
 
 ---
 
-## 3. Classification of Extracted Static URLs (`291` Unique Matches)
+## 3. Classification of Extracted Static URLs (`291` Confirmed Entries)
 
-| Category | Confirmed Sample Hosts / URLs (`EXTERNAL_ENDPOINT_INVENTORY.csv`) | Owning Binary / File | Transport |
+| Category | Representative Confirmed URLs (`EXTERNAL_ENDPOINT_INVENTORY.csv`) | Owning Artifact(s) | Transport / State |
 |---|---|---|---|
-| **OEM Portal & Smart TV Backend** | `https://www.ecdinterface.philips.com/DevicePortalICPRequestHandler/RequestHandler.ashx`, `https://nettv.corio.com/BluePortServlets/BookmarkUrl`, `https://nettvacc.corio.com/...`, `https://sp-test1-origin.portal.nettvservices.com/...`, `http://www.pds.philips.com/download_request` | `libnettv.so`, `libhtvLib.so`, `libmtkapp.so` | HTTPS (TLS 1.0) & HTTP |
-| **Netflix NRD SDK** | `https://nrdp.nccp.netflix.com/nccp/controller`, `https://nrdpv6.nccp.netflix.com/...`, `https://api-global.netflix.com`, `https://uiboot.netflix.com/apps/gibbontvui/upgrade_policy`, `https://tenfootui.netflix.com/...` + QA strings (`mvc102qa.netflix.com`, `foobar.netflix.com`) | `nrd-app`, `common.xml`, `gibbon.xml`, `error.js` | HTTPS (`OpenSSL 1.0.0d`) & QA HTTP |
-| **YouTube & Legacy Partners** | `http://www.youtube.com/tv`, `https://www.youtube.com/tv`, `http://www.youtube.com/dial`, `https://ap.spotify.com`, `http://philips-2014.ce.skype.net`, `http://www.meethue.com/api/nupnp` | `dialserver`, `libnettv.so`, `libspotify.so`, `jsapp` | Mixed HTTP / HTTPS |
-| **DRM Licensing & Clock** | `http://playready.directtaps.net/pr/svc/rightsmanager.asmx`, `http://services.wmdrm.windowsmedia.com/SecureClock/?Time`, `https://ms3.service.hostedmarlin.com:8443/hms/ms3/rights/...`, `https://wstfcps005.shibboleth.tv/widevine/cypherpc/cgi-bin/...` | `libPRGlue.so`, `libplayready.so`, `libnettv.so` | Unencrypted HTTP (`PlayReady`) & HTTPS |
-| **Opera Browser & CA CRLs/OCSP** | `https://bugs.opera.com/`, `http://sitecheck2.opera.com/banner/%u/`, multiple `crl.*`/`ocsp.*` strings inside `libmarlin.so` / `opcacrt6.dat` / `cacerts` | `opera`, `libopera_hbbtv.so`, `browser.js`, `libmarlin.so` | HTTP / HTTPS |
+| **OEM Smart TV Portals & OTA Strings** | `https://www.ecdinterface.philips.com/DevicePortalICPRequestHandler/RequestHandler.ashx`, `https://nettv.corio.com/BluePortServlets/BookmarkUrl`, `https://nettvacc.corio.com/BluePortServlets/BluePortHome`, `http://www.pds.philips.com/download_request`, `http://speedtest.oui-0x00199d.com/st.jpg` | `libnettv.so`, `libhtvLib.so`, `libmtkapp.so`, `libdtv_common.so` | Legacy `OpenSSL 1.0.0d` HTTPS + plaintext HTTP (`speedtest` / `pds`) |
+| **Netflix NRD 4.0 SDK** | `https://nrdp.nccp.netflix.com/nccp/controller`, `https://nrdpv6.nccp.netflix.com/...`, `https://uiboot.netflix.com/apps/gibbontvui/upgrade_policy`, `https://tenfootui.netflix.com/...` (+ residual QA hosts `mvc102qa.netflix.com:7001`, `foobar.netflix.com:6359`) | `nrd-app/netflix`, `common.xml`, `gibbon.xml`, `error.js` | Built `2015-04-20`; blocked today by TLS 1.2/1.3 & cipher requirements |
+| **YouTube, Spotify & Partner Apps** | `http://www.youtube.com/tv`, `https://www.youtube.com/tv`, `http://www.youtube.com/dial`, `https://ap.spotify.com`, `http://post.audioscrobbler.com/?hs=true...`, `http://philips-2014.ce.skype.net`, `http://www.meethue.com/api/nupnp` | `dialserver`, `libnettv.so`, `libspotify.so`, `jsapp` | Mixed HTTP / legacy HTTPS |
+| **DRM Provisioning & Secure Clock** | `http://playready.directtaps.net/pr/svc/rightsmanager.asmx`, `http://services.wmdrm.windowsmedia.com/SecureClock/?Time`, `https://ms3.service.hostedmarlin.com:8443/hms/ms3/rights/...`, `https://wstfcps005.shibboleth.tv/widevine/cypherpc/cgi-bin/{Ack,GetEMMs,Heartbeat}.cgi` | `libPRGlue.so`, `libplayready.so`, `libnettv.so` | Clear HTTP (`PlayReady`) & HTTPS |
+| **QA / Test Staging Strings Left In Release** | `https://sp-test1-origin.portal.nettvservices.com/...`, `http://certification.nettvservices.com/.../marlin/prod/license_008_11.xml`, `http://drmtests.farncombe.eu/...`, `http://www.test.bbc.co.uk` | `libhtvLib.so`, `libnettv.so`, `dialserver` | Residual staging strings left in shipped binaries |
 
 ---
 
-## 4. Cryptographic & TLS Transport Findings Affecting Privacy
+## 4. Root Cause Analysis of Complete HTTPS Breakage on Modern Internet Endpoints
 
-1. **Pre-2012 TLS Cipher Suite Ceiling (`OpenSSL 1.0.0d`):** Modern CDN endpoints (`api-global.netflix.com`, `youtube.com/tv`, `nettv.corio.com`) enforce TLS 1.2/1.3 with forward-secret ECDHE/AEAD suites; `OpenSSL 1.0.0d` is rejected at handshake level by current web infrastructure.
-2. **Stale Trust Store (`opcacrt6.pem`):** `57` of `186` Opera root certificates have expired before `2026` (`9` were already expired in `2016`), and newer CA roots (e.g., Let's Encrypt `ISRG Root X1`, DigiCert `Global Root G2`) are absent.
-3. **Plaintext HTTP Legacy Endpoints:** Endpoints such as `http://www.pds.philips.com/download_request`, `http://speedtest.oui-0x00199d.com/st.jpg`, `http://services.wmdrm.windowsmedia.com/SecureClock/?Time`, and QA URLs use unencrypted HTTP `80`, allowing passive on-path observation if contacted.
+Auditing both layers simultaneously explains why modern HTTPS browsing and streaming cannot operate natively:
+1. **TLS Protocol Ceiling (`OpenSSL 1.0.0d`, Feb 2011):** Lacks `TLS 1.2` (`RFC 5246`), `TLS 1.3` (`RFC 8446`), `AEAD` (`AES-GCM` / `ChaCha20`), and modern cipher negotiation required by Cloudflare, Akamai, Google, and Netflix CDNs.
+2. **X.509 Trust Store Decay (`opcacrt6.pem`):** Auditing `186` certs proves **`57` expired `<2026`** (`9` already expired at August `2016` release!), **`106` `SHA-1`**, **`8` `MD2`/`MD5`**, **`18` RSA`<2048` bits**, **`17` malformed for OpenSSL 3**, retained `WoSign`, and **absence** of `ISRG Root X1` (Let's Encrypt) and modern CA roots ([CRYPTOGRAPHIC_ANALYSIS.md](../security/CRYPTOGRAPHIC_ANALYSIS.md)).

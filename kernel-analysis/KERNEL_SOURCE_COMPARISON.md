@@ -1,35 +1,30 @@
-# Kernel Source Comparison (`MT5880 Linux 3.0.13` vs. Upstream Mainline `Linux 3.0.13` & Public `MT53xx` Trees)
+# Kernel Source Comparison (`MT5880 Linux 3.0.13` vs. Upstream Mainline `Linux 3.0.13`)
 
-## 1. Comparison Scope & Epistemic Rule
+## 1. Comparison Scope & Evidentiary Discipline
 
-Because OEM GPL source tarballs for `AOC LE32S5760/20` (`chiling` / `MT5880`) are not bundled inside `LE32S5760_V2.011_V0.2.zip`, comparisons below evaluate **confirmed file paths, symbol names, and disassembled functions extracted directly from `scratch/vmlinux.bin` and `dtv_driver.ko`** against the standard upstream `Linux 3.0.13` source tree structure and documented ChromiumOS `dm-verity` (`dm-bht`) architecture — never assuming uninspected C implementation details from file names alone.
+Because complete OEM Linux GPL source tarballs for `AOC LE32S5760/20` (`V2.011_V0.2`) were not included in `LE32S5760_V2.011_V0.2.zip`, comparisons rely strictly on:
+- All **`381` compiled C/header path literals** embedded in `scratch/vmlinux.bin` (`/share/Release_code_use/Roy/release/vm_linux/chiling/kernel/linux-3.0/...`),
+- All **`8` source path literals** inside proprietary `dtv_driver.ko` (`/share/.../driver/ko/mt5880/...`),
+- Exact symbol names (`mt53xx_*`, `dm_bht_*`, `nfsb`), console strings (`"<3>nfsb: ..."`, `console=ttyMT0,115200n1`), and disassembled ARM32 functions (`0xc0009594`, `0xc0028df8`, `0xc02243c4`).
 
 ---
 
-## 2. Upstream Vanilla `Linux 3.0.13` Files vs. MediaTek/TPV Vendor Additions
+## 2. Subsystem Diff: Mainline `Linux 3.0.13` (Dec 2011) vs. MediaTek/TPV BSP (`Aug 2016`)
 
-### 2.1 Files Present in `vmlinux.bin` Absent from Vanilla Mainline `Linux 3.0.13`
-The following paths compiled into `scratch/vmlinux.bin` do **not** exist in stock upstream `kernel.org` Linux `3.0.13` and constitute verifiable BSP additions:
+| Subsystem | Upstream `kernel.org` `3.0.13` State | Target `MT5880` (`chiling`) Deviation & File Proof | Technical & Security Consequence |
+|---|---|---|---|
+| **ARM Machine Port (`arch/arm/mach-*`)** | Upstream Linux `3.0.13` has **no** `mach-mt53xx` directory (`DTV` SoCs absent from mainline). | Introduces `arch/arm/mach-mt53xx/gpio6896.c`, `pdwnc_gpio6896.c`, plus `mt53xx_{bim_lock, get_ic_version, get_reserved_area, get_rodata_addr, get_rwdata_addr, timer_read, timer_read_ll}`. | Tightly binds boot, standby `T8032`, and reserved DMA memory layout to proprietary MediaTek BSP headers. |
+| **Verified Boot / Block Integrity (`drivers/md/`)** | Vanilla `3.0.13` contains `dm.c`, `dm-ioctl.c`, `dm-stripe.c`, `dm-table.c`, `dm-target.c`, `dm-io.c`, `dm-kcopyd.c` — **does NOT contain `dm-verity` (`added in Linux 3.4`) or `dm-bht`**. | Backports ChromeOS `drivers/md/dm-bht.c` (`20` `dm_bht_*` functions) + `drivers/md/dm-verity.c` + `init/do_mounts_dm.c` (`absent in mainline`), modified with custom **`NFSB` v2 (`populate_table_nfsb` @ `0xc02243c4`, `nfsb_rsa_check` @ `0xc0028df8`)**. | Enforces kernel-level RSA-1024 (`e=3`) + 2-level MD5 Merkle checks at mount time (`<3>nfsb: header verification failed`), blocking unsigned SquashFS replacement. |
+| **MTD & Raw NAND (`drivers/mtd/`)** | Mainline ships generic `mtdcore.c`, `mtdpart.c`, `mtdblock.c`, `nand_base.c`, `nand_bbt.c`, `ubi/{scan.c, wl.c}`. | Adds `drivers/mtd/mtk_mtdpart.c`, `drivers/mtd/mtdsdm.c` (`/dev/sdm*`), and `drivers/mtd/nand/mtk_nand.c` (`10` flash IDs + `NAND_AES_INIT`/ECC hardware modes). | Enables MediaTek `cfig` (`mtd1..mtd30`) partition map, `PSDM` block access, and inline NFI NAND cryptography. |
+| **Kernel Crypto (`crypto/`)** | Generic software algorithms (`ablkcipher.c`, `aead.c`, `algapi.c`, `blkcipher.c`, `chainiv.c`). | Injects `crypto/mtk_crypto.c`. | Bridges hardware SoC cipher/hash block into Linux CryptoAPI (`crypto_hash_*` invoked by `nfsb_rsa_check`). |
+| **USB Host (`drivers/usb/host/`)** | EHCI / OHCI / xHCI upstream drivers. | Injects `drivers/usb/host/mtk_hcd.c` & `drivers/usb/host/mtk_qmu.c` for MediaTek USB PHY and Queue Management Unit DMA. | Non-standard USB host silicon; mainline QEMU kernels lack `mtk_qmu` models. |
+| **OEM Board Drivers (Out-of-Tree `.ko`)** | Not part of mainline kernel tree. | `dtv_driver.ko` (`6.84 MB`, `Proprietary`) compiles `TPV/Philips_2K13_ODM_pdwnc_ext.c`, `TPVision_2k13_d_custom.c`, `ir6896/{irrc,irrx}_if.c`, `nor/{eeprom_hw,storage}.c` (`/dev/eeprom_{0,3,4}`), `pdwnc6896/pdwnc_hw.c`, `mt53xx_fb/mt53_fb.c`. | Prevents swapping `vmlinux` cleanly for an upstream mainline ARM kernel even aside from RSA boot signatures. |
 
-| Compiled Path in `vmlinux.bin` | Functional Subsystem | Evidence Observed in Binary |
-|---|---|---|
-| `arch/arm/mach-mt53xx/gpio6896.c` | MT53xx/MT5880 GPIO controller | File path string + symbol family (`mt53xx_*`) |
-| `arch/arm/mach-mt53xx/pdwnc_gpio6896.c` | Standby power-down (`PDWNC`) GPIOs (`T8032` domain) | Explicit path string + symbol `pdwnc_gpio6896` |
-| `crypto/mtk_crypto.c` | SoC hardware cipher/digest acceleration | Compiled in alongside upstream `crypto/{api, algapi, blkcipher, scatterwalk}.c` |
-| `drivers/md/dm-verity.c` | Block-level cryptographic verity target (upstream mainline added `dm-verity` only in Linux `3.4`!) | Path string + `populate_table_nfsb @ 0xc02243c4` + `nfsb_rsa_check @ 0xc0028df8` |
-| `drivers/md/dm-bht.c` | ChromeOS Block Hash Tree (`dm_bht_*` API, backported before mainline `3.4`) | Path string + 20 `dm_bht_*` identifiers (`dm_bht_verify_block`, `dm_bht_root_hexdigest`, etc.) |
-| `drivers/mtd/mtdsdm.c` | MediaTek Smart/SDM block partition wrapper (`PSDM` -> `/dev/sdm%d`) | Path string + matching `libmtkapp.so sub_404fbc` branch (`"sdm%d"`) |
-| `drivers/mtd/mtk_mtdpart.c` | MediaTek NAND partition parser matching `cfig` (`mtd1..mtd30`) | Path string + `PMTD` lookup table |
-| `drivers/mtd/nand/mtk_nand.c` | MTK NFI NAND controller driver with HW ECC & NAND AES | Path string + `10` `NAND_*` chip IDs + `NAND_AES_Encryption/Decryption/INIT` |
-| `drivers/usb/host/mtk_hcd.c` & `mtk_qmu.c` | MediaTek USB host & Queue Management Unit controller | Compiled alongside upstream `drivers/usb/core/{hcd.c, hub.c}` |
-| `init/do_mounts_dm.c` | Early rootfs `dm-verity` mount bypass of userspace `initrd` | Path string + `dm_mount_root_nfsb @ 0xc0009594` |
+---
 
-### 2.2 Key Vendor Deviations Proven by Disassembly (Beyond File Names)
-1. **Backported ChromeOS `dm-verity`/`dm-bht` Modified for `NFSB` RSA-1024 (`v2`):**
-   - Standard ChromeOS `dm-verity` relies on signed kernel command-line `verity` parameters (`root_hexdigest`) protected by a verified boot image/initramfs.
-   - Instead, MediaTek backported `dm-bht.c` into Linux `3.0.13` and wrapped root/application SquashFS partitions in a proprietary **`231`-byte (`0xe7`) `NFSB` v2 header** authenticated inline by `nfsb_rsa_check` (`0xc0028df8`) using an **MD5-based** `dm-bht` tree (`12,514` blocks on `rfsA`, `23,767` blocks on `3rdA`) and an embedded **1024-bit `e=3` RSA modulus (`0xc0429370`)**.
-   - Disassembly proves `mpuint_equal` enforces exact zero-padding equality ($S^3 \bmod N == 0^{96} \parallel \text{SHA-256}$), hardening raw `e=3` verification against Bleichenbacher padding truncation.
-2. **Legacy `init/do_mounts_dm.c` Hook (`mtd6`/`mtd7` Direct Verity Root):**
-   Mainline Linux `3.0.13` lacks `do_mounts_dm.c`; MediaTek/ChromiumOS early-boot hooks mount `/dev/mtdblock6` (`rfsA`) or `/dev/mtdblock7` (`rfsB`) transparently as `/` before BusyBox `/sbin/init` runs.
-3. **Out-of-Tree `dtv_driver.ko` ODM Split (`TPV`):**
-   While MediaTek `mach-mt53xx` handles low-level ARM/NAND/USB primitives in `vmlinux`, TPV board-specific PDWNC extensions (`Philips_2K13_ODM_pdwnc_ext.c`, `TPVision_2k13_d_custom.c`), EEPROM/NOR NVM (`nor/eeprom_hw.c`, `nor/storage.c`), IR decoding (`ir6896`), and framebuffer (`mt53_fb.c`) live cleanly separated inside the proprietary `dtv_driver.ko` module.
+## 3. Cross-SDK Artifact Contamination Observed in Userland (`DT_RPATH`)
+
+Complementing kernel inheritance analysis, `readelf -d` exposes direct multi-product SDK cross-pollination in userspace shared objects:
+- `appfs1/basic/lib/libcurl.so.4.2.0` carries hardcoded builder `RPATH` `/proj/mtk94073/ws_mtk94073_1st/BDP/OSS/BDP_V301/BDP_Linux/...` (**MediaTek Blu-ray Disc Player SDK `BDP_V301`**).
+- `rootfs1/ginga/lib/libcurl.so.4.2.0` carries CERTI Brazil `envision_middleware_clean` (`arm_mtk451`) build paths linking independently against `openssl-1.0.0d`.
+- `rootfs1/netflix/nrd-app/netflix` stamps exact TPV Perforce workspace `20150420_194932/TPV_linux_REL_PHILIPS_2K14` (`gnuarm-4.5.1_vfp_ca9`), confirming the multi-brand `Philips 2K14` -> `AOC 2016` inheritance hierarchy.

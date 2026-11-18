@@ -108,8 +108,8 @@
   <text class="hdr" x="54" y="586">Empirical Security Posture Summary (Strictly Evidence-Based — No Unverified Exploits Claimed)</text>
   <text class="txt" x="54" y="610">[STRONG]  Boot &amp; Firmware Signature Enforcement: BootROM + eFuse + NFSB + exact mpuint_equal block unauthorized flash persistence.</text>
   <text class="txt" x="54" y="630">[MEDIUM]  Static UPG AES Keys Exposed: Extracting 09291094*4 &amp; ro_data keys allows decrypting official packages, NOT signing fakes.</text>
-  <text class="txt" x="54" y="650">[HIGH]    No Privilege Separation: Core services (dtv_svc, SystemManager, Opera, DIAL) run as root without SELinux/AppArmor.</text>
+  <text class="txt" x="54" y="650">[HIGH]    100% Zero RELRO / Canary / PIE / FORTIFY across 16 audited app ELFs (only NX RW stack on) + UID 0 root services.</text>
   <text class="txt" x="54" y="670">[HIGH]    10+ Year EOL Crypto &amp; C Libraries: OpenSSL 1.0.0d, curl 7.21.7, libxml2 2.7.8, expat 2.0.1 expose parsing &amp; downgrade risks.</text>
-  <text class="txt" x="54" y="690">[HIGH]    Trust Store Decay: opcacrt6.pem carries expired anchors + distrusted CAs -> breaks modern TLS &amp; weakens PKI trust.</text>
+  <text class="txt" x="54" y="690">[HIGH]    X.509 Trust Decay: opcacrt6.pem has 106 SHA-1, 8 MD2/MD5, 18 RSA&lt;2048b, 57 exp&lt;2026, 17 OpenSSL3 parse errs, WoSign.</text>
   <text class="txt" x="54" y="710">[LIMITED] Telemetry Unobserved: Network packet capture on live hardware not run; privacy risk assessed statically from URLs/configs.</text>
 </svg>

@@ -216,6 +216,23 @@ class TestFirmwareResearchArchive(unittest.TestCase):
                         broken.append(f"{md_path.relative_to(REPO_ROOT)}:{lineno} -> {target}")
         self.assertEqual(broken, [], msg="Broken relative Markdown links:\n" + "\n".join(broken))
 
+    def test_11_phd_grade_quantitative_anchors(self) -> None:
+        """Verifies core PhD-level primary binary anchors remain synchronized across docs & inventories."""
+        checks = {
+            "hardware/SOC_ANALYSIS.md": ("451_vfp_ca9", "Tag_DIV_use: Not allowed", "/dev/eeprom_"),
+            "hardware/MEMORY_ARCHITECTURE.md": ("0x21fb9000", "543.72 MiB", "global_kernel_dram_size"),
+            "firmware-forensics/FIRMWARE_FORMAT_SPECIFICATION.md": ("struct nfsb_header_v2", "0xe7", "36,281"),
+            "security/SECURITY_ASSESSMENT.md": ("SEC-10", "0/16` OEM/application binaries", "_FORTIFY_SOURCE", "75` `_chk` symbols"),
+            "security/ATTACK_SURFACE_ANALYSIS.md": ("SEC-10", "RELRO=NONE", "_FORTIFY_SOURCE=0"),
+            "security/CRYPTOGRAPHIC_ANALYSIS.md": ("md2WithRSAEncryption", "sha1WithRSAEncryption", "186"),
+            "privacy/NETWORK_COMMUNICATION_ANALYSIS.md": ("MD2", "186", "291"),
+            "scientific-research/RESEARCH_PAPER.md": ("0x21fb9000", "451_vfp_ca9", "SEC-10"),
+        }
+        for rel, needles in checks.items():
+            txt = (REPO_ROOT / rel).read_text(encoding="utf-8")
+            for needle in needles:
+                self.assertIn(needle, txt, f"Missing quantitative anchor '{needle}' in {rel}")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

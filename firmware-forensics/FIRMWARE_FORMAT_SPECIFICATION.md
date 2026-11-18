@@ -1,76 +1,77 @@
-# Firmware Format Specifications (`PKG`, `NFSB v2`, `dm-bht`, `uImage`, `Autorun.upg`)
+# Binary Format Specifications (`PKG`, `NFSB v2 Struct`, `SquashFS 4.0`, `uImage`, `Autorun.upg`)
+
+> **Verification Tools:** [scripts/inspect_pkg_and_nfsb.py](../scripts/inspect_pkg_and_nfsb.py) · [scripts/inspect_dmbht_and_boot_scripts.py](../scripts/inspect_dmbht_and_boot_scripts.py) · [scripts/verify_upg_container.py](../scripts/verify_upg_container.py)
+
+---
 
 ## 1. MediaTek `upgrade_loader.pkg` Container Format
 
-```
+```text
 Offset          Size        Field
-0x00000000      0x98 (152B) Outer PKG preamble / model & package header
-0x00000098      0x0C (12B)  Partition #1 descriptor: [Tag: 4B][Flags: u32 LE][Size: u32 LE]
-0x000000a4      <Size>      Partition #1 raw payload (starts with 3rdB, 97,738,752 B)
-...                         Repeated sequentially for 16 tagged chunks up to chtC
+0x00000000      0x98 (152B) Outer PKG header preamble
+0x00000098      0x0C (12B)  Partition #1 descriptor: [char tag[4] | uint32_t flags (LE) | uint32_t size (LE)]
+0x000000a4      <size>      Partition #1 raw payload (starts at 3rdB, 97,738,752 B)
+...                         Repeated sequentially across all 16 chunks ending at chtC (0x134c69cd + 65,536 B = 323,840,461 B)
 ```
-
-- **Recognized Tags (`16`):** `3rdB`, `3rdA`, `roda`, `cfig`, `load`, `uenv`, `adsp`, `aqda`, `pqda`, `rfsB`, `rfsA`, `kerB`, `kerA`, `usig`, `chtD`, `chtC`.
-- **Total Size:** `323,840,461` bytes (`0x134d69cd` = last payload offset + `65,536`).
 
 ---
 
 ## 2. Kernel `uImage` + Dual RSA-2048 Trailer Format (`kerA` / `kerB`)
 
-- **Size:** `2,638,124` bytes (`0x28402c`).
-- **Head (`0x00..0x3F`):** Standard U-Boot `64`-byte `image_header` (`IH_MAGIC = 0x27051956`, big-endian; `ih_load = 0x00007fc0`, `ih_ep = 0x00008000` after decompression).
-- **Body:** Hardware-LZHS compressed Linux 3.0.13 kernel (`4,432,548` B raw code/data starting at `0x40` of decompressed `vmlinux.bin`).
-- **Verification Trailers:**
-  - Trailer 1 @ `0x25152c` (`256` B RSA signature + `256` B RSA public certificate/key structure)
-  - Trailer 2 @ `0x283f2c` (`256` B RSA signature + `256` B certificate at end of image)
+- **Total Image Size:** `2,638,124` bytes (`0x28402c`).
+- **U-Boot Legacy `image_header` (`0x00..0x3F`, `64` B Big-Endian):**
+  `ih_magic = 0x27051956`, `ih_size = 4,432,548` B decompressed payload, `ih_load = 0x00007fc0`, `ih_ep = 0x00008000` (meaning stripping `0x40` bytes from decompressed `vmlinux.bin` maps `.text` bit-accurately at ARM32 virtual base `0xc0008000`).
+- **Compression & Signature Trailers:** MediaTek HW-LZHS stream (`0xf00080b0`) followed by dual `512`-byte `[256B RSA-2048 signature | 256B X.509/key certificate]` trailers observed at offsets `0x25152c` and `0x283f2c`.
 
 ---
 
-## 3. `NFSB` v2 + `dm-bht` Merkle Tree Format (`rfsA`/`rfsB`, `3rdA`/`3rdB`)
+## 3. Exact C Struct Reconstruction of `NFSB` v2 (`0xe7` = `231` Bytes) + `dm-bht`
 
-Verified byte-for-byte via [scripts/inspect_pkg_and_nfsb.py](../scripts/inspect_pkg_and_nfsb.py) and [scripts/inspect_dmbht_and_boot_scripts.py](../scripts/inspect_dmbht_and_boot_scripts.py):
+Reconstructed directly from raw hex inspection (`rfsA`/`3rdA` offsets `0x00..0xe6`) paired with [scripts/inspect_dmbht_and_boot_scripts.py](../scripts/inspect_dmbht_and_boot_scripts.py) and kernel `nfsb_rsa_check` (`0xc0028df8`):
 
+```c
+#pragma pack(push, 1)
+struct nfsb_header_v2 {
+    char     magic[4];              /* +0x00: "NFSB" (0x4e465342) */
+    uint8_t  version;               /* +0x04: 0x02 (NFSB v2) */
+    uint32_t fs_offset_sectors_be;  /* +0x05: BE 512B sectors -> 0x00000008 (4,096 B) */
+    uint32_t fs_size_sectors_be;    /* +0x09: BE 512B sectors -> rfsA: 0x00018710 (51,257,344 B),
+                                                                3rdA: 0x0002e6b8 (97,349,632 B) */
+    uint8_t  tree_depth;            /* +0x0d: 0x02 (2-level dm-bht Merkle tree) */
+    char     hash_algo[16];         /* +0x0e: "md5\0..." (null-padded 16B) */
+    uint32_t hash_tree_sectors_be;  /* +0x1e: BE 512B sectors -> rfsA: 0x00000190 (204,800 B),
+                                                                3rdA: 0x000002f0 (385,024 B) */
+    uint32_t block_sectors_be;      /* +0x22: BE 512B sectors -> 0x00000008 (4,096 B page) */
+    char     root_hexdigest[64];    /* +0x26: ASCII MD5 root digest (32 chars + null pad) */
+    uint8_t  pad_0x66;              /* +0x66: 0x00 (end of 0x67 = 103B signed payload) */
+    uint8_t  rsa_sig_1024_be[128];  /* +0x67..0xe6: Big-Endian 1024-bit RSA Signature S */
+};                                  /* sizeof == 231 bytes (0xe7) */
+#pragma pack(pop)
 ```
-Offset       Size    Field (Little Endian except Signature/Hash)
-0x00..0x03   4 B     Magic: "NFSB" (0x4e465342)
-0x04..0x07   4 B     Version / flags (`2` -> NFSB v2)
-0x08..0x0D   6 B     Header parameters (block sizing / padding)
-0x0E..0x1F   18 B    Hash algorithm ASCII string: "md5\0..." (dm-bht uses MD5)
-0x20..0x23   4 B     Total verified SquashFS/image 4 KB block count (little-endian? Verified BE/LE!)
-...          ...     Root digest (`16` B MD5 in NFSB metadata), offsets, size fields up to 0x67
-0x67..0xE6   128 B   Raw 1024-bit RSA Signature S (Big-Endian) over header[0x00:0x67]
-0xE7         ...     SquashFS (hsqs) filesystem image aligned to 4096-byte pages
-EOF - tree   ...     Two-level dm-bht MD5 Merkle Tree: Level 1 leaf hashes (128 hashes / 4KB block? Exact verified counts below)
-```
 
-### Verified Cryptographic & Merkle Values
-- **Signing Equation Enforced by `nfsb_rsa_check` (`0xc0028df8`):**
-  $$S^{3} \bmod N \stackrel{!}{=} \texttt{0x00}^{96} \parallel \text{SHA-256}(\text{hdr}[0\text{x}00:0\text{x}67])$$
-- **Root Partition (`rfsA`/`rfsB`):** `12,514` verified 4 KB SquashFS blocks (`51,257,344` B); root `dm-bht` MD5 digest verified across all `12,514` leaf hashes + intermediate level (`666e1b26...` / `6cc5d821...` — exact hex digests logged in `evidence/01` and `evidence/07`).
-- **Application Partition (`3rdA`/`3rdB`):** `23,767` verified 4 KB SquashFS blocks (`97,349,632` B); all `23,767` blocks verified offline without error.
+### Verified Partition Geometry & Cryptographic Validation Values
+| Partition | `fs_size` (`4KB` Blocks) | Merkle Layout (`4KB` Pages) | Signed `root_hexdigest` (`+0x26`) | RSA Verification Equation (`0xc0028df8`) |
+|---|---|---|---|---|
+| `rfsA` / `rfsB` | `12,514` (`51,257,344` B) | `50` pages (`1` Level-0 parent + `49` Level-1 leaf pages @ `256` MD5/page) | `6cc5d821e2e914aec01a1db58fcca389` | $S^3 \bmod N \stackrel{!}{=} 0^{96} \parallel \text{SHA-256}(\text{hdr}[0:0\text{x}67])$ |
+| `3rdA` / `3rdB` | `23,767` (`97,349,632` B) | `94` pages (`1` Level-0 parent + `93` Level-1 leaf pages @ `256` MD5/page) | `666e1b26ae2e81a681c4f510bd98bfca` | Exact `1024`-bit `mpuint_equal` (`0xc0029000`) -> `36,281/36,281` blocks PASS |
 
 ---
 
-## 4. `TPV_MTK2K14PLF` `Autorun.upg` Container Format
+## 4. `TPV_MTK2K14PLF` `Autorun.upg` Container Format (`#DH@FiRm`)
 
+```text
++-----------------------------------------------------------------------+
+| 0x000..0x07F (128 B): Unauthenticated filename prefix ("Autorun.upg") |
++-----------------------------------------------------------------------+
+| 0x080..0x0EF (112 B): AES-128-CBC (K = 09291094*4, IV = 0x00*16)       |
+|   vendor[4] | "#DH@FiRm"[8] | prod_id[60] | body_len(u32) | flags | model |
+| 0x0F0..0x10F (32 B) : AES-128-CBC (K = 09291094*4, IV = 0x00*16)       |
+|   Decrypted[0:16] == MD5(data[0x80:0xF0] || 0x00^32 || data[0x110:-256])|
++-----------------------------------------------------------------------+
+| 0x110..end-256: Chunks = [tag:4B][flags:u32][len:u32]                  |
+|   [16B AES_Prod("reserved mtk inc")] [32B AES_Prod(SHA256(payload))]   |
+|   Where K_prod = MD5(33B AES_Prod.key), IV_prod = MD5(33B AES_Prod.iv) |
++-----------------------------------------------------------------------+
+| end-256..end (256 B): RSA-2048 PKCS#1 v1.5 Sig over data[0x80:-256]    |
++-----------------------------------------------------------------------+
 ```
-+-------------------------------------------------------------------+
-| 0x000..0x07F (128 B): Filename prefix ("Autorun.upg\0...")        |  <-- Unauthenticated
-+-------------------------------------------------------------------+
-| 0x080..0x0EF (112 B): AES-128-CBC (Key=0x94102909*4, IV=0)        |
-|   -> vendor | "#DH@FiRm" | prod_str | body_len | flags | model    |
-| 0x0F0..0x10F (32 B) : AES-128-CBC (Key=0x94102909*4, IV=0)        |  <-- Covered by RSA-2048
-|   -> Body MD5 over data[0x80:0xF0] || 0x00^32 || data[0x110:-256] |
-+-------------------------------------------------------------------+
-| 0x110..end-256: Sequential Chunks                                 |
-|   Per chunk: [4B tag][4B flags][4B len]                           |
-|              [16B AES_Prod("reserved mtk inc")]                   |
-|              [32B AES_Prod(SHA256(payload))]                      |
-|              [Payload bytes (XML 'ixml', tgz 'smth', etc.)]       |
-+-------------------------------------------------------------------+
-| end-256..end (256 B): RSA-2048 PKCS#1 v1.5 Sig over [0x80:-256]   |
-+-------------------------------------------------------------------+
-```
-
-- **Non-Standard AES Key Derivation (`libdtv_common.so`):** `AES_Prod.key` (`33` bytes including trailing `\n`) is hashed via `MD5()` to produce the `16`-byte AES-128-CBC key; `AES_Prod.iv` (`33` bytes including `\n`) is similarly hashed via `MD5()` to derive the `16`-byte IV.
-- **Manifest Schema (`ixml`):** UTF-8 `<UPGRADE><SW><TAG>...</TAG><METHOD>...</METHOD><PATH>...</PATH></SW></UPGRADE>`.

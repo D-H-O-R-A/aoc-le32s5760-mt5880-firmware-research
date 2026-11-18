@@ -34,11 +34,11 @@
 
   <!-- CPU Cluster -->
   <rect class="box-conf" x="305" y="140" width="275" height="105"/>
-  <text class="hdr" x="320" y="164">ARMv7-A SMP CPU Complex</text>
-  <text class="txt" x="320" y="185">ISA: ARM32 + Thumb-2 (PREEMPT)</text>
-  <text class="txt" x="320" y="203">Cache: L2x0 (cache-l2x0.c)</text>
-  <text class="txt" x="320" y="221">GIC IRQ + PMU + VFPv3</text>
-  <text class="muted" x="320" y="238">Evidence: vmlinux 3.0.13 vermagic</text>
+  <text class="hdr" x="320" y="164">ARM Cortex-A9 SMP (ARMv7-A)</text>
+  <text class="txt" x="320" y="185">ISA: ARM32 + Thumb-2 + VFPv3</text>
+  <text class="txt" x="320" y="203">Cache: L2x0 | No SDIV (.ARM.attr)</text>
+  <text class="txt" x="320" y="221">GIC IRQ + PMU + gnuarm-4.5.1_ca9</text>
+  <text class="muted" x="320" y="238">Evidence: vmlinux + DT_RPATH ca9</text>
 
   <!-- Security / BootROM / Crypto -->
   <rect class="box-sec" x="600" y="140" width="275" height="105"/>
@@ -75,9 +75,9 @@
   <!-- External Left: Memory & Storage -->
   <rect class="box-conf" x="36" y="120" width="210" height="125"/>
   <text class="hdr" x="50" y="144">DRAM Subsystem</text>
-  <text class="txt" x="50" y="166">Channel A + Channel B</text>
-  <text class="txt" x="50" y="184">Size: ~512 MB (inferred)</text>
-  <text class="txt" x="50" y="202">uenv global_kernel_dram</text>
+  <text class="txt" x="50" y="166">Channel A + Channel B DQS</text>
+  <text class="txt" x="50" y="184">uenv kernel: 0x21fb9000</text>
+  <text class="txt" x="50" y="202">(543.7 MiB -> &gt;=768M total)</text>
   <text class="warn" x="50" y="226">Exact IC PN: UNVERIFIED</text>
 
   <rect class="box-conf" x="36" y="270" width="210" height="165"/>

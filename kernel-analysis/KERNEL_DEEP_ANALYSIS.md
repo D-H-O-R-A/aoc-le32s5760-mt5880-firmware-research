@@ -1,39 +1,50 @@
 # Deep Reverse Engineering of the Linux 3.0.13 MT5880 Kernel
 
-> **Module Inventory:** [KERNEL_MODULE_INVENTORY.csv](KERNEL_MODULE_INVENTORY.csv) | **Disassembly Traces:** [evidence/02_secure_boot_chain_disasm.txt](../evidence/02_secure_boot_chain_disasm.txt)
+> **Module Inventory:** [KERNEL_MODULE_INVENTORY.csv](KERNEL_MODULE_INVENTORY.csv) | **Disassembly Proof:** [evidence/02_secure_boot_chain_disasm.txt](../evidence/02_secure_boot_chain_disasm.txt)
 
-## 1. Kernel Identity & Memory Image Anatomy
+## 1. Kernel Binary Anatomy & Built-In Boot Defaults
 
-Decompressing `kerA`/`kerB` yields `scratch/vmlinux.bin` (`4,432,612` bytes, `SHA256: c52a4aa8bcc21fc263a44c54fdebfe95ad1de53bf1137bd4f45d934e2c63c790`).
+Decompressing `kerA`/`kerB` (`2,638,124` B) yields `scratch/vmlinux.bin` (`4,432,612` B, `SHA256: c52a4aa8bcc21fc263a44c54fdebfe95ad1de53bf1137bd4f45d934e2c63c790`).
 
-| Property | Observed Value | Evidence Source |
+| Kernel Attribute | Empirically Extracted Value | Binary Verification |
 |---|---|---|
-| **Exact Banner** | `Linux version 3.0.13 (roylo@TWCLS066) (gcc version 4.5.1 (GCC) ) #1 SMP PREEMPT Thu Aug 4 00:06:04 CST 2016` | `scratch/vmlinux.bin` `.rodata` |
-| **Container Prefix** | `64`-byte U-Boot `uImage` header (`IH_MAGIC=0x27051956`, `ih_size=4,432,548`, `load=0x00007fc0`, `ep=0x00008000`) | First `0x40` bytes of `vmlinux.bin` |
-| **Virtual Base Address** | `0xc0008000` (after stripping `0x40`-byte `uImage` header) | Cross-validated via `.rodata` string pointers |
-| **Architecture & SMP** | `ARMv7-A` Little Endian (`ARM32`), `SMP`, `PREEMPT`, `VFPv3`, `HIGHMEM`, `cache-l2x0` | `.modinfo` `vermagic` + `arch/arm/*` paths |
-| **`CONFIG_IKCONFIG`** | Disabled (`IKCFG_ST` absent from binary) | Direct binary search in `FIRMWARE_METADATA.json` |
-| **Embedded Source Paths** | `381` unique `/share/Release_code_use/.../linux-3.0/...` file paths | Compiled `BUG()` / `WARN_ON()` / `__FILE__` literals |
+| **Version Banner** | `Linux version 3.0.13 (roylo@TWCLS066) (gcc version 4.5.1 (GCC) ) #1 SMP PREEMPT Thu Aug 4 00:06:04 CST 2016` | `.rodata` string |
+| **Virtual Base Address** | `0xc0008000` (after stripping `64`-B `uImage` header `0x27051956`, `load=0x7fc0`, `ep=0x8000`) | Re-anchored ARM branch & literal pool alignment |
+| **Built-In Default `CMDLINE`** | `"console=ttyMT0,115200n1 root=/dev/ram"` | Extracted verbatim from `vmlinux.bin` |
+| **`kallsyms` / `IKCONFIG` State** | `kallsyms_addresses=False`, `kallsyms_num_syms=False`, `__ksymtab_strings=False`, `IKCFG_ST=False` | Stripped/compiled-out (`CONFIG_KALLSYMS=n`, `CONFIG_IKCONFIG=n`); symbols resolved via function banners/strings & Capstone |
+| **Compiled `mt53xx_*` Helpers (`7`)** | `mt53xx_bim_lock`, `mt53xx_get_ic_version`, `mt53xx_get_reserved_area`, `mt53xx_get_rodata_addr`, `mt53xx_get_rwdata_addr`, `mt53xx_timer_read`, `mt53xx_timer_read_ll` | Matched directly inside `vmlinux.bin` |
+| **Compiled Source Paths** | `381` unique `/share/Release_code_use/Roy/release/vm_linux/chiling/kernel/linux-3.0/...` paths | Compiled `BUG()`/`WARN_ON()`/__FILE__ strings |
 
 ---
 
-## 2. Core Custom Subsystems Dissected Inside `vmlinux.bin`
+## 2. Dissected `NFSB` & `dm-verity` Enforcement Engine (`vmlinux.bin`)
 
-### 2.1 `arch/arm/mach-mt53xx/` Machine & Power Management Layer
-Unlike upstream ARM boards (`mach-versatile`, `mach-omap2`), the kernel embeds MediaTek's unified DTV board port `arch/arm/mach-mt53xx/` sharing the `6896`/`5880` register framework:
-- `arch/arm/mach-mt53xx/gpio6896.c`: SoC-wide GPIO multiplexing and digital TV pin control.
-- `arch/arm/mach-mt53xx/pdwnc_gpio6896.c`: Power-Down Control (`PDWNC`) standby GPIOs cooperating with the T8032 8051 co-processor (`dtv_driver.ko` `pdwnc6896/pdwnc_hw.c`).
-- Exported SoC primitives observed in kernel strings/symbols: `mt53xx_get_ic_version`, `mt53xx_get_reserved_area`, `mt53xx_get_rodata_addr`, `mt53xx_get_rwdata_addr`, `mt53xx_timer_read`, `mt53xx_timer_read_ll`, `mt53xx_bim_lock`.
+Because `kallsyms` and `IKCONFIG` were stripped out to harden the retail kernel, function boundaries inside `vmlinux.bin` were recovered cleanly through string x-refs (`"<3>nfsb: header verification failed"`, `"<3>device-mapper: verity: Block hash does not match!"`, `0xc04292f0`/`0xc0429370`) and Capstone disassembly:
 
-### 2.2 Storage Stack (`drivers/mtd/mtk_mtdpart.c`, `nand/mtk_nand.c`, `fs/ubifs`)
-MediaTek heavily customizes the Linux MTD/NAND subsystem:
-- `drivers/mtd/mtk_mtdpart.c` and `drivers/mtd/mtdsdm.c`: Custom partitioning (`cfig` / `PMTD` / `PSDM`) mapping `mtd0..mtd30`.
-- `drivers/mtd/nand/mtk_nand.c`: Supports hardware ECC (`NAND_ECC_MODE`), inline hardware AES hooks (`NAND_AES_INIT`, `NAND_AES_Encryption`, `NAND_AES_Decryption`), and `10` compiled flash IC IDs (Hynix, Micron, Samsung, Toshiba).
-- `fs/ubifs/{dir.c, journal.c, tnc.c}`: Native UBIFS support mounting `ubi2:perm` (`mtd11`), `ubi3:ro_data` (`mtd13`), and `ubi4:3rd_rw` (`mtd12`).
+1. **`dm_mount_root_nfsb` (`0xc0009594`, `init/do_mounts_dm.c`):**
+   - Intercepts root mount for `mtd6`/`mtd7` (`rfsA`/`rfsB`), allocating `/dev/nfsb` rather than trusting an unsigned initramfs switch.
+2. **`populate_table_nfsb` (`0xc02243c4`, `drivers/md/dm-verity.c` + `dm-bht.c`):**
+   - Reads the `231`-byte `struct nfsb_header_v2` (including `fs_size_sectors_be`, `"md5"`, and `root_hexdigest` ASCII hex) from sector `0` of `/dev/mtdblock*` (meaning userspace `dmsetup ... --table "0 0 verity /dev/mtdblock9"` intentionally passes `0 0` dummy bounds).
+   - Emits kernel errors `nfsb: open %s failed`, `nfsb: create_dev failed`, `nfsb: check %s header fail`, and `nfsb: header verification failed` on tampering.
+3. **`nfsb_rsa_check` (`0xc0028df8` — Full-Width Integer Verifier):**
+   ```arm
+   0xc0028ee0: mov   r2, #0x67       ; Signed NFSB metadata length (103 bytes)
+   0xc0028f04: blx   r3              ; crypto_hash_update(&desc, &sg, 0x67)
+   0xc0028f38: blx   r3              ; crypto_hash_final -> 32-byte SHA-256 digest
+   0xc0028f5c: add   r1, r8, #0x67   ; hdr + 0x67 -> 128B Big-Endian RSA signature S
+   0xc0028f64: bl    #0xc0189820     ; mpuint_setbytes(sig_mpi, S, 128)
+   0xc0028f84: mov   r1, sb          ; e = 3 @ VA 0xc04292f0 (128B BE)
+   0xc0028f88: mov   r2, fp          ; N = 1024-bit modulus @ VA 0xc0429370
+   0xc0028f8c: bl    #0xc0189f2c     ; out = S^3 mod N (mpuint_modexp)
+   0xc0029000: bl    #0xc01897c4     ; mpuint_equal(out, 0^96 || SHA256)
+   ```
+   - Crucially, `mpuint_equal` performs an **exact full `1024`-bit check** rather than permissive ASN.1 suffix scanning — completely defeating Bleichenbacher's classic $e=3$ signature forgery.
 
-### 2.3 Security & Block Verification (`dm_mount_root_nfsb`, `nfsb_rsa_check`, `dm-bht`, `mtk_crypto`)
-The most critical departure from vanilla Linux 3.0.13 is the tight coupling between kernel block-device mounting and RSA-1024 cryptography:
-- `init/do_mounts_dm.c`: Invokes `dm_mount_root_nfsb` (`0xc0009594`) directly during root mount rather than relying on an unverified initramfs.
-- `drivers/md/dm-verity.c` + `drivers/md/dm-bht.c`: ChromeOS/Google-derived `dm-bht` 2-level MD5 Merkle tree implementation paired with MediaTek's `populate_table_nfsb` (`0xc02243c4`).
-- `nfsb_rsa_check` (`0xc0028df8`): Uses kernel internal multi-precision unsigned integer arithmetic (`mpuint_setbytes @ 0xc0189820`, `mpuint_modexp @ 0xc0189f2c`, `mpuint_trim @ 0xc0189600`, `mpuint_equal @ 0xc01897c4`) to enforce full `1024`-bit equality against $0^{96} \parallel \text{SHA-256}$, defeating Bleichenbacher $e=3$ trailing-garbage padding forgeries.
-- `crypto/mtk_crypto.c`: MediaTek hardware cryptographic acceleration integrated into the Linux kernel CryptoAPI (`crypto/ablkcipher.c`, `aead.c`, `scatterwalk.c`).
+---
+
+## 3. Custom Storage, Crypto & Hardware Subsystems Compiled In
+
+- **`arch/arm/mach-mt53xx/{gpio6896.c, pdwnc_gpio6896.c}`:** GPIO & PDWNC standby integration with T8032.
+- **`drivers/mtd/{mtdsdm.c, mtk_mtdpart.c}` & `nand/mtk_nand.c`:** MediaTek `PMTD`/`PSDM` partitions (`nand 1..30`) + hardware ECC + `NAND_AES_Encryption`/`Decryption`/`INIT` + `10` Hynix/Micron/Samsung/Toshiba NAND flash IDs.
+- **`crypto/mtk_crypto.c`:** Hardware cipher/hash acceleration plumbed into Linux CryptoAPI alongside `fs/ubifs` (`dir.c`, `journal.c`, `tnc.c`).
+- **`drivers/usb/host/{mtk_hcd.c, mtk_qmu.c}`:** Built-in MTK USB HCD & Queue Management Unit.

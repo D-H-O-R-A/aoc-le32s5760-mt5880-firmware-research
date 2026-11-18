@@ -1,55 +1,44 @@
 # Hardware Architecture (`AOC LE32S5760/20` — `MediaTek MT5880` Platform)
 
-> **Reference Diagram:** [diagrams/HARDWARE_ARCHITECTURE.svg](../diagrams/HARDWARE_ARCHITECTURE.svg) | **Component Matrix:** [HARDWARE_COMPONENT_INVENTORY.csv](HARDWARE_COMPONENT_INVENTORY.csv)
+> **Scalar Diagram:** [diagrams/HARDWARE_ARCHITECTURE.svg](../diagrams/HARDWARE_ARCHITECTURE.svg) | **Component Matrix:** [HARDWARE_COMPONENT_INVENTORY.csv](HARDWARE_COMPONENT_INVENTORY.csv)
 
-## 1. Epistemic Framework
+## 1. Epistemic Classification Framework
 
-Because this investigation proceeded strictly via static firmware analysis without invasive chassis teardown or external flash-programmer intervention (documented in [HARDWARE_PHOTOGRAPHIC_DOCUMENTATION/README.md](HARDWARE_PHOTOGRAPHIC_DOCUMENTATION/README.md)), hardware observations are classified strictly into three verification tiers:
+Because physical chassis teardown and external flash-programmer intervention were deliberately excluded ([HARDWARE_PHOTOGRAPHIC_DOCUMENTATION/README.md](HARDWARE_PHOTOGRAPHIC_DOCUMENTATION/README.md)), every hardware attribute is graded strictly across three tiers:
 
-1. **CONFIRMED:** Directly demonstrated by machine code, MMIO register constants, kernel driver paths, `.modinfo` metadata, or bootloader strings inside the official image (`LE32S5760_V2.011_V0.2.zip`).
-2. **INFERRED:** Architectural parameters consistently deduced from driver capability tables, environment variables, or screen resolution assets without direct physical die inspection.
-3. **UNKNOWN / UNVERIFIED:** Physical PCB silkscreen codes, exact soldered passive/IC part numbers, and board-level bus probing results unavailable without opening the chassis.
+1. **CONFIRMED:** Proven via machine code, MMIO literal pools, `.ARM.attributes`, ELF `DT_RPATH`, DWARF `.data` sections, kernel paths, or `.modinfo` metadata.
+2. **INFERRED:** Architectural parameters consistently bounded by software telemetry (e.g., total physical DRAM size implied above the confirmed `543.7 MiB` kernel window).
+3. **UNKNOWN / UNVERIFIED:** Bare-metal PCB silkscreen codes (`715G7904M`), soldered DDR3/NAND/T-Con/tuner part numbers, and live UART timing logs unavailable without disassembly.
 
 ---
 
 ## 2. Core Silicon & Processing Complex
 
-| Subsystem | Technical Specification | Evidence Anchor | Confidence |
+| Subsystem | Verified Micro-Architecture / Specification | Primary Binary Evidence | Confidence |
 |---|---|---|---|
-| **Primary SoC** | MediaTek `MT5880` (`MT53xx`/`MT58xx` DTV family) | `extracted/uenv` (`board/mt5880`), `vmlinux.bin` (`mt5880`, `mt53xx_get_ic_version`), `dtv_driver.ko` paths | **CONFIRMED** |
-| **Application CPU Architecture** | `ARMv7-A` SMP (`PREEMPT`), ARM32 + Thumb-2, VFPv3, `cache-l2x0` L2 controller, ARM GIC + PMU | Kernel `vermagic=3.0.13 SMP preempt mod_unload ARMv7`, `arch/arm/mm/cache-l2x0.c`, `arch/arm/common/gic.c`, `arch/arm/vfp/vfpmodule.c` | **CONFIRMED** |
-| **Standby / Power Co-Processor** | Embedded `T8032` (8051 core) under PDWNC (`pdwnc_gpio6896.c`, `pdwnc_hw.c`) | Preloader strings `"Preloader T8032 ack !"`, `"T8032 NO ack!"`; `dtv_driver.ko` `pdwnc6896` | **CONFIRMED** |
-| **Audio Signal Processor** | MediaTek Audio DSP (`adsp`) paired with `aqda` audio calibration tables | PKG chunks `adsp` (`1,272,368` B) & `aqda` (`131,216` B); `cfig` `nand 29`, `nand 18` | **CONFIRMED** |
-| **Display & 2D/3D Subsystem** | MediaTek `mt53xx_fb` framebuffer (`mt53_fb.c`) + DirectFB 1.4.1 (`fusion.ko` IPC); `/3rd/Img_Sgx` directory exists **empty** (`pvrsrvctl` not shipped) | `dtv_driver.ko` path `mt53_fb.c`; `etc/scripts/ins_basic_mod.sh` template hook vs empty `extracted/rootfs1/Img_Sgx` | **CONFIRMED** |
-| **Exact SoC Mask / Package Revision** | Package ballout & silicon stepping (`ES`/`MP`) | `mt53xx_get_ic_version` queried only at runtime | **UNKNOWN** |
+| **Primary SoC** | MediaTek `MT5880` (`MT53xx`/`MT58xx` DTV family) | `uenv` (`board/mt5880`), `vmlinux.bin` (`mt53xx_*`), `dtv_driver.ko` (`5880_driver`) | **CONFIRMED** |
+| **Application CPU Complex** | **ARM Cortex-A9 SMP (`ARMv7-A`) w/ VFPv3**, Thumb-2, **No `SDIV`/`UDIV`**, `L2x0`/`PL310` L2 cache, ARM `GIC` + `PMU` (`met.ko`) | `SystemManager` & `netflix` `DT_RPATH` (`451_vfp_ca9` / `gnuarm-4.5.1_vfp_ca9`); `uenv` `.ARM.attributes` (`Tag_CPU_name: 7-A`, `Tag_DIV_use: Not allowed`); `arch/arm/mm/cache-l2x0.c` | **CONFIRMED** |
+| **Standby / Power MCU** | Embedded `T8032` (`8051` core) inside `PDWNC` domain | Preloader `"Preloader T8032 ack !"`; `pdwnc_gpio6896.c`; `dtv_driver.ko` `pdwnc_hw.c` | **CONFIRMED** |
+| **Audio DSP** | MediaTek Audio DSP (`adsp` + `aqda`, Dolby `MS10`) | `upgrade_loader.pkg#part:adsp` (`1,272,368` B) & `aqda` (`131,216` B); `etc/profile` `AUD_DOLBY_SUPPORT=MS10` | **CONFIRMED** |
+| **Display & Compositor** | MediaTek `mt53xx_fb` (`mt53_fb.c`) + DirectFB 1.4.1 (`fusion.ko`); `/3rd/Img_Sgx/` exists **empty** (`pvrsrvctl` omitted) | `dtv_driver.ko` `mt53_fb.c` + empty `/3rd/Img_Sgx` check vs `ins_basic_mod.sh` | **CONFIRMED** |
 
 ---
 
-## 3. Memory, Non-Volatile Storage & Cryptographic Engines
+## 3. Memory, Non-Volatile Storage & Security Blocks
 
-| Subsystem | Observed Architecture | Evidence Anchor | Confidence |
+| Subsystem | Observed Architecture | Primary Evidence | Confidence |
 |---|---|---|---|
-| **Main DRAM Bus** | Dual-channel DRAM controller (Channels A & B calibrated independently at cold boot) | Preloader `DRAM Channel A/B Calibration` routines; `uenv` symbol `global_kernel_dram_size` | **CONFIRMED** |
-| **Installed DRAM Capacity** | ~`512 MB` unified main + A/V memory budget (typical for MT5880; unconfirmed via `/proc/meminfo` live shell) | `SystemManager` QML/Presto ceiling ([docs/04](../docs/04_systemmanager_qt_opera_presto_and_legacy_apps.md)); `global_kernel_dram_size` | **INFERRED** |
-| **Primary Flash Controller** | Raw NAND Controller (`NFI`) with hardware AES & ECC (`mtk_nand.c`, `NAND_NFI_STA`, `NAND_AES_INIT`, `NAND_ECC_MODE`) | `vmlinux.bin` strings & paths `drivers/mtd/nand/mtk_nand.c` | **CONFIRMED** |
-| **Secondary / EEPROM Driver** | `nor/eeprom_hw.c` and `nor/storage.c` present in `dtv_driver.ko` (manages boot bank metadata / TV NVM variables) | `dtv_driver.ko` embedded source paths; `libmtkapp.so` `_phm_upg_model_start_upgrade` | **CONFIRMED** |
-| **Hardware Crypto & LZHS** | OTP eFuse MMIO (`0xf0008664 & 0x100000`), HW-LZHS block (`0xf00080b0`), kernel `crypto/mtk_crypto.c`, `libmtk_hw_decrypt.so` | Disassembly traces in `evidence/02_secure_boot_chain_disasm.txt` & `vmlinux.bin` | **CONFIRMED** |
+| **System DRAM** | Dual-Channel DDR (Ch A & Ch B DQS calibrated); kernel window `0x21fb9000` (`543.72 MiB`) -> total physical DDR `>= 768 MiB / 1 GiB` *(supersedes earlier `~512 MB` estimate)* | Preloader `DRAM Channel A/B Calibration`, `0xf00046xx..48xx` literals; `uenv` `.data` (`global_kernel_dram_size = 0x21fb9000`) | **CONFIRMED (`543.7 MiB` Kernel) / INFERRED (Total IC)** |
+| **Primary Flash Controller** | Raw NAND (`NFI` controller w/ HW ECC & NAND AES, `mtd0..mtd30`); `10` compiled Hynix/Micron/Samsung/Toshiba flash IDs | `drivers/mtd/nand/mtk_nand.c`, `NAND_NFI_STA`, `cfig` table | **CONFIRMED (Bus) / UNKNOWN (Soldered PN)** |
+| **Auxiliary EEPROM / NOR** | `/dev/eeprom_0`, `/dev/eeprom_3`, `/dev/eeprom_4` + `nor/eeprom_hw.c` | `dtv_driver.ko` source/device strings + `libmtkapp.so @ 0x40ae80` | **CONFIRMED** |
+| **OTP eFuse & Crypto** | Hardware eFuse (`0xf0008664 & 0x100000`), HW-LZHS (`0xf00080b0`), `crypto/mtk_crypto.c`, `TRUSTZONE=enable` | Preloader Capstone disassembly (`evidence/02`), `vmlinux.bin`, `/etc/profile` | **CONFIRMED** |
 
 ---
 
-## 4. Wired, Wireless, USB & Broadcast Peripherals
+## 4. Network, USB, Tuner & Debug Interfaces
 
-| Interface | Hardware / Driver Evidence | Notes & Limitations | Confidence |
-|---|---|---|---|
-| **10/100 Wired Ethernet** | `star_mac.ko` (`eth0`) loaded via `etc/scripts/ins_eth_mod.sh`; wake-on-LAN / net control via `mnet_down.script` | PHY IC model on PCB unverified without teardown | **CONFIRMED (MAC) / UNKNOWN (PHY IC)** |
-| **Internal/USB Wi-Fi** | Ralink/MediaTek `rt5572sta.ko` + `rtnet5572sta.ko` + `rtutil5572sta.ko` (USB VID:PID aliases `148F:5572`, `043E:7A13`, `043E:7A32`, `2001:3C1A`) | Only the RT5572 3-module set is actually shipped under `appfs1/basic/wifi_ko` | **CONFIRMED** |
-| **USB Host Controllers** | MTK USB HCD (`drivers/usb/host/mtk_hcd.c`, `mtk_qmu.c`, `mtk-hcd.ko`) + `xhci-hcd.ko`, `usb-storage.ko`, `usbhid.ko`, `usbserial.ko`, `pl2303.ko` | Physical port count requires visual chassis inspection | **CONFIRMED** |
-| **IR Remote & Front Keys** | `ir6896/irrc_if.c` & `irrx_if.c` (`dtv_driver.ko`) + `gpio6896.c` / `pdwnc_gpio6896.c` | Controlled via T8032 standby domain for cold power-on | **CONFIRMED** |
-| **DTV Demodulator / Tuner** | Brazilian ISDB-Tb (`Ginga` SBTVD middleware) + `dtv_driver.ko` `Philips_2K13_ODM_pdwnc_ext.c` | Specific silicon tuner IC part number not observable statically | **INFERRED (Region) / UNKNOWN (IC)** |
-| **Debug Serial UART** | `ttyMT0` (`115200 8N1`), commented out in `etc/inittab`; `ttyUSB0` conditional script `usb_console.sh` | Physical header test-pad pinout unphotographed | **CONFIRMED (SW) / UNKNOWN (PCB Pads)** |
-
----
-
-## 5. Summary of Physical Hardware Gaps
-
-To promote the remaining `INFERRED` and `UNKNOWN` entries (`715G7904M` PCB silkscreen, exact mounted NAND IC among the 10 kernel-supported IDs, exact DRAM chip configuration, panel LVDS timing IC, and tuner IC) to `CONFIRMED`, visual photography and chip-marking capture per [HARDWARE_PHOTOGRAPHIC_DOCUMENTATION/README.md](HARDWARE_PHOTOGRAPHIC_DOCUMENTATION/README.md) are required.
+- **Wired Ethernet (`eth0`):** `star_mac.ko` (`ins_eth_mod.sh`) — MAC confirmed, board PHY IC requires teardown.
+- **USB Wi-Fi (`ra0`):** Only the `3`-module Ralink/MediaTek `rt5572sta` stack is shipped (`appfs1/basic/wifi_ko`, USB VID:PID aliases `148F:5572`, `043E:7A13`, `043E:7A32`, `2001:3C1A`).
+- **USB Host Controllers:** `mtk_hcd.c`, `mtk_qmu.c`, `xhci-hcd.ko`, `usb-storage`, `usbhid`, `ntfs.ko`, `fuse.ko`.
+- **Debug UART:** Built-in kernel console `console=ttyMT0,115200n1` (`vmlinux.bin`), with `/sbin/getty ttyMT0` commented out in `appfs1/etc/inittab`.
+- **Unverified Physical PCB:** `715G7904M` yields **`0` matches** in firmware (`MAINBOARD_ANALYSIS.md`); awaits visual teardown photos.

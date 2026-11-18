@@ -1,61 +1,44 @@
-# SoC Analysis — MediaTek MT5880 (`MT53xx` / `TPV MTK2K14PLF`)
+# SoC Micro-Architecture Analysis — MediaTek MT5880 (`ARM Cortex-A9 SMP`)
 
-## 1. Silicon Identification & Family Provenance
+## 1. Silicon & CPU Core Identification (With Compiler & ELF Evidence)
 
-Static inspection across boot, kernel, and proprietary driver binaries establishes the target System-on-Chip as the **MediaTek `MT5880`** DTV SoC, built within MediaTek's unified `arch/arm/mach-mt53xx` Linux BSP lineage (`6896`/`5880` register & GPIO architecture):
+Beyond generic `ARMv7-A` identification (`vermagic=3.0.13 SMP preempt mod_unload ARMv7`), cross-correlating `ELF DT_RPATH`, `.ARM.attributes`, `uenv` DWARF debug info, and `vmlinux.bin` strings pins down the exact CPU micro-architecture targeted by the OEM toolchain:
 
-| Indicator | Exact Artifact & String / Symbol | Interpretation | Confidence |
+| Silicon Attribute | Empirically Verified Evidence | Exact Source Artifact | Confidence |
 |---|---|---|---|
-| Kernel Source Tree | `/share/Release_code_use/Roy/release/vm_linux/chiling/kernel/linux-3.0/arch/arm/mach-mt53xx/{gpio6896.c, pdwnc_gpio6896.c}` | MT53xx shared ARM machine layer paired with 6896/MT5880 GPIO & PDWNC blocks | **CONFIRMED** |
-| Proprietary Driver | `/share/Release_code_use/Roy/release/vm_linux/chiling/driver/ko/mt5880/5880_driver/...` (`dtv_driver.ko`, `6,846,712` B) | Dedicated MT5880 kernel driver tree (`chiling` / `Roy`) | **CONFIRMED** |
-| U-Boot Environment Object | `extracted/uenv` (`2,384` B unstripped ARM ELF `.o`, `chiling/uboot/board/mt5880/env.c`) | Board target literally named `mt5880` | **CONFIRMED** |
-| Kernel Board APIs | `mt53xx_get_ic_version`, `mt53xx_get_reserved_area`, `mt53xx_get_rodata_addr`, `mt53xx_get_rwdata_addr`, `mt53xx_timer_read`, `mt53xx_bim_lock` | SoC hardware abstraction helpers in `vmlinux.bin` | **CONFIRMED** |
-| Module `vermagic` | `3.0.13 SMP preempt mod_unload ARMv7` (all 12 `.ko` files) | Multi-core SMP ARMv7-A processor core | **CONFIRMED** |
-| Exact Stepping (`IC Version`) | Returned dynamically by `mt53xx_get_ic_version()` at runtime | Not statically readable from offline flash dump alone | **UNKNOWN** |
+| **SoC Family / Part** | MediaTek `MT5880` (`arch/arm/mach-mt53xx`, `6896` PDWNC/GPIO register generation) | `vmlinux.bin`, `uenv` (`board/mt5880`), `dtv_driver.ko` (`5880_driver`) | **CONFIRMED** |
+| **CPU Core Micro-Architecture** | **ARM Cortex-A9 SMP + VFP** (`ca9`, without ARMv7-A `SDIV`/`UDIV` integer divide hardware instructions) | `SystemManager` `DT_RPATH`: `/home/mtkvm/qtbuild/osslibrary/451_vfp_ca9/...`; `netflix` `DT_RPATH`: `.../gnuarm-4.5.1_vfp_ca9/...`; `uenv` `.ARM.attributes` `Tag_DIV_use: Not allowed` | **CONFIRMED** |
+| **ABI & Instruction Set Mix** | `Version5 EABI`, ARM32 + Thumb-2 (`Tag_ARM_ISA_use: Yes`, `Tag_THUMB_ISA_use: Thumb-2`), IEEE 754 VFP (`Tag_ABI_FP_number_model: IEEE 754`), 8-byte stack alignment | `readelf -A uenv` + `readelf -h` across `17` ELF binaries (`Flags: 0x5000002`) | **CONFIRMED** |
+| **L2 Cache Controller** | PrimeCell L2x0 / PL310-compatible outer cache | `vmlinux.bin`: `arch/arm/mm/cache-l2x0.c` | **CONFIRMED** |
+| **Interrupt & Performance Hardware** | ARM Generic Interrupt Controller (`GIC`) & ARM PMU (`met.ko` `MET PMU Sampler`) | `vmlinux.bin`: `arch/arm/common/gic.c`, `arch/arm/kernel/pmu.c`, `met.ko` | **CONFIRMED** |
+| **Standby MCU** | Embedded `T8032` (`8051` core) inside `PDWNC` (`pdwnc6896`) domain | Preloader `"Preloader T8032 ack !"`, `"T8032 NO ack!"`, `dtv_driver.ko` `pdwnc_hw.c` | **CONFIRMED** |
+| **Display Compositor** | `mt53xx_fb` (`mt53_fb.c`) + DirectFB 1.4.1 (`fusion.ko` IPC); `/3rd/Img_Sgx/` directory is **empty** (`pvrsrvctl` absent) | `dtv_driver.ko` paths + empty dir verification | **CONFIRMED** |
+| **Silicon Stepping (`IC Version`)** | Queried via SoC register helper `mt53xx_get_ic_version()` at runtime | Symbol compiled into `vmlinux.bin` (runtime value requires live shell/UART) | **UNKNOWN** |
 
 ---
 
-## 2. Internal Core & Bus Architecture
+## 2. Preloader-Exposed SoC MMIO Register Banks (`uboot.bin[:0xa040]`)
 
-```
-+-----------------------------------------------------------------------------+
-|                         MediaTek MT5880 DTV SoC                             |
-|                                                                             |
-|  +------------------------------+    +-----------------------------------+  |
-|  | ARMv7-A SMP Application Core |    | On-Chip SRAM & BootROM            |  |
-|  |  - ARM32 + Thumb-2 + VFPv3   |    |  - Mask BootROM (NANDBOOT/V01.00) |  |
-|  |  - PL310 / L2x0 Cache Ctrl   |    |  - Preloader SRAM base 0xfb000000 |  |
-|  |  - ARM GIC + PMU (met.ko)    |    |  - OTP eFuse MMIO @ 0xf0008664    |  |
-|  +--------------+---------------+    +-----------------+-----------------+  |
-|                 |                                      |                    |
-|  +--------------v--------------------------------------v-----------------+  |
-|  |        System Fabric / BIM Lock (mt53xx_bim_lock) & MMIO Bus          |  |
-|  +--+------------+------------+------------+------------+------------+---+  |
-|     |            |            |            |            |            |      |
-|  +--v---+   +----v----+  +----v-----+ +----v----+  +----v----+  +----v---+  |
-|  |T8032 |   |HW-LZHS  |  |mtk_crypto| |NFI NAND |  |Dual-Ch  |  |USB HCD |  |
-|  |8051  |   |0xf00080 |  |TrustZone | |& NOR/EE |  |DRAM Ctrl|  |MTK_HCD |  |
-|  |PDWNC |   |b0 Decod.|  |Engine    | |Ctrl     |  |Ch A & B |  |& xHCI  |  |
-|  +------+   +---------+  +----------+ +---------+  +---------+  +--------+  |
-+-----------------------------------------------------------------------------+
-```
+Extracting unique `32`-bit little-endian literal-pool MMIO addresses directly from the Thumb-2 Preloader (`0x0000..0xa040`) maps the low-level SoC register apertures active before Linux boots (`0xf0000000` peripheral window, `0xfb000000` SRAM execution window):
 
-### 2.1 ARMv7-A Application Complex
-- **SMP PREEMPT:** Compiled with `SMP`, `PREEMPT`, and `ARMv7` (`HIGHMEM` enabled per `arch/arm/mm/highmem.c` + `mmu.c`).
-- **L2 Cache & Coprocessors:** `arch/arm/mm/cache-l2x0.c` confirms an external L2 cache controller (PL310-compatible `l2x0`); `arch/arm/vfp/vfpmodule.c` confirms hardware VFP floating-point support; `met.ko` (`MET PMU Sampler`) exposes ARM PMU hardware performance counters.
-- **Note on `/3rd/Img_Sgx`:** While `/etc/scripts/ins_basic_mod.sh` retains a template hook probing `/3rd/Img_Sgx/pvrsrvctl --start`, `extracted/rootfs1/Img_Sgx/` is empty and no PowerVR SGX binaries ship in this SKU; display rendering uses MediaTek's proprietary framebuffer (`mt53_fb.c`) and DirectFB 1.4.1 (`fusion.ko`).
+| MMIO Aperture Range | Observed Register Literals in Preloader | Identified Subsystem / Evidence |
+|---|---|---|
+| `0xf0002000 – 0xf0002c02` | `0xf0002000`, `0xf0002064`, `0xf0002201..0xf00022ff`, `0xf000280a`, `0xf0002c02` | Preloader early clock / NFI / NAND pinmux & bus init (**exact bit definitions in closed MTK datasheet**) |
+| `0xf0004020 – 0xf00048f5` | `0xf0004620`, `0xf000466c`, `0xf000482c..0xf00048f5` | **Dual-Channel DDR3 PHY / DQS Calibration** (`"DRAM Channel A/B Calibration"`, `"DRAM Input DQS Calibration fail !"`) |
+| `0xf0005224 – 0xf0007240` | `0xf0005224`, `0xf0005280`, `0xf0006101`, `0xf0007000`, `0xf0007240` | DDR Channel B / BIM system arbiter timing registers |
+| **`0xf0008000 – 0xf00081d0`** | `0xf0008000..0xf0008078`, **`0xf00080b0`**, `0xf00080b4..0xf00081d0` | **BIM & HW-LZHS Hardware Decompression Engine** (`0xf00080b0` verified via Capstone trace) |
+| **`0xf0008664` (`& 0x100000`)** | `0xf00084dc`, **`0xf0008664`**, `0xf0008670`, `0xf00087b0`, `0xf0008f00..0c` | **OTP Silicon eFuse & Secure-Boot Configuration** (`bit 20 == 1` enforces mandatory RSA check) |
+| `0xf000b510 – 0xf000d094` | `0xf000b510`, `0xf000c000..0xf000c388`, `0xf000d000..0xf000d094` | Serial / PDWNC / T8032 mailbox (`UART0` `ttyMT0` @ `115200n1`) |
 
-### 2.2 T8032 (8051) PDWNC Standby Microcontroller
-- During cold boot, the Thumb-2 Preloader explicitly handshakes with an embedded 8051-class **T8032** microcontroller (`"Preloader T8032 ack !"`, `"T8032 NO ack!"`).
-- Paired with kernel `pdwnc_gpio6896.c` and driver `pdwnc6896/pdwnc_hw.c` plus `ir6896/{irrc_if.c, irrx_if.c}`, the T8032 remains powered in deep standby to service infrared remote wakeups (`IRRX`), front-panel buttons, and power rails before lifting reset on the main ARMv7 complex.
+---
 
-### 2.3 Security, TrustZone & Hardware Acceleration Blocks
-1. **OTP eFuse Security Register (`0xf0008664`):** Read directly by Preloader at VA `0xfb001450..0xfb00145a` (`tst.w r3, #0x100000`). Bit 20 permanently locks retail silicon to verified boot.
-2. **Hardware LZHS Engine (`0xf00080b0`):** Dedicated decompression IP core invoked by the Preloader (`uboot.bin`) to expand LZHS-compressed U-Boot and Linux kernel payloads.
-3. **ARM TrustZone & `mtk_crypto`:** `/etc/profile` sets `export TRUSTZONE=enable`, `vmlinux.bin` embeds `crypto/mtk_crypto.c`, and rootfs ships `/lib/libmtk_hw_decrypt.so` (`36,492` B) supporting hardware-backed key ladder / PlayReady / Widevine operations. Note: Specific Secure World SMC call numbers inside TZ OS reside in OTP/BootROM/encrypted TZ memory not exported cleanly as an unstripped ELF.
+## 3. Cross-Kernel Hardware Interfaces Exported by `vmlinux.bin` & `dtv_driver.ko`
 
-### 2.4 Integrated I/O & Peripheral Controllers
-- **Audio DSP (`adsp` / `aqda`):** Dedicated `adsp` (`1,272,368` B) and `aqda` (`131,216` B) partitions confirm an offloaded DSP handling multichannel decode and Dolby `MS10` (`AUD_DOLBY_SUPPORT=MS10`).
-- **MediaTek Star MAC (`star_mac.ko`):** Integrated Ethernet MAC controller exposed as `eth0`.
-- **USB 2.0/3.0 Host Controllers (`mtk_hcd.c`, `mtk_qmu.c`, `xhci-hcd.ko`):** USB host fabric with Queue Management Unit (`QMU`) servicing external storage (`usb-storage.ko`) and Wi-Fi dongles (`rt5572sta.ko`).
-- **NAND Flash Interface (`mtk_nand.c`, `NAND_NFI_STA`):** Dedicated NFI block with hardware ECC (`NAND_ECC_MODE`) and inline NAND AES hooks (`NAND_AES_INIT`).
+Inspection of `vmlinux.bin` identifies all **`7` explicit `mt53xx_*` BSP primitives**:
+1. `mt53xx_bim_lock` — Bus Interface Module atomic spinlock arbiter across shared CPU/DSP/DMAs.
+2. `mt53xx_get_ic_version` — Silicon mask revision query.
+3. `mt53xx_get_reserved_area` — Carveout boundary locator separating Linux lowmem/highmem from A/V framebuffers & TrustZone memory.
+4. `mt53xx_get_rodata_addr` & `mt53xx_get_rwdata_addr` — Memory-mapped lookup hooks locating factory read-only (`ro_data`) and persistent read-write metadata.
+5. `mt53xx_timer_read` & `mt53xx_timer_read_ll` — High-resolution BIM hardware timer counters.
+
+Meanwhile, `dtv_driver.ko` (`6,846,712` B) binds directly to `/dev/eeprom_0`, `/dev/eeprom_3`, and `/dev/eeprom_4` for I2C/SPI NVM access (`nor/eeprom_hw.c`, `nor/storage.c`), IR reception (`ir6896`), T8032 standby (`pdwnc6896`), and LCD panel scanout (`mt53_fb.c`). Note also MediaTek cross-product SDK reuse evidenced inside `appfs1/basic/lib/libcurl.so.4.2.0` (`DT_RPATH` pointing to Blu-ray Player build `/proj/mtk94073/.../BDP/OSS/BDP_V301/...`).

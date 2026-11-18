@@ -8,7 +8,7 @@ All `12` kernel modules inside `extracted/appfs1` carry `vermagic=3.0.13 SMP pre
 
 | Subsystem | Module File | Size (B) | License | Hardware / Functional Role |
 |---|---|---|---|---|
-| **Core DTV SoC Engine** | `basic/dtv_driver.ko` | `6,846,712` | `Proprietary` | Monolithic MT5880 peripheral driver (display framebuffer, A/V decode, IR remote, NOR/EEPROM, PDWNC standby, tuner) |
+| **Core DTV SoC Engine** | `basic/dtv_driver.ko` | `6,846,712` | `Proprietary` | Monolithic MT5880 peripheral driver (display framebuffer, A/V decode, IR remote, `/dev/eeprom_{0,3,4}`, PDWNC standby, tuner) |
 | **DMA Memory Mapper** | `basic/modules/mtk_mmap.ko` | `3,220` | `Proprietary` | Contiguous/DMA memory mapping helper between userland `dtv_svc`/`libmtkapp` and A/V buffers |
 | **DirectFB IPC** | `basic/fusion.ko` (+ `home/fusion.ko`) | `47,312` / `50,264` | `GPL` | Multi-application DirectFB 1.4.1 Shared Memory / IPC (`Denis Oliver Kropp <dok@directfb.org>`) |
 | **USB Wi-Fi (Ralink/MTK)** | `basic/wifi_ko/rt5572sta.ko` + `rtnet5572sta.ko` + `rtutil5572sta.ko` | `1,655,384` + `57,840` + `46,312` | Unmarked / `GPL` | RT5572 dual-band USB WLAN stack; `rtnet5572sta.ko` lists VID:PID aliases `148F:5572`, `043E:7A13`, `043E:7A32`, `2001:3C1A` |
@@ -21,19 +21,19 @@ Boot scripts in `etc/scripts/` (`ins_eth_mod.sh`, `ins_usb_sub_mod.sh`, `ins_wif
 
 ---
 
-## 2. Internal Source Structure of Proprietary `dtv_driver.ko`
+## 2. Internal Source Structure, Character Devices & GPU Scanout Boundary (`dtv_driver.ko`)
 
-The `6.84 MB` `dtv_driver.ko` module leaks `8` source file paths revealing MediaTek and TPV hardware integration:
+The `6.84 MB` (`6,846,712`-byte) `dtv_driver.ko` module leaks `8` source file paths and character-device registrations revealing MediaTek and TPV hardware integration:
 
-| Embedded Source Path in `dtv_driver.ko` | Hardware / Subsystem Mapped |
+| Embedded Source Path / String in `dtv_driver.ko` | Hardware / Subsystem Mapped |
 |---|---|
 | `.../5880_driver/drv_cust/TPV/Philips_2K13_ODM_pdwnc_ext.c` | TPV / Philips 2K13/2K14 standby GPIO & power-down extensions |
 | `.../5880_driver/drv_cust/TPV/TPVision_2k13_d_custom.c` | TPVision custom board/panel/peripheral board table |
 | `.../5880_driver/ir6896/irrc_if.c` | Infrared remote protocol decoder / controller interface |
 | `.../5880_driver/ir6896/irrx_if.c` | Hardware IR receiver (`IRRX`) interrupt/register driver |
-| `.../5880_driver/nor/eeprom_hw.c` | Hardware EEPROM / NOR flash read/write primitives |
+| `.../5880_driver/nor/eeprom_hw.c` (`/dev/eeprom_0`, `/dev/eeprom_3`, `/dev/eeprom_4`) | Hardware EEPROM / NOR flash read/write device nodes (`mtd`/NVM factory & bank flags) |
 | `.../5880_driver/nor/storage.c` | Non-volatile configuration block abstraction (bank/NVM storage) |
 | `.../5880_driver/pdwnc6896/pdwnc_hw.c` | MT5880 `PDWNC` standby & T8032 mailbox hardware controller |
-| `.../mt5880/linux/native/mt53xx_fb/mt53_fb.c` | MediaTek MT53xx/MT5880 native framebuffer (`/dev/fb*`) driver |
+| `.../mt5880/linux/native/mt53xx_fb/mt53_fb.c` | MediaTek MT53xx/MT5880 native framebuffer (`/dev/fb*`) driver backing DirectFB `1.4.1` |
 
-Because `dtv_driver.ko` declares `license=Proprietary` and encapsulates panel timing, A/V pipeline, tuner control, and PDWNC IOCTLs, replacing `vmlinux` cleanly on a custom kernel without binary-compatible MediaTek headers breaks video, audio, and standby power control even if boot locks were absent.
+Concurrently, static filesystem inspection confirms **`/3rd/Img_Sgx` is empty** (`0` files) and no PowerVR `pvrsrvkm.ko` or `pvrsrvctl` binary is shipped in `appfs1` or `appfs2`, demonstrating that UI compositing runs over `mt53_fb.c` + DirectFB (`fusion.ko` + `libdirectfb-1.4.so.5`) rather than an active PowerVR SGX 3D userspace driver stack on this SKU. Because `dtv_driver.ko` declares `license=Proprietary` and encapsulates panel timing, A/V pipeline, tuner control, `/dev/eeprom_{0,3,4}` NVM IOCTLs, and PDWNC standby transitions, replacing `vmlinux` cleanly on a custom kernel without binary-compatible MediaTek ABI headers breaks video, audio, NVM access, and standby power control even if boot locks were absent.

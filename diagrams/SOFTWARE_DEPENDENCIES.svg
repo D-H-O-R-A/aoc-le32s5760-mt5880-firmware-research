@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 740" width="1180" height="740">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #0f172a; }
+      .subtitle { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13px; fill: #475569; }
+      .layer { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; rx: 10; }
+      .b-krn { fill: #eef2ff; stroke: #4338ca; stroke-width: 1.8; rx: 6; }
+      .b-sys { fill: #e0f2fe; stroke: #0284c7; stroke-width: 1.8; rx: 6; }
+      .b-app { fill: #f0fdf4; stroke: #15803d; stroke-width: 1.8; rx: 6; }
+      .b-leg { fill: #fef2f2; stroke: #b91c1c; stroke-width: 1.8; rx: 6; }
+      .hdr { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #0f172a; }
+      .txt { font-family: 'Liberation Mono', monospace; font-size: 11px; fill: #1e293b; }
+      .arrow { stroke: #475569; stroke-width: 1.8; fill: none; }
+    </style>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1180" height="740"/>
+  <text class="title" x="36" y="40">Userland, Middleware &amp; Kernel Module Dependency Architecture</text>
+  <text class="subtitle" x="36" y="62">Observed ELF shared libraries, ABIs (GCC 4.5.1 ARM EABI), runtimes, and UI/Browser execution ceilings</text>
+
+  <!-- Tier 1: Top Userland Apps -->
+  <rect class="layer" x="36" y="88" width="1108" height="145"/>
+  <text class="hdr" x="54" y="114">Tier 4 — Top-Level Interactive Applications (/3rd)</text>
+
+  <rect class="b-app" x="54" y="128" width="245" height="88"/>
+  <text class="hdr" x="68" y="149">SystemManager (Qt UI Shell)</text>
+  <text class="txt" x="68" y="167">Qt 4.8.3 / QML QtQuick 1.1</text>
+  <text class="txt" x="68" y="183">HSMain.qml (qrc embedded)</text>
+  <text class="txt" x="68" y="199">SMConfig dynqml @ 0x1db58c</text>
+
+  <rect class="b-leg" x="318" y="128" width="265" height="88"/>
+  <text class="hdr" x="332" y="149">Opera Devices Browser (Presto)</text>
+  <text class="txt" x="332" y="167">Core 6213 + Presto (ES5 JS)</text>
+  <text class="txt" x="332" y="183">libopera_hbbtv.so (15.7 MB)</text>
+  <text class="txt" x="332" y="199">opcacrt6.pem (186 CAs) + userjs</text>
+
+  <rect class="b-leg" x="602" y="128" width="255" height="88"/>
+  <text class="hdr" x="616" y="149">Legacy Streaming &amp; Adobe Flash</text>
+  <text class="txt" x="616" y="167">Netflix nrd-app (NRD 2015)</text>
+  <text class="txt" x="616" y="183">YouTube Leanback -&gt; yt_lbl.swf</text>
+  <text class="txt" x="616" y="199">Adobe AIR Stagecraft 2.5.1</text>
+
+  <rect class="b-app" x="876" y="128" width="248" height="88"/>
+  <text class="hdr" x="890" y="149">Ginga (ISDB-Tb) &amp; Daemons</text>
+  <text class="txt" x="890" y="167">NCL/Lua + libcommoncore (7.5MB)</text>
+  <text class="txt" x="890" y="183">dialserver + libqtdlna + WFD</text>
+  <text class="txt" x="890" y="199">libmicrohttpd + mDNSResponder</text>
+
+  <!-- Tier 2: OEM Middleware -->
+  <rect class="layer" x="36" y="255" width="1108" height="135"/>
+  <text class="hdr" x="54" y="281">Tier 3 — OEM Middleware &amp; IPC Layer (/basic + /3rd/lib)</text>
+
+  <rect class="b-sys" x="54" y="295" width="250" height="80"/>
+  <text class="hdr" x="68" y="316">dtv_svc &amp; libdtv_common.so</text>
+  <text class="txt" x="68" y="334">TV control + /3rd_rw/nettv init</text>
+  <text class="txt" x="68" y="350">x_dlm_download_by_tag (AES/RSA)</text>
+  <text class="txt" x="68" y="366">librpc_ipc.so + libapp_if_rpc.so</text>
+
+  <rect class="b-sys" x="322" y="295" width="265" height="80"/>
+  <text class="hdr" x="336" y="316">libmtkapp.so (32.8 MB Core)</text>
+  <text class="txt" x="336" y="334">_phm_upg_model_start_upgrade</text>
+  <text class="txt" x="336" y="350">sub_404f28 (PART vs PMTD bug)</text>
+  <text class="txt" x="336" y="366">UI event model &amp; NAND erase</text>
+
+  <rect class="b-sys" x="605" y="295" width="255" height="80"/>
+  <text class="hdr" x="619" y="316">libnettv.so &amp; DirectFB 1.4.1</text>
+  <text class="txt" x="619" y="334">_imnettv_copydata (opera_new.ini)</text>
+  <text class="txt" x="619" y="350">Copies opcacrt6.pem from /mnt</text>
+  <text class="txt" x="619" y="366">DirectFB 1.4.1 + fusion.ko IPC</text>
+
+  <rect class="b-sys" x="878" y="295" width="246" height="80"/>
+  <text class="hdr" x="892" y="316">DRM &amp; Media Codecs</text>
+  <text class="txt" x="892" y="334">PlayReady 1.8 MB + Widevine</text>
+  <text class="txt" x="892" y="350">Marlin + libmtk_hw_decrypt.so</text>
+  <text class="txt" x="892" y="366">FFmpeg libavcodec 53 + Live555</text>
+
+  <!-- Tier 3: Legacy System C/C++ Shared Libraries -->
+  <rect class="layer" x="36" y="412" width="1108" height="135"/>
+  <text class="hdr" x="54" y="438">Tier 2 — C/C++ System Foundation &amp; Obsolete Cryptographic Stack (/lib &amp; /basic/lib)</text>
+
+  <rect class="b-leg" x="54" y="452" width="340" height="80"/>
+  <text class="hdr" x="68" y="473">GNU / ABI Base (2010-2012 Era)</text>
+  <text class="txt" x="68" y="491">glibc 2.12.2 + ld-2.12.2.so + libstdc++ 6.0.14</text>
+  <text class="txt" x="68" y="507">BusyBox v1.15.3 (73 applets, no curl/ssh)</text>
+  <text class="txt" x="68" y="523">GCC 4.5.1 ARMv7-A hard/soft ABI ceiling</text>
+
+  <rect class="b-leg" x="414" y="452" width="350" height="80"/>
+  <text class="hdr" x="428" y="473">TLS, Networking &amp; Parsers (Pre-TLS 1.2/1.3)</text>
+  <text class="txt" x="428" y="491">OpenSSL 1.0.0d (NO TLS 1.2/1.3, NO SNI default)</text>
+  <text class="txt" x="428" y="507">libcurl 7.21.7 + c-ares 1.7.x + libmicrohttpd</text>
+  <text class="txt" x="428" y="523">libxml2 2.7.8 + expat 2.0.1 + Xerces-C 3.1</text>
+
+  <rect class="b-krn" x="784" y="452" width="340" height="80"/>
+  <text class="hdr" x="798" y="473">Storage, Graphics &amp; Utility Libraries</text>
+  <text class="txt" x="798" y="491">libdevmapper 1.02 + libfuse 2.8.4 + ntfs-3g 76</text>
+  <text class="txt" x="798" y="507">zlib 1.2.3 + libpng 1.2.43 + libjpeg 62 + webp</text>
+  <text class="txt" x="798" y="523">SQLite 3.7.2 + FreeType 6.6.1 + ALSA 1.0.24.1</text>
+
+  <!-- Tier 4: Kernel Space -->
+  <rect class="layer" x="36" y="570" width="1108" height="130"/>
+  <text class="hdr" x="54" y="596">Tier 1 — Linux 3.0.13 Kernel Space &amp; Loadable Modules (12 Confirmed .ko)</text>
+  <rect class="b-krn" x="54" y="610" width="1070" height="75"/>
+  <text class="txt" x="70" y="632">vmlinux.bin: dm-bht.c / dm-ioctl.c / mtk_crypto.c / gpio6896.c / pdwnc_gpio6896.c / NAND controller</text>
+  <text class="txt" x="70" y="650">Proprietary KOs: dtv_driver.ko (6.84 MB) + mtk_mmap.ko (3.2 KB)</text>
+  <text class="txt" x="70" y="668">GPL KOs: fusion.ko (DirectFB), fuse.ko, ntfs.ko, joydev.ko, usbhid.ko, met.ko, rt5572sta / rtnet5572sta / rtutil5572sta</text>
+
+  <!-- Arrows -->
+  <path class="arrow" d="M 176 216 L 176 295" marker-end="url(#arr)"/>
+  <path class="arrow" d="M 450 216 L 450 295" marker-end="url(#arr)"/>
+  <path class="arrow" d="M 730 216 L 730 295" marker-end="url(#arr)"/>
+  <path class="arrow" d="M 1000 216 L 1000 295" marker-end="url(#arr)"/>
+  <path class="arrow" d="M 224 375 L 224 452" marker-end="url(#arr)"/>
+  <path class="arrow" d="M 590 375 L 590 452" marker-end="url(#arr)"/>
+  <path class="arrow" d="M 950 375 L 950 452" marker-end="url(#arr)"/>
+  <path class="arrow" d="M 590 532 L 590 610" marker-end="url(#arr)"/>
+</svg>

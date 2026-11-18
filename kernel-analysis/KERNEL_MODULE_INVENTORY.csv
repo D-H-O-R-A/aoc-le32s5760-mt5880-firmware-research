@@ -1,0 +1,13 @@
+module_name,path,size_bytes,sha256,vermagic,license,description,author,depends,srcversion,status
+dtv_driver.ko,extracted/appfs1/basic/dtv_driver.ko,6846712,e278e0593778aa5e6976f262c3ceef52da93452575da26c5526097ee22507f09,3.0.13 SMP preempt mod_unload ARMv7,Proprietary,,,,,CONFIRMED
+fusion.ko,extracted/appfs1/basic/fusion.ko,47312,c3b7c13436542e28fd4c457881b39cfbbc1a3666c9ab9b83c29ea2722fa3ff73,3.0.13 SMP preempt mod_unload ARMv7,GPL,,Denis Oliver Kropp <dok@directfb.org>,,,CONFIRMED
+fuse.ko,extracted/appfs1/basic/modules/fuse.ko,71776,a760c5201d1d587ea2427a03a32ae1100a593e17268dbb2a895ff1a096dbe362,3.0.13 SMP preempt mod_unload ARMv7,GPL,Filesystem in Userspace,Miklos Szeredi <miklos@szeredi.hu>,,,CONFIRMED
+joydev.ko,extracted/appfs1/basic/modules/joydev.ko,12912,9526166ad36e87d435f0cb394cc483d6157aaf0bc275d4831d03a2e73d1be91d,3.0.13 SMP preempt mod_unload ARMv7,GPL,Joystick device interfaces,Vojtech Pavlik <vojtech@ucw.cz>,,,CONFIRMED
+met.ko,extracted/appfs1/basic/modules/met.ko,22640,ec5904a53fe911b2e38ffe4af1c5c9d7519f26c6854d2dbe7e5b0063cfb38384,3.0.13 SMP preempt mod_unload ARMv7,GPL,MET PMU Sampler,CJ Tsai,,,CONFIRMED
+mtk_mmap.ko,extracted/appfs1/basic/modules/mtk_mmap.ko,3220,f193428610834dd29f5ebb4558200b6ee865dbbc89246367e63efa0a015b6ff6,3.0.13 SMP preempt mod_unload ARMv7,Proprietary,,,,,CONFIRMED
+ntfs.ko,extracted/appfs1/basic/modules/ntfs.ko,104264,390c4e02b1e2fe1d72aa9d4feaafd1ea6161991cfed11a26f776bc83645074d7,3.0.13 SMP preempt mod_unload ARMv7,GPL,NTFS 1.2/3.x driver - Copyright (c) 2001-2011 Anton Altaparmakov and Tuxera Inc.,Anton Altaparmakov <anton@tuxera.com>,,6F207B1F3E2271FEAAD50D8,CONFIRMED
+usbhid.ko,extracted/appfs1/basic/modules/usbhid.ko,30172,575d0e51e14f046761ce7a2c5c083f23f4f4e759dee2bb6c489221dd8f0c7090,3.0.13 SMP preempt mod_unload ARMv7,GPL,USB HID core driver,Jiri Kosina; Vojtech Pavlik; Andreas Gal,,,CONFIRMED
+rt5572sta.ko,extracted/appfs1/basic/wifi_ko/rt5572sta.ko,1655384,7fce3f7706c45ee139a9b4f2b4a5904f94e5811fa257d481a316ffc7f7045a97,3.0.13 SMP preempt mod_unload ARMv7,,,,,,CONFIRMED
+rtnet5572sta.ko,extracted/appfs1/basic/wifi_ko/rtnet5572sta.ko,57840,112561fdda3eb496a388150dbf48bc77479bca918a1fc3aaa774c8702d8ad683,3.0.13 SMP preempt mod_unload ARMv7,GPL,RT2870 Wireless Lan Linux Driver,Paul Lin <paul_lin@ralinktech.com>,,533BB7E5866E52F63B9ACCB,CONFIRMED
+rtutil5572sta.ko,extracted/appfs1/basic/wifi_ko/rtutil5572sta.ko,46312,ac0135d0e2bdc39f8c6078770698e26afe36f2a183f8b63e16c4f9977ba35dbf,3.0.13 SMP preempt mod_unload ARMv7,GPL,,,,,CONFIRMED
+fusion.ko,extracted/appfs1/home/fusion.ko,50264,b2dc8f5257f3597eac3a56e6d060d25d97a0867d012c89dda111fd0481cec763,3.0.13 SMP preempt mod_unload ARMv7,GPL,,Denis Oliver Kropp <dok@directfb.org>,,,CONFIRMED

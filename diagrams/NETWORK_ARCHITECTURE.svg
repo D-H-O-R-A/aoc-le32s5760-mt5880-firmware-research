@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 760" width="1180" height="760">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #0f172a; }
+      .subtitle { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13px; fill: #475569; }
+      .box { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 2; rx: 8; }
+      .lan { fill: #f0fdf4; stroke: #15803d; stroke-width: 2; rx: 8; }
+      .ext { fill: #fef2f2; stroke: #b91c1c; stroke-width: 2; rx: 8; }
+      .obs { fill: #fffbeb; stroke: #d97706; stroke-width: 2; stroke-dasharray: 6,3; rx: 8; }
+      .hdr { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #0f172a; }
+      .txt { font-family: 'Liberation Mono', monospace; font-size: 11px; fill: #1e293b; }
+      .arr { stroke: #334155; stroke-width: 1.8; fill: none; }
+      .arr-r { stroke: #b91c1c; stroke-width: 1.8; fill: none; }
+      .arr-d { stroke: #d97706; stroke-width: 1.8; stroke-dasharray: 5,4; fill: none; }
+    </style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b91c1c"/>
+    </marker>
+    <marker id="ad" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1180" height="760"/>
+  <text class="title" x="36" y="40">Static Network Communication Map &amp; Uncaptured Telemetry Boundary</text>
+  <text class="subtitle" x="36" y="62">Endpoints, daemons, IPC ports, and TLS trust anchors extracted statically from extracted/appfs1 &amp; extracted/rootfs1</text>
+
+  <!-- TV Node (Left) -->
+  <rect class="box" x="36" y="95" width="335" height="450"/>
+  <text class="hdr" x="52" y="122">TV Host Runtime (UID 0 / root)</text>
+
+  <rect fill="#ffffff" stroke="#93c5fd" x="52" y="138" width="303" height="82" rx="6"/>
+  <text class="hdr" x="64" y="158">Network Interfaces &amp; Stack</text>
+  <text class="txt" x="64" y="176">eth0 (star_mac.ko) | ra0 (rt5572sta)</text>
+  <text class="txt" x="64" y="193">udhcpc + dibbler-client (IPv6 DHCPv6)</text>
+  <text class="txt" x="64" y="210">mnet_down.script + iptables 1.4.15</text>
+
+  <rect fill="#ffffff" stroke="#93c5fd" x="52" y="232" width="303" height="92" rx="6"/>
+  <text class="hdr" x="64" y="252">Local Loopback &amp; IPC Services</text>
+  <text class="txt" x="64" y="270">127.0.0.1:20012 (browser.out IPC)</text>
+  <text class="txt" x="64" y="287">localhost:56789/dialData?app=YouTube</text>
+  <text class="txt" x="64" y="304">librpc_ipc.so / libapp_socket_client</text>
+
+  <rect fill="#ffffff" stroke="#93c5fd" x="52" y="336" width="303" height="100" rx="6"/>
+  <text class="hdr" x="64" y="356">HTTP/HTTPS Client &amp; Crypto Stack</text>
+  <text class="txt" x="64" y="374">OpenSSL 1.0.0d (TLS 1.0/1.1 ceiling)</text>
+  <text class="txt" x="64" y="391">libcurl 7.21.7 + c-ares + QtNetwork</text>
+  <text class="txt" x="64" y="408">opcacrt6.pem (186 CAs: 9 exp &lt;=2016,</text>
+  <text class="txt" x="64" y="424">57 exp &lt;2026) + ui_ca.pem / siab_ca</text>
+
+  <rect class="lan" x="52" y="448" width="303" height="82"/>
+  <text class="hdr" x="64" y="468">LAN Exposed Services</text>
+  <text class="txt" x="64" y="486">dialserver + libmicrohttpd.so.10</text>
+  <text class="txt" x="64" y="503">libmDNSResponderPosix + libqtdlna.so</text>
+  <text class="txt" x="64" y="520">libminiupnpc.so + libwfd (Wi-Fi Direct)</text>
+
+  <!-- Center: Classification Column -->
+  <rect class="ext" x="425" y="95" width="350" height="125"/>
+  <text class="hdr" x="441" y="119">1. OEM Smart TV Portals &amp; Firmware Links</text>
+  <text class="txt" x="441" y="139">https://www.ecdinterface.philips.com/...</text>
+  <text class="txt" x="441" y="156">https://nettv.corio.com/BluePortServlets/...</text>
+  <text class="txt" x="441" y="173">https://sp-test1-origin.portal.nettvservices.com</text>
+  <text class="txt" x="441" y="190">http://www.pds.philips.com/download_request</text>
+  <text class="txt" x="441" y="207">http://speedtest.oui-0x00199d.com/st.jpg</text>
+
+  <rect class="ext" x="425" y="238" width="350" height="125"/>
+  <text class="hdr" x="441" y="262">2. Streaming &amp; Social App Backends</text>
+  <text class="txt" x="441" y="282">https://nrdp.nccp.netflix.com/nccp/...</text>
+  <text class="txt" x="441" y="299">https://uiboot.netflix.com/apps/gibbontvui/...</text>
+  <text class="txt" x="441" y="316">http://www.youtube.com/tv &amp; /dial</text>
+  <text class="txt" x="441" y="333">https://ap.spotify.com + audioscrobbler</text>
+  <text class="txt" x="441" y="350">http://philips-2014.ce.skype.net + Hue nUPnP</text>
+
+  <rect class="ext" x="425" y="380" width="350" height="105"/>
+  <text class="hdr" x="441" y="404">3. DRM License &amp; Clock Endpoints</text>
+  <text class="txt" x="441" y="424">http://playready.directtaps.net/...asmx</text>
+  <text class="txt" x="441" y="441">http://services.wmdrm.windowsmedia.com/...</text>
+  <text class="txt" x="441" y="458">https://ms3.service.hostedmarlin.com:8443</text>
+  <text class="txt" x="441" y="475">https://wstfcps005.shibboleth.tv/widevine/...</text>
+
+  <rect class="lan" x="425" y="502" width="350" height="65"/>
+  <text class="hdr" x="441" y="524">4. LAN Peers (Smartphone DIAL / DLNA)</text>
+  <text class="txt" x="441" y="544">Unauthenticated app launch/cast requests</text>
+  <text class="txt" x="441" y="559">(No TLS / no pairing PIN in stock dial.conf)</text>
+
+  <!-- Right: Dynamic Telemetry Epistemic Boundary -->
+  <rect class="obs" x="820" y="95" width="324" height="472"/>
+  <text class="hdr" x="836" y="122">Evidentiary &amp; Privacy Boundary</text>
+  <text class="txt" x="836" y="148">STATIC OBSERVATION (CONFIRMED):</text>
+  <text class="txt" x="836" y="166">- 291 URL entries cataloged across</text>
+  <text class="txt" x="836" y="182">  appfs1 &amp; rootfs1 binaries/configs</text>
+  <text class="txt" x="836" y="198">- Hardcoded plaintext HTTP URLs</text>
+  <text class="txt" x="836" y="214">  (PlayReady, Philips PDS, speedtest)</text>
+  <text class="txt" x="836" y="230">- Pre-release test hosts left in XMLs</text>
+  <text class="txt" x="836" y="246">  (mvc102qa, certification.nettv...)</text>
+
+  <text class="hdr" x="836" y="284">DYNAMIC TELEMETRY (UNOBSERVED):</text>
+  <text class="txt" x="836" y="304">- Zero live tcpdump/MITM packet</text>
+  <text class="txt" x="836" y="320">  captures exist in workspace.</text>
+  <text class="txt" x="836" y="340">- Therefore, exact PII fields,</text>
+  <text class="txt" x="836" y="356">  beacon frequencies, or runtime</text>
+  <text class="txt" x="836" y="372">  SNI failures remain UNCONFIRMED</text>
+  <text class="txt" x="836" y="388">  until controlled proxy capture</text>
+  <text class="txt" x="836" y="404">  described in privacy/ docs.</text>
+
+  <text class="hdr" x="836" y="442">TLS BREAKAGE ROOT CAUSE (CONF.):</text>
+  <text class="txt" x="836" y="462">- OpenSSL 1.0.0d maxes out at TLSv1</text>
+  <text class="txt" x="836" y="478">- 57/186 Opera CAs expired &lt;2026</text>
+  <text class="txt" x="836" y="494">- Missing modern ISRG Root X1 (Let's</text>
+  <text class="txt" x="836" y="510">  Encrypt), DigiCert Global G2, etc.</text>
+  <text class="txt" x="836" y="526">- Modern CDN APIs reject handshake</text>
+  <text class="txt" x="836" y="542">  before application data exchanges.</text>
+
+  <!-- Arrows -->
+  <path class="arr-r" d="M 371 175 L 425 155" marker-end="url(#ar)"/>
+  <path class="arr-r" d="M 371 290 L 425 290" marker-end="url(#ar)"/>
+  <path class="arr-r" d="M 371 390 L 425 425" marker-end="url(#ar)"/>
+  <path class="arr" d="M 371 500 L 425 535" marker-end="url(#a)"/>
+  <path class="arr-d" d="M 775 160 L 820 180" marker-end="url(#ad)"/>
+  <path class="arr-d" d="M 775 300 L 820 330" marker-end="url(#ad)"/>
+  <path class="arr-d" d="M 775 430 L 820 460" marker-end="url(#ad)"/>
+
+  <!-- Bottom Protocol Summary -->
+  <rect fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" rx="8" x="36" y="595" width="1108" height="135"/>
+  <text class="hdr" x="54" y="622">Controlled Verification &amp; Mitigation Protocol</text>
+  <text class="txt" x="54" y="646">1. Any researcher claiming active PII exfiltration MUST validate over an isolated tap (SPAN/ARP/mitmproxy) — static strings prove capability, not wire traffic.</text>
+  <text class="txt" x="54" y="666">2. Hardened Opera config in custom_payload/nettv/urlfilter.ini restricts ad/tracker hosts at browser layer within stock Presto 6213 limits.</text>
+  <text class="txt" x="54" y="686">3. Because the Smart TV should never run directly on untrusted WAN/IoT segments with EOL OpenSSL/curl/DIAL, isolate via dedicated guest VLAN + block UDP 1900/TCP DIAL externally.</text>
+</svg>

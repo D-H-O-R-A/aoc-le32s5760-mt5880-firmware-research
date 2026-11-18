@@ -1,0 +1,972 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:89f56421-5e7e-5c48-90ac-61dee5e1db3c",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-18T19:03:21Z",
+    "tools": [
+      {
+        "vendor": "D-H-O-R-A",
+        "name": "sbom_generation.py",
+        "version": "1.0.0"
+      }
+    ],
+    "component": {
+      "type": "firmware",
+      "bom-ref": "AOC-LE32S5760-V2.011_V0.2",
+      "name": "AOC LE32S5760/20 Smart TV Firmware",
+      "version": "V2.011_V0.2"
+    }
+  },
+  "components": [
+    {
+      "type": "operating-system",
+      "bom-ref": "linux-kernel",
+      "name": "linux-kernel-mt5880",
+      "version": "3.0.13",
+      "supplier": {
+        "name": "MediaTek / TPV Technology (Linux Foundation upstream)"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "scratch/vmlinux.bin"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Kernel banner: Linux version 3.0.13 (roylo@TWCLS066) (gcc 4.5.1) Thu Aug 4 2016"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c52a4aa8bcc21fc263a44c54fdebfe95ad1de53bf1137bd4f45d934e2c63c790"
+        }
+      ],
+      "cpe": "cpe:2.3:o:linux:linux_kernel:3.0.13:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/linux@3.0.13?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-only"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "glibc",
+      "name": "glibc",
+      "version": "2.12.2",
+      "supplier": {
+        "name": "Free Software Foundation (GNU Project)"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/lib/libc-2.12.2.so"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "SONAME libc-2.12.2.so & string 'GNU C Library stable release version 2.12.2'"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f83cae1fc73eba372b0d37e7c38630e09613a5de929bdbcfac64f2b1e46195b7"
+        }
+      ],
+      "cpe": "cpe:2.3:a:gnu:glibc:2.12.2:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/glibc@2.12.2?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "busybox",
+      "name": "busybox",
+      "version": "1.15.3",
+      "supplier": {
+        "name": "BusyBox Project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/bin/busybox"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Binary string 'BusyBox v1.15.3 (2012-06-06 18:54:15 CST)'"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c4c7dac66b148e05d32f132df0aeace8dd2cd1d4828c45587abffe20ce41ca54"
+        }
+      ],
+      "cpe": "cpe:2.3:a:busybox:busybox:1.15.3:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/busybox@1.15.3?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-only"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "openssl",
+      "name": "openssl",
+      "version": "1.0.0d",
+      "supplier": {
+        "name": "OpenSSL Software Foundation"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/basic/lib/libssl.so.1.0.0"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "libssl.so.1.0.0 & libcurl RPATH/build path openssl-1.0.0d"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "134483cc9f5cd817785578fd631c5f0b073dc2f964e05a7fa57efdfb0ad8d9d8"
+        }
+      ],
+      "cpe": "cpe:2.3:a:openssl:openssl:1.0.0d:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/openssl@1.0.0d?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "OpenSSL"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "libcurl",
+      "name": "curl",
+      "version": "7.21.7",
+      "supplier": {
+        "name": "Daniel Stenberg / curl project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/rootfs1/ginga/lib/libcurl.so.4.2.0"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Embedded string 'libcurl/7.21.7' and build path curl-7.21.7"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7e1838ba37e5c17597ca718d2de500acf3814996b1bebf9dd08453d1c22bb296"
+        }
+      ],
+      "cpe": "cpe:2.3:a:haxx:libcurl:7.21.7:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/curl@7.21.7?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "curl"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "libxml2",
+      "name": "libxml2",
+      "version": "2.7.8",
+      "supplier": {
+        "name": "GNOME / Daniel Veillard"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/rootfs1/lib/libxml2.so.2.7.8"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library filename libxml2.so.2.7.8"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "17377f3d5d90a7505a653ccd27fcb9e8d0536a0b9082d359909b8da74a3ac440"
+        }
+      ],
+      "cpe": "cpe:2.3:a:xmlsoft:libxml2:2.7.8:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libxml2@2.7.8?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "expat",
+      "name": "expat",
+      "version": "2.0.1",
+      "supplier": {
+        "name": "Expat Project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/basic/lib/libexpat.so.1.5.2"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Embedded version string 'expat_2.0.1'"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2ff8de3b8a4d2ba1b3e1d0b4a34dc47697ee570c0539e136d90c98f93cf7007d"
+        }
+      ],
+      "cpe": "cpe:2.3:a:libexpat:expat:2.0.1:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/expat@2.0.1?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "zlib",
+      "name": "zlib",
+      "version": "1.2.3",
+      "supplier": {
+        "name": "Jean-loup Gailly & Mark Adler"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/lib/libz.so.1.2.3"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library filename libz.so.1.2.3"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2a92d6681a778889681a4f331a7c63b012d0ddb7defe3013b9beea5d6800bc11"
+        }
+      ],
+      "cpe": "cpe:2.3:a:zlib:zlib:1.2.3:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/zlib@1.2.3?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "Zlib"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "libpng",
+      "name": "libpng",
+      "version": "1.2.43",
+      "supplier": {
+        "name": "PNG Development Group"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/lib/libpng12.so.0.1.2.43"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "String 'libpng version 1.2.43 - February 25, 2010'"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0ad05456ebe3d722d93c5f5fd9a8274c15332ca826b3bd9aba1a7c8e45de553c"
+        }
+      ],
+      "cpe": "cpe:2.3:a:libpng:libpng:1.2.43:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libpng@1.2.43?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "Libpng"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "sqlite",
+      "name": "sqlite",
+      "version": "3.7.2",
+      "supplier": {
+        "name": "SQLite Consortium"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/basic/lib/libsqlite_3_7_2.so"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library filename libsqlite_3_7_2.so"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c73eb0cfce906af17e7de4264b1843c3ac0a8a7bf4da7534b157785d62adcf53"
+        }
+      ],
+      "cpe": "cpe:2.3:a:sqlite:sqlite:3.7.2:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/sqlite@3.7.2?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "name": "blessing"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "qt4",
+      "name": "qt-everywhere",
+      "version": "4.8.3",
+      "supplier": {
+        "name": "Nokia / Qt Project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/rootfs1/qt/lib/libQtCore.so.4.8.3"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "QtCore/QtDeclarative/QtGui/QtNetwork/QtScript 4.8.3 shared libraries"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "12d4845f15a2f994b88457219a937c738d339a05c422f25a4f0cbea7e107c70b"
+        }
+      ],
+      "cpe": "cpe:2.3:a:qt:qt:4.8.3:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/qt@4.8.3?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-only"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "alsa-lib",
+      "name": "alsa-lib",
+      "version": "1.0.24.1",
+      "supplier": {
+        "name": "ALSA Project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/basic/lib/libasound.so.2.0.0"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Path alsa-lib-1.0.24.1/lib/libasound.so.2.0.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "35287d7da1b1301142cb1bdf0ba8ee1398037f21abb69176b9f7e95345e7ee0d"
+        }
+      ],
+      "cpe": "cpe:2.3:a:alsa-project:alsa-lib:1.0.24.1:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/alsa-lib@1.0.24.1?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "fuse",
+      "name": "libfuse",
+      "version": "2.8.4",
+      "supplier": {
+        "name": "FUSE Project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/basic/lib/libfuse.so.2.8.4"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library filename libfuse.so.2.8.4"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d33deffa24b7905eedbe8e8d82fc805b036a6dba23729044f980c05a6fe697f6"
+        }
+      ],
+      "purl": "pkg:generic/libfuse@2.8.4?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-only"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "ntfs-3g",
+      "name": "ntfs-3g",
+      "version": "2010.x-abi76",
+      "supplier": {
+        "name": "Tuxera / NTFS-3G"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/basic/lib/libntfs-3g.so.76.0.0"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "INFERRED_SONAME"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "SONAME libntfs-3g.so.76.0.0 (upstream release date inferred from ABI 76)"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "92fe760c7b7af94cbc0bb4eb6ce8c99ed0be1444a4f1eb9d500538a7a16b491a"
+        }
+      ],
+      "purl": "pkg:generic/ntfs-3g@76.0.0?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-or-later"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "boost",
+      "name": "boost",
+      "version": "1.44.0",
+      "supplier": {
+        "name": "Boost C++ Libraries"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/rootfs1/ginga/lib/libboost_filesystem.so.1.44.0"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library libboost_*.so.1.44.0 under rootfs1/ginga/lib"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4dc9d9a16a274908b93c843008ec8e361527b7b2b65aae4585cbeacb757b9d5b"
+        }
+      ],
+      "cpe": "cpe:2.3:a:boost:boost:1.44.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/boost@1.44.0?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSL-1.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "xerces-c",
+      "name": "xerces-c",
+      "version": "3.1",
+      "supplier": {
+        "name": "Apache Software Foundation"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/rootfs1/lib/libxerces-c-3.1.so"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library libxerces-c-3.1.so"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d5e3e329a74e86fc5da395a20fc685037a1ece3bc42b823c446ba8d57f52411f"
+        }
+      ],
+      "cpe": "cpe:2.3:a:apache:xerces-c\\+\\+:3.1:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/xerces-c@3.1?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "freetype",
+      "name": "freetype",
+      "version": "2.4.x-so6.6.1",
+      "supplier": {
+        "name": "FreeType Project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/lib/libfreetype.so.6.6.1"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "INFERRED_SONAME"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library libfreetype.so.6.6.1 (rootfs1/ginga ships 6.6.2)"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "038b2e8f7650de8c45ec81445fd38309746aad1f4b986b4204f935b3b73025c0"
+        }
+      ],
+      "purl": "pkg:generic/freetype@6.6.1?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "name": "FTL OR GPL-2.0-or-later"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "libjpeg",
+      "name": "libjpeg",
+      "version": "6b-so62",
+      "supplier": {
+        "name": "Independent JPEG Group"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/lib/libjpeg.so.62.0.0"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library libjpeg.so.62.0.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2bcabc0c5786a409473789951b6d948140abf07b82fddd57e83e9addfc8734e4"
+        }
+      ],
+      "purl": "pkg:generic/libjpeg@62.0.0?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "name": "IJG"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "libiconv",
+      "name": "libiconv",
+      "version": "1.13-so2.4.0",
+      "supplier": {
+        "name": "GNU Project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/rootfs1/lib/libiconv.so.2.4.0"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "INFERRED_SONAME"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library libiconv.so.2.4.0 (ginga ships 2.5.0)"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "64bf4b946bfc91725a70b101ea7080fc3dd2ff34c3fe824ab7cff38780ca01f2"
+        }
+      ],
+      "purl": "pkg:generic/libiconv@2.4.0?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.0-or-later"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "lvm2-devmapper",
+      "name": "device-mapper",
+      "version": "1.02",
+      "supplier": {
+        "name": "Red Hat / LVM2"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/lib/libdevmapper.so.1.02"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library libdevmapper.so.1.02 for dm-verity/dmsetup"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0075742554513b9aee0640910ff31177007ce5e2eb7ee4ab5705762cbcbd5ed6"
+        }
+      ],
+      "purl": "pkg:generic/device-mapper@1.02?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-only"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "c-ares",
+      "name": "c-ares",
+      "version": "1.7.x-so2.0.0",
+      "supplier": {
+        "name": "c-ares Project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/basic/lib/libcares.so.2.0.0"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "INFERRED_SONAME"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library libcares.so.2.0.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "13a99aafd964c350184e33144bbfa9f6868f2a056c8a4595eca046ad19b16c90"
+        }
+      ],
+      "purl": "pkg:generic/c-ares@2.0.0?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "libmicrohttpd",
+      "name": "libmicrohttpd",
+      "version": "so10",
+      "supplier": {
+        "name": "GNU Project"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/rootfs1/lib/libmicrohttpd.so.10"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library libmicrohttpd.so.10"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "135736879938c20dc6950d2bf36965fc0368aec84444c5ad5e605c05697318a4"
+        }
+      ],
+      "purl": "pkg:generic/libmicrohttpd@10?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "libwebp",
+      "name": "libwebp",
+      "version": "so4.0.1",
+      "supplier": {
+        "name": "Google Inc."
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/basic/lib/libwebp.so.4.0.1"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Shared library libwebp.so.4.0.1"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "08577cab29503537813551f0b15bcedffd10d38def01c1b2d757d016a7518112"
+        }
+      ],
+      "purl": "pkg:generic/libwebp@4.0.1?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "directfb",
+      "name": "DirectFB",
+      "version": "1.4.1",
+      "supplier": {
+        "name": "DirectFB / MediaTek"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/appfs1/lib/libdirectfb.so"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "libdirectfb.so / libdirectfb-1.4.so.0 strings"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3dc169b6dfd115c479e8a9c720dfa382490a912df99124783150fa4b0b71e341"
+        }
+      ],
+      "purl": "pkg:generic/directfb@1.4.1?arch=armv7",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "opera-presto",
+      "name": "opera-devices-sdk-presto",
+      "version": "Presto-6213",
+      "supplier": {
+        "name": "Opera Software ASA"
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/rootfs1/nettv/opera/opera"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "Opera Presto binary & User-Agent core 6213"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "netflix-nrd",
+      "name": "netflix-ready-device-sdk",
+      "version": "NRD-2015-legacy",
+      "supplier": {
+        "name": "Netflix Inc."
+      },
+      "properties": [
+        {
+          "name": "firmware:relativePath",
+          "value": "extracted/rootfs1/netflix/nrd-app/bin/nrd-app"
+        },
+        {
+          "name": "firmware:verificationStatus",
+          "value": "CONFIRMED"
+        },
+        {
+          "name": "firmware:evidence",
+          "value": "nrd-app ELF binary and JavaScriptCore runtime under rootfs1/netflix"
+        }
+      ]
+    }
+  ]
+}

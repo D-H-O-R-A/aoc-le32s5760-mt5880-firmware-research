@@ -1,0 +1,344 @@
+{
+  "schema_version": "1.0.0",
+  "generated_utc": "2026-11-18T19:07:10.163483+00:00",
+  "repository": "https://github.com/D-H-O-R-A/aoc-le32s5760-mt5880-firmware-research",
+  "baseline_artifact_count": 56,
+  "baseline_artifacts": [
+    {
+      "category": "docs",
+      "path": "docs/01_architecture_hardware_and_flash_layout.md",
+      "size_bytes": 22394,
+      "sha256": "0871005289d8148b3a0a4015f5d09cf6f0bde1e589aa19512a14aa153486d5ed"
+    },
+    {
+      "category": "docs",
+      "path": "docs/02_secure_boot_chain_preloader_tz_and_nfsb.md",
+      "size_bytes": 21789,
+      "sha256": "c04e86f48115182360da4fd3c1149f0bd41ed492c74464616d7477f8a16c86e6"
+    },
+    {
+      "category": "docs",
+      "path": "docs/03_dlm_upg_cryptography_and_libmtkapp_internals.md",
+      "size_bytes": 15710,
+      "sha256": "091dc1cecf8a6049cf351f60671a8cbfc5d96c9dca34b64bdd5ae40eb5b497a7"
+    },
+    {
+      "category": "docs",
+      "path": "docs/04_systemmanager_qt_opera_presto_and_legacy_apps.md",
+      "size_bytes": 15168,
+      "sha256": "29e614f1638931da9bd033ef5fc0aef992f4154ce2dd28fed986bf1ca9302b2f"
+    },
+    {
+      "category": "docs",
+      "path": "docs/05_mtd12_rw_delivery_and_offline_verification_thesis.md",
+      "size_bytes": 12243,
+      "sha256": "619bc06364f1f6c2a9a66845433ca946954505d1dd3bc6b0253bffd001066373"
+    },
+    {
+      "category": "docs",
+      "path": "docs/06_reproduction_guide_and_experimental_protocol.md",
+      "size_bytes": 14300,
+      "sha256": "9e1dab0412e9e25a453d6770cbc5a74832577542248a5affb066d564d9fae56f"
+    },
+    {
+      "category": "docs",
+      "path": "docs/07_elf_abi_memory_maps_and_startup_scripts.md",
+      "size_bytes": 14327,
+      "sha256": "e83d36ceaa0dc695141bb5b3cc649540bc36750403ee3808d57f2fc2b446f5d3"
+    },
+    {
+      "category": "docs",
+      "path": "docs/08_appendix_verified_cryptographic_and_binary_evidence.md",
+      "size_bytes": 33752,
+      "sha256": "fed85ff635d9aaf78d5d806e7934404c761c19d3336cc589ed63961d603742d1"
+    },
+    {
+      "category": "docs",
+      "path": "docs/09_appendix_annotated_arm_and_thumb_disassembly.md",
+      "size_bytes": 48049,
+      "sha256": "cba608508857e301ce77fa47d94772de1e997a9679af710d3a26add0580f90de"
+    },
+    {
+      "category": "docs",
+      "path": "docs/10_opera_presto_tls_userjs_and_qml_study.md",
+      "size_bytes": 11744,
+      "sha256": "d492f425fa81ab953cd6d4b38e596447db751a09112f3946c0a9295f004a51ed"
+    },
+    {
+      "category": "docs",
+      "path": "docs/11_legacy_streaming_drm_and_rootfs_subsystems.md",
+      "size_bytes": 9350,
+      "sha256": "dd54cf27613a6d215d864826915809f0066dd2f511a5cad979111ca8a48cf7d1"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/build_safe_rw_upg.py",
+      "size_bytes": 5791,
+      "sha256": "3c335910f9e78858b917aadcb32b9a7d6270594bc9e56c2559fa5f2145ebc67a"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/disasm_secure_boot_chain.py",
+      "size_bytes": 4434,
+      "sha256": "7e50e72cd9e82d5e410d1517cbe84602d08f4df6d28f1b57718e54309b43178a"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/disasm_systemmanager_and_nettv.py",
+      "size_bytes": 6462,
+      "sha256": "43eaa07ac9b499f2428496a69880f06ab9433978daa3c389f60313978140c0b3"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/disasm_upg_installer.py",
+      "size_bytes": 4366,
+      "sha256": "656977ec5db1c31084d2e17859551e160ee22fd32aecca356d9e652a3b3c29db"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/firmware_comparison.py",
+      "size_bytes": 6988,
+      "sha256": "6d098f4bbd015b1beef86ee1ad45605186929b825417b2e97f1a27b46a3b6c04"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/firmware_inventory.py",
+      "size_bytes": 12774,
+      "sha256": "5afd6cc76530d0fc2b242ac1ef91c783f3b64d1e1e0762a4b445e0ff8da673c3"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/hash_verification.py",
+      "size_bytes": 4497,
+      "sha256": "574133b7eaf8cc8a8c8523a2e7b0e2b3a19d2f06bf9b8774026cf2fd7c6a6b14"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/inspect_dmbht_and_boot_scripts.py",
+      "size_bytes": 5944,
+      "sha256": "e51e124aabcbbfe0d1e066aef8ce01f80bea790618a02eaa6f2c0d1c6c2bc48c"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/inspect_pkg_and_nfsb.py",
+      "size_bytes": 5760,
+      "sha256": "6117e9690b465966cf2fb1d0d65917a1fe1bc5f2d424d57976eeb456968c26e6"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/inspect_runtime_engines.py",
+      "size_bytes": 3915,
+      "sha256": "92ec3c31d3ea9f0f669daf0b42fefa1663f6888d6a7fad6472ff4400a5c7c43e"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/metadata_extraction.py",
+      "size_bytes": 19747,
+      "sha256": "06c202f943b48003bddd0fa3f7fa7cda224f235a095348753f5edaab6267e2e5"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/run_all_proofs.sh",
+      "size_bytes": 1760,
+      "sha256": "3f9e44395131ede0068f35cd7ba45f0ba134221cee5772617c9f84393bbf3ea3"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/sbom_generation.py",
+      "size_bytes": 18964,
+      "sha256": "b5e340e5e9009fd7406e996786717375ca9d0885a21320dbdecfef9459ec33f4"
+    },
+    {
+      "category": "scripts",
+      "path": "scripts/verify_upg_container.py",
+      "size_bytes": 5177,
+      "sha256": "37992bbf1c483a07fe4975442ea311e3edde8daa09797d6c190646cfadc5cb75"
+    },
+    {
+      "category": "evidence",
+      "path": "evidence/01_pkg_and_nfsb_proof.txt",
+      "size_bytes": 3835,
+      "sha256": "f7859fdd518cb438411d660e744907a474968d68d70bfa73d131265cd946e504"
+    },
+    {
+      "category": "evidence",
+      "path": "evidence/02_secure_boot_chain_disasm.txt",
+      "size_bytes": 31717,
+      "sha256": "397232574827d249d99a512d8ebd2663633dad4de7baf97b3ebd95da6d60281c"
+    },
+    {
+      "category": "evidence",
+      "path": "evidence/03_upg_installer_disasm.txt",
+      "size_bytes": 14920,
+      "sha256": "a634799967cb4b070f8d935b8fef8c4f08d3747738233cec389786205cbe072a"
+    },
+    {
+      "category": "evidence",
+      "path": "evidence/04_upg_container_crypto_proof.txt",
+      "size_bytes": 1899,
+      "sha256": "d9117e51ca5a849b75a2b8689caf3099585fc9c7ba38cd7ed3b861996755b1fc"
+    },
+    {
+      "category": "evidence",
+      "path": "evidence/05_runtime_engines_and_busybox_audit.txt",
+      "size_bytes": 2963,
+      "sha256": "3317a37568c8bc0573be096cdc8575b9622be81203e9e45493c93f7362a72654"
+    },
+    {
+      "category": "evidence",
+      "path": "evidence/06_systemmanager_and_nettv_disasm.txt",
+      "size_bytes": 22340,
+      "sha256": "16ca02171c06f7d55a69b6ea8e5d9d15e8960fbcb815d99ccc74d2e7c299cad9"
+    },
+    {
+      "category": "evidence",
+      "path": "evidence/07_dmbht_and_boot_scripts_audit.txt",
+      "size_bytes": 10250,
+      "sha256": "92d9eb3df131dc5e72d73b2d1723d9fb030b804ca04e23da4b2013239da8b05d"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/patches/run.sh",
+      "size_bytes": 3281,
+      "sha256": "eac306142e117c0f841533d715640c0fbec29fc3dcaf1ebecb2ff79e0d007a79"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/patches/sm_config.ini",
+      "size_bytes": 33,
+      "sha256": "794f297587c129a6d183352e8a6479fbf60707c02ca85353521b7fb989246ee9"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/nettv/opera_new.ini",
+      "size_bytes": 2463,
+      "sha256": "7c3441aa01082b8861202b43c1e8d5cbeb35f1b3005a7fe2e9c07b8491b3f382"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/nettv/urlfilter.ini",
+      "size_bytes": 1906,
+      "sha256": "cea181360e12266443040a1f93c6e37c21df0b5c0e63216c00fb0af3c09f23c1"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/nettv/user.css",
+      "size_bytes": 775,
+      "sha256": "055c96050b300f3fffa479409a7e7f71f50cdb346afdfeee8e7a325c797f545e"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/nettv/user.js",
+      "size_bytes": 25421,
+      "sha256": "81e4732a51edccce5ffe09b9fd56d7c05f9ded9ff52edec27ca7dca006147a42"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/HSMain.qml",
+      "size_bytes": 12038,
+      "sha256": "8d89071a38cf646bd6c3faf6a79e9428872c50b351ef9cc6a6f0b165cbf98b0d"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/ModernLauncher.qml",
+      "size_bytes": 10332,
+      "sha256": "0e07bb30ef4fff08555cb8074fe57fd112fc051a41bdeef001351d3d2b0d0444"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/AppCard.qml",
+      "size_bytes": 3414,
+      "sha256": "dbc2659151886b49cc17d1dbef4e8263091cfe9e676c59dc180b9c69207a4713"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/ChatGPTView.qml",
+      "size_bytes": 5857,
+      "sha256": "ef4e6cf1d475d71aa765caafa8ae470e173780979ed19108858b2af0321e4858"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/ChromeWebView.qml",
+      "size_bytes": 7414,
+      "sha256": "8ecc025a371623b127606f98fae024520a942f60c46b9f67dcac39a7faa5a060"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/CinemaHubView.qml",
+      "size_bytes": 7801,
+      "sha256": "8a3143097c1052a1a073ba1ee4550b6781f6e0e65c15aa4db74e9dcc03c9a9eb"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/HeroBanner.qml",
+      "size_bytes": 1918,
+      "sha256": "6d55195bc96a1e6a5494a413f0658148a1ec1badde5f65d48ee9fb032cba8523"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/MediaBrowserPanel.qml",
+      "size_bytes": 5441,
+      "sha256": "6dcb89db7ca46e68f948bb033b2f75ec2c43c404fc0b76cd1e1b6360dadef078"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/ModernPlayerView.qml",
+      "size_bytes": 11751,
+      "sha256": "af257d819471515609b099801c14d229ecdf4c411466a2740ee3de7747e08245"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/MusicHubView.qml",
+      "size_bytes": 7398,
+      "sha256": "65b1a9e49925e7a60fee576e34cfc48267c8dde20b10ae9aef6c298b63b317d8"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/NavDrawer.qml",
+      "size_bytes": 3663,
+      "sha256": "464e4fe253c9e7094fcf1e1ae597b972807e7eec772bb276422f03ff00a7dce1"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/NetworkPanel.qml",
+      "size_bytes": 5372,
+      "sha256": "bb05f15e80a4913a94b57411dd1f643723dd355c3154f28d23cc5d6a4f75e8b5"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/SettingsPanel.qml",
+      "size_bytes": 4048,
+      "sha256": "509f9abe127e4b8ecdcf3563264b93466d7ab2b8d6fd8e46ae207f0f5a9a9c3c"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/StoragePanel.qml",
+      "size_bytes": 3767,
+      "sha256": "600c4a38f3693eaab8ed811b1171c459ebc132d3de6eaafd7f844c73b462a758"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/SystemInfoPanel.qml",
+      "size_bytes": 4239,
+      "sha256": "d7fb34fee1e57573ff0fc27298be3659f3b740ab5fb5f4bdd7d76656fff5aec1"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/ToolsHubView.qml",
+      "size_bytes": 6598,
+      "sha256": "9e3bdb3cc886d696da9cafc52bc69661f01b9130c59e26b397cc7bc432f98935"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/TopBar.qml",
+      "size_bytes": 4053,
+      "sha256": "cbb5da8b4a9a257e6aa13e7e9a6532100ab48b2b1548416222431bceac955adc"
+    },
+    {
+      "category": "custom_payload",
+      "path": "custom_payload/qml_HomeScreen/components/YouTubeView.qml",
+      "size_bytes": 8429,
+      "sha256": "f3e4fb5deed6b2a274463e3dc52148fb115292bcc27e27dec905328df4eb339e"
+    }
+  ]
+}

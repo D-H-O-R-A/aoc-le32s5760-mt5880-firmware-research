@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 760" width="1180" height="760">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #0f172a; }
+      .subtitle { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13px; fill: #475569; }
+      .box-conf { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 2; rx: 8; }
+      .box-sec { fill: #fef2f2; stroke: #b91c1c; stroke-width: 2; rx: 8; }
+      .box-rw { fill: #f0fdf4; stroke: #15803d; stroke-width: 2; rx: 8; }
+      .box-unk { fill: #fffbeb; stroke: #d97706; stroke-width: 2; stroke-dasharray: 6,4; rx: 8; }
+      .box-soc { fill: #f1f5f9; stroke: #334155; stroke-width: 2.5; rx: 12; }
+      .hdr { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #0f172a; }
+      .txt { font-family: 'Liberation Mono', monospace; font-size: 11.5px; fill: #1e293b; }
+      .muted { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 11px; fill: #475569; }
+      .warn { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 11.5px; font-weight: bold; fill: #92400e; }
+      .line { stroke: #475569; stroke-width: 2; fill: none; }
+      .line-dash { stroke: #d97706; stroke-width: 2; stroke-dasharray: 5,4; fill: none; }
+    </style>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+    <marker id="arr-amb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1180" height="760"/>
+  <text class="title" x="36" y="40">AOC LE32S5760/20 (TPV MTK2K14PLF) — Hardware &amp; SoC Traceability Architecture</text>
+  <text class="subtitle" x="36" y="62">Strict epistemic separation between binary-confirmed MediaTek MT5880 subsystems and unverified physical PCB markings</text>
+
+  <!-- SoC Container -->
+  <rect class="box-soc" x="280" y="95" width="620" height="440"/>
+  <text class="hdr" x="300" y="122">MediaTek MT5880 SoC (Confirmed via vmlinux.bin, uenv board/mt5880, Preloader)</text>
+
+  <!-- CPU Cluster -->
+  <rect class="box-conf" x="305" y="140" width="275" height="105"/>
+  <text class="hdr" x="320" y="164">ARMv7-A SMP CPU Complex</text>
+  <text class="txt" x="320" y="185">ISA: ARM32 + Thumb-2 (PREEMPT)</text>
+  <text class="txt" x="320" y="203">Cache: L2x0 (cache-l2x0.c)</text>
+  <text class="txt" x="320" y="221">GIC IRQ + PMU + VFPv3</text>
+  <text class="muted" x="320" y="238">Evidence: vmlinux 3.0.13 vermagic</text>
+
+  <!-- Security / BootROM / Crypto -->
+  <rect class="box-sec" x="600" y="140" width="275" height="105"/>
+  <text class="hdr" x="615" y="164">BootROM, eFuse &amp; HW Crypto</text>
+  <text class="txt" x="615" y="185">OTP eFuse MMIO: 0xf0008664 &amp; 0x100000</text>
+  <text class="txt" x="615" y="203">HW-LZHS Decoder: 0xf00080b0</text>
+  <text class="txt" x="615" y="221">mtk_crypto.c / TZ (TRUSTZONE=enable)</text>
+  <text class="muted" x="615" y="238">Evidence: uboot.bin + vmlinux.bin</text>
+
+  <!-- Coprocessors -->
+  <rect class="box-conf" x="305" y="265" width="275" height="110"/>
+  <text class="hdr" x="320" y="289">Embedded Co-Processors</text>
+  <text class="txt" x="320" y="310">T8032 (8051 Standby / PDWNC)</text>
+  <text class="txt" x="320" y="328">Audio DSP (adsp + aqda bins)</text>
+  <text class="txt" x="320" y="346">Display FB (mt53_fb.c / DirectFB)</text>
+  <text class="muted" x="320" y="365">Note: /3rd/Img_Sgx empty (no SGX bin)</text>
+
+  <!-- Memory & Storage Controllers -->
+  <rect class="box-conf" x="600" y="265" width="275" height="110"/>
+  <text class="hdr" x="615" y="289">Memory &amp; Flash Controllers</text>
+  <text class="txt" x="615" y="310">Dual-Channel DRAM Ctrl (Ch A &amp; B)</text>
+  <text class="txt" x="615" y="328">NAND NFI Controller (mtd0..13)</text>
+  <text class="txt" x="615" y="346">Star MAC 10/100 Ethernet (star_mac)</text>
+  <text class="muted" x="615" y="365">Evidence: Preloader cal + mtd scripts</text>
+
+  <!-- Peripheral I/O Bar -->
+  <rect class="box-conf" x="305" y="395" width="570" height="120"/>
+  <text class="hdr" x="320" y="418">SoC Peripheral &amp; Media Buses</text>
+  <text class="txt" x="320" y="440">USB 2.0/3.0 Hosts: mtk-hcd.ko + xhci-hcd.ko (usbfs + usb-storage + HID)</text>
+  <text class="txt" x="320" y="458">GPIO / PDWNC: gpio6896.c, pdwnc_gpio6896.c, UART0 ttyMT0 (115200)</text>
+  <text class="txt" x="320" y="476">Video/Panel Out: DirectFB 1.4.1 / dtv_driver.ko (6.84 MB) + pqda</text>
+  <text class="muted" x="320" y="497">Note: No external JTAG/UART oscilloscope capture in current workspace</text>
+
+  <!-- External Left: Memory & Storage -->
+  <rect class="box-conf" x="36" y="120" width="210" height="125"/>
+  <text class="hdr" x="50" y="144">DRAM Subsystem</text>
+  <text class="txt" x="50" y="166">Channel A + Channel B</text>
+  <text class="txt" x="50" y="184">Size: ~512 MB (inferred)</text>
+  <text class="txt" x="50" y="202">uenv global_kernel_dram</text>
+  <text class="warn" x="50" y="226">Exact IC PN: UNVERIFIED</text>
+
+  <rect class="box-conf" x="36" y="270" width="210" height="165"/>
+  <text class="hdr" x="50" y="294">Raw NAND Flash IC</text>
+  <text class="txt" x="50" y="315">mtd0..mtd13 layout</text>
+  <text class="txt" x="50" y="333">10 IDs in vmlinux table:</text>
+  <text class="txt" x="50" y="350">H27U*, MT29F*, K9GAG*,</text>
+  <text class="txt" x="50" y="367">TC58NVG4D1/D2</text>
+  <text class="warn" x="50" y="392">Mounted IC PN: UNVERIFIED</text>
+  <text class="muted" x="50" y="416">Requires board teardown</text>
+
+  <!-- External Right: Network, Panel, Unverified PCB -->
+  <rect class="box-conf" x="935" y="120" width="210" height="145"/>
+  <text class="hdr" x="950" y="144">Network &amp; Wireless</text>
+  <text class="txt" x="950" y="166">RJ45 LAN: eth0 (star_mac)</text>
+  <text class="txt" x="950" y="184">Wi-Fi: Ralink rt5572sta</text>
+  <text class="txt" x="950" y="202">VID:PID 148F:5572,</text>
+  <text class="txt" x="950" y="219">043E:7A13/32, 2001:3C1A</text>
+  <text class="muted" x="950" y="245">Atheros/Realtek scripts alt.</text>
+
+  <rect class="box-unk" x="935" y="290" width="210" height="145"/>
+  <text class="hdr" x="950" y="314">PCB &amp; Panel / Tuner</text>
+  <text class="warn" x="950" y="336">PCB: 715G7904M? UNVERIFIED</text>
+  <text class="txt" x="950" y="356">Zero hits in extracted bins</text>
+  <text class="txt" x="950" y="376">ISDB-Tb Tuner IC: UNVER.</text>
+  <text class="txt" x="950" y="394">LCD/T-Con 1366x768 inf.</text>
+  <text class="muted" x="950" y="418">Pending teardown photos</text>
+
+  <rect class="box-rw" x="36" y="460" width="210" height="80"/>
+  <text class="hdr" x="50" y="484">USB / UART Ports</text>
+  <text class="txt" x="50" y="504">USB: FAT32 / NTFS-3G</text>
+  <text class="txt" x="50" y="522">Autorun.upg via USB port</text>
+
+  <!-- Connectors -->
+  <path class="line" d="M 246 180 L 280 180" marker-end="url(#arr)"/>
+  <path class="line" d="M 246 340 L 280 340" marker-end="url(#arr)"/>
+  <path class="line" d="M 246 500 L 280 500" marker-end="url(#arr)"/>
+  <path class="line" d="M 900 190 L 935 190" marker-end="url(#arr)"/>
+  <path class="line-dash" d="M 900 360 L 935 360" marker-end="url(#arr-amb)"/>
+
+  <!-- Legend -->
+  <rect fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" rx="8" x="36" y="575" width="1109" height="150"/>
+  <text class="hdr" x="56" y="602">Legend &amp; Evidentiary Classification</text>
+  <rect class="box-conf" x="56" y="618" width="22" height="18"/><text class="muted" x="88" y="632">CONFIRMED — Directly observed via kernel paths, ELF headers, module vermagic, or disassembled MMIO constants.</text>
+  <rect class="box-sec" x="56" y="646" width="22" height="18"/><text class="muted" x="88" y="660">SECURITY / CRYPTO GATE — OTP hardware eFuse, BootROM RSA verifier, or HW-LZHS block.</text>
+  <rect class="box-rw" x="56" y="674" width="22" height="18"/><text class="muted" x="88" y="688">EXTERNAL INTERFACE — User-accessible USB host path utilized for safe mtd12 UPG delivery diagnostics.</text>
+  <rect class="box-unk" x="56" y="702" width="22" height="18"/><text class="muted" x="88" y="716">UNVERIFIED / UNKNOWN — Physical board/chip identifiers (715G7904M PCB, exact NAND/DRAM/tuner/T-Con ICs) omitted until physical teardown.</text>
+</svg>

@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 780" width="1180" height="780">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #0f172a; }
+      .subtitle { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13px; fill: #475569; }
+      .stage { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 2; rx: 8; }
+      .gate { fill: #fef2f2; stroke: #b91c1c; stroke-width: 2; rx: 8; }
+      .trap { fill: #7f1d1d; stroke: #450a0a; stroke-width: 2; rx: 8; }
+      .rw { fill: #f0fdf4; stroke: #15803d; stroke-width: 2; rx: 8; }
+      .hdr { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #0f172a; }
+      .hdr-w { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #ffffff; }
+      .txt { font-family: 'Liberation Mono', monospace; font-size: 11px; fill: #1e293b; }
+      .txt-w { font-family: 'Liberation Mono', monospace; font-size: 11px; fill: #fecaca; }
+      .arrow { stroke: #334155; stroke-width: 2.2; fill: none; }
+      .arrow-red { stroke: #b91c1c; stroke-width: 2.2; fill: none; }
+      .arrow-grn { stroke: #15803d; stroke-width: 2.2; fill: none; }
+    </style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b91c1c"/>
+    </marker>
+    <marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#15803d"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1180" height="780"/>
+  <text class="title" x="36" y="40">MT5880 Transitive Boot Chain &amp; Cryptographic Enforcement Gates</text>
+  <text class="subtitle" x="36" y="62">From Silicon BootROM through Preloader eFuse, U-Boot RSA-2048, Kernel dm-verity NFSB (RSA-1024) to SystemManager</text>
+
+  <!-- Row 1: Stage 0 -> Stage 1 -> Gate 1 -> Trap -->
+  <rect class="stage" x="36" y="95" width="235" height="105"/>
+  <text class="hdr" x="50" y="119">1. Mask BootROM (Silicon)</text>
+  <text class="txt" x="50" y="140">Magic: MTK/DTV/ROMCODE/</text>
+  <text class="txt" x="50" y="156">NANDBOOT/V01.00</text>
+  <text class="txt" x="50" y="172">Loads Preloader @ 0xfb000000</text>
+  <text class="txt" x="50" y="188">T8032 standby handshake</text>
+
+  <rect class="stage" x="315" y="95" width="250" height="105"/>
+  <text class="hdr" x="330" y="119">2. Preloader (Thumb-2 SRAM)</text>
+  <text class="txt" x="330" y="140">DRAM Channel A/B Calibration</text>
+  <text class="txt" x="330" y="156">NAND ExNID timing init</text>
+  <text class="txt" x="330" y="172">HW-LZHS unpack @ 0xf00080b0</text>
+  <text class="txt" x="330" y="188">Tests OTP eFuse @ 0xf0008664</text>
+
+  <rect class="gate" x="610" y="95" width="250" height="105"/>
+  <text class="hdr" x="625" y="119">GATE 1: Preloader RSA-2048</text>
+  <text class="txt" x="625" y="140">eFuse 0xf0008664 &amp; 0x100000 == 1</text>
+  <text class="txt" x="625" y="156">SW Flag [0xfb0053bc] == 1</text>
+  <text class="txt" x="625" y="172">bl #0xfb0034f0 -> RSA check</text>
+  <text class="txt" x="625" y="188">Verify U-Boot (+0x6c4b0)</text>
+
+  <rect class="trap" x="905" y="95" width="240" height="105"/>
+  <text class="hdr-w" x="920" y="119">FAIL -&gt; PERMANENT HALT</text>
+  <text class="txt-w" x="920" y="142">0xfb00052a: "not secure loader"</text>
+  <text class="txt-w" x="920" y="160">0xfb000530: b #0xfb000520</text>
+  <text class="txt-w" x="920" y="180">Infinite spin -> Brick without</text>
+  <text class="txt-w" x="920" y="194">external NAND programmer</text>
+
+  <path class="arrow" d="M 271 147 L 315 147" marker-end="url(#a)"/>
+  <path class="arrow" d="M 565 147 L 610 147" marker-end="url(#a)"/>
+  <path class="arrow-red" d="M 860 147 L 905 147" marker-end="url(#ar)"/>
+
+  <!-- Down from Gate 1 to U-Boot -->
+  <path class="arrow" d="M 735 200 L 735 235 L 155 235 L 155 260" marker-end="url(#a)"/>
+
+  <!-- Row 2: U-Boot -> Gate 2 -> Kernel -> Gate 3 -->
+  <rect class="stage" x="36" y="260" width="240" height="115"/>
+  <text class="hdr" x="50" y="284">3. U-Boot (ARM32 SDRAM)</text>
+  <text class="txt" x="50" y="304">uboot.bin (1.31 MB total)</text>
+  <text class="txt" x="50" y="321">Reads env ('uenv' ELF object)</text>
+  <text class="txt" x="50" y="338">Selects Bank A or B (EEPROM)</text>
+  <text class="txt" x="50" y="355">Loads kerA/kerB (uImage 2.6MB)</text>
+
+  <rect class="gate" x="320" y="260" width="255" height="115"/>
+  <text class="hdr" x="335" y="284">GATE 2: Kernel Trailers</text>
+  <text class="txt" x="335" y="304">Dual 512B RSA-2048 + Cert</text>
+  <text class="txt" x="335" y="321">Offsets: 0x25152c &amp; 0x283f2c</text>
+  <text class="txt" x="335" y="338">Blocks unsigned kerA/B patch</text>
+  <text class="txt" x="335" y="355">to remove dm-verity/NFSB</text>
+
+  <rect class="stage" x="620" y="260" width="240" height="115"/>
+  <text class="hdr" x="635" y="284">4. Linux Kernel 3.0.13</text>
+  <text class="txt" x="635" y="304">LZHS -> vmlinux (4.43 MB)</text>
+  <text class="txt" x="635" y="321">VA 0xc0008000 (uImage - 0x40)</text>
+  <text class="txt" x="635" y="338">dm_mount_root_nfsb@c0009594</text>
+  <text class="txt" x="635" y="355">Mounts appfs1 (mtd4/5) + root</text>
+
+  <rect class="gate" x="905" y="260" width="240" height="115"/>
+  <text class="hdr" x="920" y="284">GATE 3: NFSB RSA-1024 (e=3)</text>
+  <text class="txt" x="920" y="304">nfsb_rsa_check @ 0xc0028df8</text>
+  <text class="txt" x="920" y="321">pow(S, 3, N) == 0^96||SHA256</text>
+  <text class="txt" x="920" y="338">2-level dm-bht MD5 (36,281 blk)</text>
+  <text class="txt" x="920" y="355">Protects rfsA/B &amp; 3rdA/B</text>
+
+  <path class="arrow" d="M 276 317 L 320 317" marker-end="url(#a)"/>
+  <path class="arrow" d="M 575 317 L 620 317" marker-end="url(#a)"/>
+  <path class="arrow" d="M 860 317 L 905 317" marker-end="url(#a)"/>
+
+  <!-- Down to Row 3: Userspace Init & RW Boundary -->
+  <path class="arrow" d="M 740 375 L 740 415 L 155 415 L 155 440" marker-end="url(#a)"/>
+
+  <rect class="stage" x="36" y="440" width="250" height="130"/>
+  <text class="hdr" x="50" y="464">5. BusyBox Init &amp; rc.local</text>
+  <text class="txt" x="50" y="484">BusyBox v1.15.3 -> /etc/init.d/rcS</text>
+  <text class="txt" x="50" y="502">rc.local &amp; ins_drv.sh</text>
+  <text class="txt" x="50" y="520">dmsetup verity -> /dev/mapper/dm-1</text>
+  <text class="txt" x="50" y="538">Mounts /3rd (mtd9/10) READ-ONLY</text>
+
+  <rect class="rw" x="330" y="440" width="260" height="130"/>
+  <text class="hdr" x="345" y="464">6. Writable UBIFS (mtd12 /3rd_rw)</text>
+  <text class="txt" x="345" y="484">ubiattach -m 12 -d 4 (NO NFSB!)</text>
+  <text class="txt" x="345" y="502">Updated safely via &lt;TAG&gt;smth&lt;/TAG&gt;</text>
+  <text class="txt" x="345" y="520">Signed with OEM LT0 RSA-2048?</text>
+  <text class="txt" x="345" y="538">YES for valid dev/prod keyholders</text>
+
+  <rect class="stage" x="635" y="440" width="245" height="130"/>
+  <text class="hdr" x="650" y="464">7. dtv_svc &amp; SystemManager</text>
+  <text class="txt" x="650" y="484">/basic/dtv_svc (4.25 MB ARM)</text>
+  <text class="txt" x="650" y="502">Preserves /3rd_rw/nettv on flag</text>
+  <text class="txt" x="650" y="520">Qt 4.8.3 SystemManager QML</text>
+  <text class="txt" x="650" y="538">SMConfig dynqml @ 0x1db58c</text>
+
+  <rect class="stage" x="920" y="440" width="225" height="130"/>
+  <text class="hdr" x="935" y="464">8. TV Apps &amp; Opera Browser</text>
+  <text class="txt" x="935" y="484">Opera Presto 6213 (nettv)</text>
+  <text class="txt" x="935" y="502">Copies /3rd_rw/nettv/opera_new.ini</text>
+  <text class="txt" x="935" y="520">Netflix (NRD), Ginga, YouTube SWF</text>
+  <text class="txt" x="935" y="538">DIAL / DLNA / PVR services</text>
+
+  <path class="arrow-grn" d="M 286 505 L 330 505" marker-end="url(#ag)"/>
+  <path class="arrow" d="M 590 505 L 635 505" marker-end="url(#a)"/>
+  <path class="arrow" d="M 880 505 L 920 505" marker-end="url(#a)"/>
+
+  <!-- Footer Summary -->
+  <rect fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" rx="8" x="36" y="610" width="1109" height="135"/>
+  <text class="hdr" x="56" y="638">Why Unsigned Full Custom ROMs Fail Deterministically</text>
+  <text class="txt" x="56" y="662">[1] Flashing unsigned U-Boot/Preloader breaks Gate 1 -&gt; permanent UART infinite loop trap (0xfb000520).</text>
+  <text class="txt" x="56" y="682">[2] Patching kerA/kerB to disable nfsb_rsa_check fails Gate 2 (dual RSA-2048 trailers @ 0x25152c / 0x283f2c).</text>
+  <text class="txt" x="56" y="702">[3] Repacking 3rdA/3rdB SquashFS without OEM private key fails Gate 3 (pow(sig,3,N) != 0^96||SHA256) -&gt; I/O fault.</text>
+  <text class="txt" x="56" y="722">[4] Only mtd12 (/3rd_rw UBIFS) sits outside dm-verity/NFSB — and still requires a valid UPG RSA-2048 signature if flashed via UI.</text>
+</svg>

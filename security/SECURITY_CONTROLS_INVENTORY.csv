@@ -1,0 +1,13 @@
+control_id,domain,control_name,implementation_state,enforcement_strength,evidence_source,notes
+SC-01,Secure Boot,OTP Silicon eFuse + BootROM RSA-2048 Gate,ENFORCED,HIGH,extracted/uboot.bin (0xfb001450..0xfb00147e),Reads 0xf0008664 & 0x100000 and [0xfb0053bc]==1; halts permanently at 0xfb000520 on failure
+SC-02,Kernel Integrity,Dual RSA-2048 Signature/Certificate Trailers on kerA/kerB,ENFORCED,HIGH,upgrade_loader.pkg#kerA/kerB (0x25152c; 0x283f2c),Blocks unsigned kernel modification before LZHS decompression
+SC-03,RootFS & /3rd Integrity,NFSB v2 RSA-1024 (e=3) + 2-level dm-bht MD5 Merkle Tree,ENFORCED,HIGH,scratch/vmlinux.bin (0xc0028df8 nfsb_rsa_check),Verifies 12514 rfsA blocks and 23767 3rdA blocks via exact mpuint_equal against 0^96||SHA256
+SC-04,Upgrade Container Security,DLM AES-128-CBC + MD5 + Chunk SHA-256 + RSA-2048 Sig,ENFORCED_WITH_KEY_HYGIENE_FLAW,MEDIUM,libdtv_common.so; extracted/ro_data_keys,Asymmetric RSA-2048 blocks arbitrary signatures except where leaked OEM PriKey exists in roda archive
+SC-05,Process Privilege Separation,Linux UID/GID Multi-User Isolation,ABSENT,WEAK,appfs1/etc/passwd; inittab; init scripts,Only root:x:0:0 user exists; dtv_svc SystemManager Opera dialserver run as root
+SC-06,Password Authentication,Shadow Password Database (/etc/shadow),ABSENT,WEAK,extracted/appfs1/etc/,No /etc/shadow shipped; usb_console.sh auto-spawns /bin/sh on ttyUSB cmdline
+SC-07,Mandatory Access Control,SELinux / AppArmor / Smack LSM,NOT_ENFORCED,WEAK,vmlinux.bin; appfs1/etc/,No SELinux or AppArmor policies or enforcing hooks present in userspace
+SC-08,Writable Partition Isolation,Separate RO (/) (/3rd) (/ro_data) vs RW (/perm) (/3rd_rw),PARTIAL,MEDIUM,"etc/scripts/{mount_perm, ubi_mount_3rd_rw, mount_ro_data}.sh",Prevents trivial overwrite of /ro_data or SquashFS but /3rd_rw lacks dm-verity
+SC-09,TLS / Transport Security,OpenSSL 1.0.0d + Opera CA Trust Store (opcacrt6.pem),SEVERELY_OUTDATED,WEAK,appfs1/basic/lib/libssl.so.1.0.0; opcacrt6.pem,Maxes out at TLS 1.0/1.1; 57/186 Opera CAs expired <2026 (9 expired <=2016)
+SC-10,Binary Hardening,ASLR / NX / Stack Canaries (Partial Observed),PARTIAL,LOW_TO_MEDIUM,GCC 4.5.1 ELF binaries (not dynamically tested on unit),vmlinux CONFIG_IKCONFIG absent; kernel ASLR (KASLR) absent on Linux 3.0.13 ARM32
+SC-11,Anti-Rollback Protection,Version / Sequence Monotonic Counter in Bootloader/UPG,NOT_VERIFIED_ABSENT_EVIDENCE,UNKNOWN_WEAK,libmtkapp.so; docs/03,No RPMB/eFuse monotonic firmware version counter observed; EEPROM bank toggles only on full PKG/UPG
+SC-12,Serial Debug Hardening,UART0 Console Disabled in /etc/inittab,PARTIAL,MEDIUM,extracted/appfs1/etc/inittab (#ttyMT0 line),inittab ttyMT0 getty commented out; ttyUSB0 auto-root gated on kernel cmdline

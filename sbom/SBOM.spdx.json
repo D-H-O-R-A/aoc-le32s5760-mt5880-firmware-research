@@ -1,0 +1,832 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "AOC-LE32S5760-MT5880-Firmware-SBOM",
+  "documentNamespace": "https://github.com/D-H-O-R-A/aoc-le32s5760-mt5880-firmware-research/spdx/f335000e-172a-59f7-8d85-fa6fed9dd887",
+  "creationInfo": {
+    "created": "2026-11-18T19:03:21Z",
+    "creators": [
+      "Tool: aoc-le32s5760-sbom_generation.py-1.0",
+      "Organization: D-H-O-R-A Firmware Research"
+    ]
+  },
+  "packages": [
+    {
+      "name": "AOC-LE32S5760-MT5880-Firmware",
+      "SPDXID": "SPDXRef-RootFirmware",
+      "versionInfo": "V2.011_V0.2",
+      "supplier": "Organization: TPV Technology / AOC",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "summary": "Official firmware image LE32S5760_V2.011_V0.2 (TPV MTK2K14PLF / MediaTek MT5880)."
+    },
+    {
+      "name": "linux-kernel-mt5880",
+      "SPDXID": "SPDXRef-pkg-linux-kernel",
+      "versionInfo": "3.0.13",
+      "supplier": "Organization: MediaTek / TPV Technology (Linux Foundation upstream)",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-only",
+      "licenseDeclared": "GPL-2.0-only",
+      "comment": "Status=CONFIRMED; Evidence=Kernel banner: Linux version 3.0.13 (roylo@TWCLS066) (gcc 4.5.1) Thu Aug 4 2016; Path=scratch/vmlinux.bin",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "c52a4aa8bcc21fc263a44c54fdebfe95ad1de53bf1137bd4f45d934e2c63c790"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:o:linux:linux_kernel:3.0.13:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/linux@3.0.13?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "glibc",
+      "SPDXID": "SPDXRef-pkg-glibc",
+      "versionInfo": "2.12.2",
+      "supplier": "Organization: Free Software Foundation (GNU Project)",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LGPL-2.1-or-later",
+      "licenseDeclared": "LGPL-2.1-or-later",
+      "comment": "Status=CONFIRMED; Evidence=SONAME libc-2.12.2.so & string 'GNU C Library stable release version 2.12.2'; Path=extracted/appfs1/lib/libc-2.12.2.so",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "f83cae1fc73eba372b0d37e7c38630e09613a5de929bdbcfac64f2b1e46195b7"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:gnu:glibc:2.12.2:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/glibc@2.12.2?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "busybox",
+      "SPDXID": "SPDXRef-pkg-busybox",
+      "versionInfo": "1.15.3",
+      "supplier": "Organization: BusyBox Project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-only",
+      "licenseDeclared": "GPL-2.0-only",
+      "comment": "Status=CONFIRMED; Evidence=Binary string 'BusyBox v1.15.3 (2012-06-06 18:54:15 CST)'; Path=extracted/appfs1/bin/busybox",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "c4c7dac66b148e05d32f132df0aeace8dd2cd1d4828c45587abffe20ce41ca54"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:busybox:busybox:1.15.3:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/busybox@1.15.3?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "openssl",
+      "SPDXID": "SPDXRef-pkg-openssl",
+      "versionInfo": "1.0.0d",
+      "supplier": "Organization: OpenSSL Software Foundation",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "OpenSSL",
+      "licenseDeclared": "OpenSSL",
+      "comment": "Status=CONFIRMED; Evidence=libssl.so.1.0.0 & libcurl RPATH/build path openssl-1.0.0d; Path=extracted/appfs1/basic/lib/libssl.so.1.0.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "134483cc9f5cd817785578fd631c5f0b073dc2f964e05a7fa57efdfb0ad8d9d8"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:openssl:openssl:1.0.0d:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/openssl@1.0.0d?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "curl",
+      "SPDXID": "SPDXRef-pkg-libcurl",
+      "versionInfo": "7.21.7",
+      "supplier": "Organization: Daniel Stenberg / curl project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "curl",
+      "licenseDeclared": "curl",
+      "comment": "Status=CONFIRMED; Evidence=Embedded string 'libcurl/7.21.7' and build path curl-7.21.7; Path=extracted/rootfs1/ginga/lib/libcurl.so.4.2.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "7e1838ba37e5c17597ca718d2de500acf3814996b1bebf9dd08453d1c22bb296"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:haxx:libcurl:7.21.7:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/curl@7.21.7?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "libxml2",
+      "SPDXID": "SPDXRef-pkg-libxml2",
+      "versionInfo": "2.7.8",
+      "supplier": "Organization: GNOME / Daniel Veillard",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "comment": "Status=CONFIRMED; Evidence=Shared library filename libxml2.so.2.7.8; Path=extracted/rootfs1/lib/libxml2.so.2.7.8",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "17377f3d5d90a7505a653ccd27fcb9e8d0536a0b9082d359909b8da74a3ac440"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:xmlsoft:libxml2:2.7.8:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/libxml2@2.7.8?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "expat",
+      "SPDXID": "SPDXRef-pkg-expat",
+      "versionInfo": "2.0.1",
+      "supplier": "Organization: Expat Project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "comment": "Status=CONFIRMED; Evidence=Embedded version string 'expat_2.0.1'; Path=extracted/appfs1/basic/lib/libexpat.so.1.5.2",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2ff8de3b8a4d2ba1b3e1d0b4a34dc47697ee570c0539e136d90c98f93cf7007d"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:libexpat:expat:2.0.1:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/expat@2.0.1?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "zlib",
+      "SPDXID": "SPDXRef-pkg-zlib",
+      "versionInfo": "1.2.3",
+      "supplier": "Organization: Jean-loup Gailly & Mark Adler",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Zlib",
+      "licenseDeclared": "Zlib",
+      "comment": "Status=CONFIRMED; Evidence=Shared library filename libz.so.1.2.3; Path=extracted/appfs1/lib/libz.so.1.2.3",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2a92d6681a778889681a4f331a7c63b012d0ddb7defe3013b9beea5d6800bc11"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:zlib:zlib:1.2.3:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/zlib@1.2.3?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "libpng",
+      "SPDXID": "SPDXRef-pkg-libpng",
+      "versionInfo": "1.2.43",
+      "supplier": "Organization: PNG Development Group",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Libpng",
+      "licenseDeclared": "Libpng",
+      "comment": "Status=CONFIRMED; Evidence=String 'libpng version 1.2.43 - February 25, 2010'; Path=extracted/appfs1/lib/libpng12.so.0.1.2.43",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0ad05456ebe3d722d93c5f5fd9a8274c15332ca826b3bd9aba1a7c8e45de553c"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:libpng:libpng:1.2.43:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/libpng@1.2.43?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "sqlite",
+      "SPDXID": "SPDXRef-pkg-sqlite",
+      "versionInfo": "3.7.2",
+      "supplier": "Organization: SQLite Consortium",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "blessing",
+      "licenseDeclared": "blessing",
+      "comment": "Status=CONFIRMED; Evidence=Shared library filename libsqlite_3_7_2.so; Path=extracted/appfs1/basic/lib/libsqlite_3_7_2.so",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "c73eb0cfce906af17e7de4264b1843c3ac0a8a7bf4da7534b157785d62adcf53"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:sqlite:sqlite:3.7.2:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/sqlite@3.7.2?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "qt-everywhere",
+      "SPDXID": "SPDXRef-pkg-qt4",
+      "versionInfo": "4.8.3",
+      "supplier": "Organization: Nokia / Qt Project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LGPL-2.1-only",
+      "licenseDeclared": "LGPL-2.1-only",
+      "comment": "Status=CONFIRMED; Evidence=QtCore/QtDeclarative/QtGui/QtNetwork/QtScript 4.8.3 shared libraries; Path=extracted/rootfs1/qt/lib/libQtCore.so.4.8.3",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "12d4845f15a2f994b88457219a937c738d339a05c422f25a4f0cbea7e107c70b"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:qt:qt:4.8.3:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/qt@4.8.3?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "alsa-lib",
+      "SPDXID": "SPDXRef-pkg-alsa-lib",
+      "versionInfo": "1.0.24.1",
+      "supplier": "Organization: ALSA Project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LGPL-2.1-or-later",
+      "licenseDeclared": "LGPL-2.1-or-later",
+      "comment": "Status=CONFIRMED; Evidence=Path alsa-lib-1.0.24.1/lib/libasound.so.2.0.0; Path=extracted/appfs1/basic/lib/libasound.so.2.0.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "35287d7da1b1301142cb1bdf0ba8ee1398037f21abb69176b9f7e95345e7ee0d"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:alsa-project:alsa-lib:1.0.24.1:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/alsa-lib@1.0.24.1?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "libfuse",
+      "SPDXID": "SPDXRef-pkg-fuse",
+      "versionInfo": "2.8.4",
+      "supplier": "Organization: FUSE Project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LGPL-2.1-only",
+      "licenseDeclared": "LGPL-2.1-only",
+      "comment": "Status=CONFIRMED; Evidence=Shared library filename libfuse.so.2.8.4; Path=extracted/appfs1/basic/lib/libfuse.so.2.8.4",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "d33deffa24b7905eedbe8e8d82fc805b036a6dba23729044f980c05a6fe697f6"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/libfuse@2.8.4?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "ntfs-3g",
+      "SPDXID": "SPDXRef-pkg-ntfs-3g",
+      "versionInfo": "2010.x-abi76",
+      "supplier": "Organization: Tuxera / NTFS-3G",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "comment": "Status=INFERRED_SONAME; Evidence=SONAME libntfs-3g.so.76.0.0 (upstream release date inferred from ABI 76); Path=extracted/appfs1/basic/lib/libntfs-3g.so.76.0.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "92fe760c7b7af94cbc0bb4eb6ce8c99ed0be1444a4f1eb9d500538a7a16b491a"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/ntfs-3g@76.0.0?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "boost",
+      "SPDXID": "SPDXRef-pkg-boost",
+      "versionInfo": "1.44.0",
+      "supplier": "Organization: Boost C++ Libraries",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "BSL-1.0",
+      "comment": "Status=CONFIRMED; Evidence=Shared library libboost_*.so.1.44.0 under rootfs1/ginga/lib; Path=extracted/rootfs1/ginga/lib/libboost_filesystem.so.1.44.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "4dc9d9a16a274908b93c843008ec8e361527b7b2b65aae4585cbeacb757b9d5b"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:boost:boost:1.44.0:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/boost@1.44.0?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "xerces-c",
+      "SPDXID": "SPDXRef-pkg-xerces-c",
+      "versionInfo": "3.1",
+      "supplier": "Organization: Apache Software Foundation",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "comment": "Status=CONFIRMED; Evidence=Shared library libxerces-c-3.1.so; Path=extracted/rootfs1/lib/libxerces-c-3.1.so",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "d5e3e329a74e86fc5da395a20fc685037a1ece3bc42b823c446ba8d57f52411f"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceType": "cpe23Type",
+          "referenceLocator": "cpe:2.3:a:apache:xerces-c\\+\\+:3.1:*:*:*:*:*:*:*"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/xerces-c@3.1?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "freetype",
+      "SPDXID": "SPDXRef-pkg-freetype",
+      "versionInfo": "2.4.x-so6.6.1",
+      "supplier": "Organization: FreeType Project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "FTL OR GPL-2.0-or-later",
+      "licenseDeclared": "FTL OR GPL-2.0-or-later",
+      "comment": "Status=INFERRED_SONAME; Evidence=Shared library libfreetype.so.6.6.1 (rootfs1/ginga ships 6.6.2); Path=extracted/appfs1/lib/libfreetype.so.6.6.1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "038b2e8f7650de8c45ec81445fd38309746aad1f4b986b4204f935b3b73025c0"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/freetype@6.6.1?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "libjpeg",
+      "SPDXID": "SPDXRef-pkg-libjpeg",
+      "versionInfo": "6b-so62",
+      "supplier": "Organization: Independent JPEG Group",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "IJG",
+      "licenseDeclared": "IJG",
+      "comment": "Status=CONFIRMED; Evidence=Shared library libjpeg.so.62.0.0; Path=extracted/appfs1/lib/libjpeg.so.62.0.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2bcabc0c5786a409473789951b6d948140abf07b82fddd57e83e9addfc8734e4"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/libjpeg@62.0.0?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "libiconv",
+      "SPDXID": "SPDXRef-pkg-libiconv",
+      "versionInfo": "1.13-so2.4.0",
+      "supplier": "Organization: GNU Project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LGPL-2.0-or-later",
+      "licenseDeclared": "LGPL-2.0-or-later",
+      "comment": "Status=INFERRED_SONAME; Evidence=Shared library libiconv.so.2.4.0 (ginga ships 2.5.0); Path=extracted/rootfs1/lib/libiconv.so.2.4.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "64bf4b946bfc91725a70b101ea7080fc3dd2ff34c3fe824ab7cff38780ca01f2"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/libiconv@2.4.0?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "device-mapper",
+      "SPDXID": "SPDXRef-pkg-lvm2-devmapper",
+      "versionInfo": "1.02",
+      "supplier": "Organization: Red Hat / LVM2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LGPL-2.1-only",
+      "licenseDeclared": "LGPL-2.1-only",
+      "comment": "Status=CONFIRMED; Evidence=Shared library libdevmapper.so.1.02 for dm-verity/dmsetup; Path=extracted/appfs1/lib/libdevmapper.so.1.02",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0075742554513b9aee0640910ff31177007ce5e2eb7ee4ab5705762cbcbd5ed6"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/device-mapper@1.02?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "c-ares",
+      "SPDXID": "SPDXRef-pkg-c-ares",
+      "versionInfo": "1.7.x-so2.0.0",
+      "supplier": "Organization: c-ares Project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "comment": "Status=INFERRED_SONAME; Evidence=Shared library libcares.so.2.0.0; Path=extracted/appfs1/basic/lib/libcares.so.2.0.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "13a99aafd964c350184e33144bbfa9f6868f2a056c8a4595eca046ad19b16c90"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/c-ares@2.0.0?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "libmicrohttpd",
+      "SPDXID": "SPDXRef-pkg-libmicrohttpd",
+      "versionInfo": "so10",
+      "supplier": "Organization: GNU Project",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LGPL-2.1-or-later",
+      "licenseDeclared": "LGPL-2.1-or-later",
+      "comment": "Status=CONFIRMED; Evidence=Shared library libmicrohttpd.so.10; Path=extracted/rootfs1/lib/libmicrohttpd.so.10",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "135736879938c20dc6950d2bf36965fc0368aec84444c5ad5e605c05697318a4"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/libmicrohttpd@10?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "libwebp",
+      "SPDXID": "SPDXRef-pkg-libwebp",
+      "versionInfo": "so4.0.1",
+      "supplier": "Organization: Google Inc.",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "comment": "Status=CONFIRMED; Evidence=Shared library libwebp.so.4.0.1; Path=extracted/appfs1/basic/lib/libwebp.so.4.0.1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "08577cab29503537813551f0b15bcedffd10d38def01c1b2d757d016a7518112"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/libwebp@4.0.1?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "DirectFB",
+      "SPDXID": "SPDXRef-pkg-directfb",
+      "versionInfo": "1.4.1",
+      "supplier": "Organization: DirectFB / MediaTek",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LGPL-2.1-or-later",
+      "licenseDeclared": "LGPL-2.1-or-later",
+      "comment": "Status=CONFIRMED; Evidence=libdirectfb.so / libdirectfb-1.4.so.0 strings; Path=extracted/appfs1/lib/libdirectfb.so",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "3dc169b6dfd115c479e8a9c720dfa382490a912df99124783150fa4b0b71e341"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/directfb@1.4.1?arch=armv7"
+        }
+      ]
+    },
+    {
+      "name": "opera-devices-sdk-presto",
+      "SPDXID": "SPDXRef-pkg-opera-presto",
+      "versionInfo": "Presto-6213",
+      "supplier": "Organization: Opera Software ASA",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "comment": "Status=CONFIRMED; Evidence=Opera Presto binary & User-Agent core 6213; Path=extracted/rootfs1/nettv/opera/opera"
+    },
+    {
+      "name": "netflix-ready-device-sdk",
+      "SPDXID": "SPDXRef-pkg-netflix-nrd",
+      "versionInfo": "NRD-2015-legacy",
+      "supplier": "Organization: Netflix Inc.",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "comment": "Status=CONFIRMED; Evidence=nrd-app ELF binary and JavaScriptCore runtime under rootfs1/netflix; Path=extracted/rootfs1/netflix/nrd-app/bin/nrd-app"
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-RootFirmware"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-linux-kernel"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-glibc"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-busybox"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-openssl"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-libcurl"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-libxml2"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-expat"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-zlib"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-libpng"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-sqlite"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-qt4"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-alsa-lib"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-fuse"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-ntfs-3g"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-boost"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-xerces-c"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-freetype"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-libjpeg"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-libiconv"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-lvm2-devmapper"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-c-ares"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-libmicrohttpd"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-libwebp"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-directfb"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-opera-presto"
+    },
+    {
+      "spdxElementId": "SPDXRef-RootFirmware",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-pkg-netflix-nrd"
+    }
+  ]
+}

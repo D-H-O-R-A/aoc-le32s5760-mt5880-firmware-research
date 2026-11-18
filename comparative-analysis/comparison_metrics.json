@@ -1,0 +1,426 @@
+{
+  "ab_mirrors": [
+    {
+      "pair": "kerA vs kerB",
+      "size_a": 2638124,
+      "size_b": 2638124,
+      "sha256_a": "dd670a548ae9546ecc91eacf7dc4de6a9d2ea457178af0afc68c27e1ad59dbe8",
+      "sha256_b": "dd670a548ae9546ecc91eacf7dc4de6a9d2ea457178af0afc68c27e1ad59dbe8",
+      "bit_identical": true,
+      "diff_ranges_sample": []
+    },
+    {
+      "pair": "rfsA vs rfsB",
+      "size_a": 51466240,
+      "size_b": 51466240,
+      "sha256_a": "e7273462007cbb7880f2016f9e57e685383009aa4f757e258dd2d84a32aa6b7a",
+      "sha256_b": "e7273462007cbb7880f2016f9e57e685383009aa4f757e258dd2d84a32aa6b7a",
+      "bit_identical": true,
+      "diff_ranges_sample": []
+    },
+    {
+      "pair": "3rdA vs 3rdB",
+      "size_a": 97738752,
+      "size_b": 97738752,
+      "sha256_a": "48de787eb015934940b2d1b60c82259de129fe10759e209b9e3e453f777a196d",
+      "sha256_b": "48de787eb015934940b2d1b60c82259de129fe10759e209b9e3e453f777a196d",
+      "bit_identical": true,
+      "diff_ranges_sample": []
+    }
+  ],
+  "stock_vs_custom_pkg": [
+    {
+      "partition": "3rdB",
+      "stock_size": 97738752,
+      "custom_size": 97738752,
+      "bit_identical": false,
+      "stock_nfsb_header_prefix": "NFSB",
+      "custom_header_prefix_hex": "4e46534202000000080002e6b8026d64"
+    },
+    {
+      "partition": "3rdA",
+      "stock_size": 97738752,
+      "custom_size": 97738752,
+      "bit_identical": false,
+      "stock_nfsb_header_prefix": "NFSB",
+      "custom_header_prefix_hex": "4e46534202000000080002e6b8026d64"
+    },
+    {
+      "partition": "roda",
+      "stock_size": 5767168,
+      "custom_size": 5767168,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "cfig",
+      "stock_size": 237,
+      "custom_size": 237,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "load",
+      "stock_size": 1314592,
+      "custom_size": 1314592,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "uenv",
+      "stock_size": 2384,
+      "custom_size": 2384,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "adsp",
+      "stock_size": 1272368,
+      "custom_size": 1272368,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "aqda",
+      "stock_size": 131216,
+      "custom_size": 131216,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "pqda",
+      "stock_size": 11534336,
+      "custom_size": 11534336,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "rfsB",
+      "stock_size": 51466240,
+      "custom_size": 51466240,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "rfsA",
+      "stock_size": 51466240,
+      "custom_size": 51466240,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "kerB",
+      "stock_size": 2638124,
+      "custom_size": 2638124,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "kerA",
+      "stock_size": 2638124,
+      "custom_size": 2638124,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "usig",
+      "stock_size": 512,
+      "custom_size": 512,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "chtD",
+      "stock_size": 65536,
+      "custom_size": 65536,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    },
+    {
+      "partition": "chtC",
+      "stock_size": 65536,
+      "custom_size": 65536,
+      "bit_identical": true,
+      "stock_nfsb_header_prefix": "",
+      "custom_header_prefix_hex": ""
+    }
+  ],
+  "staging_rootfs_delta": {
+    "added": [
+      {
+        "path": "run.sh",
+        "size_bytes": 3281,
+        "sha256": "eac306142e117c0f841533d715640c0fbec29fc3dcaf1ebecb2ff79e0d007a79"
+      },
+      {
+        "path": "nettv/opera_new.ini",
+        "size_bytes": 2463,
+        "sha256": "7c3441aa01082b8861202b43c1e8d5cbeb35f1b3005a7fe2e9c07b8491b3f382"
+      },
+      {
+        "path": "nettv/custom/user.css",
+        "size_bytes": 775,
+        "sha256": "055c96050b300f3fffa479409a7e7f71f50cdb346afdfeee8e7a325c797f545e"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/sm_config.ini",
+        "size_bytes": 33,
+        "sha256": "794f297587c129a6d183352e8a6479fbf60707c02ca85353521b7fb989246ee9"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/ModernLauncher.qml",
+        "size_bytes": 10332,
+        "sha256": "0e07bb30ef4fff08555cb8074fe57fd112fc051a41bdeef001351d3d2b0d0444"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/AppCard.qml",
+        "size_bytes": 3414,
+        "sha256": "dbc2659151886b49cc17d1dbef4e8263091cfe9e676c59dc180b9c69207a4713"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/ChatGPTView.qml",
+        "size_bytes": 5857,
+        "sha256": "ef4e6cf1d475d71aa765caafa8ae470e173780979ed19108858b2af0321e4858"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/ChromeWebView.qml",
+        "size_bytes": 7414,
+        "sha256": "8ecc025a371623b127606f98fae024520a942f60c46b9f67dcac39a7faa5a060"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/CinemaHubView.qml",
+        "size_bytes": 7801,
+        "sha256": "8a3143097c1052a1a073ba1ee4550b6781f6e0e65c15aa4db74e9dcc03c9a9eb"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/HeroBanner.qml",
+        "size_bytes": 1918,
+        "sha256": "6d55195bc96a1e6a5494a413f0658148a1ec1badde5f65d48ee9fb032cba8523"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/MediaBrowserPanel.qml",
+        "size_bytes": 5441,
+        "sha256": "6dcb89db7ca46e68f948bb033b2f75ec2c43c404fc0b76cd1e1b6360dadef078"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/ModernPlayerView.qml",
+        "size_bytes": 11751,
+        "sha256": "af257d819471515609b099801c14d229ecdf4c411466a2740ee3de7747e08245"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/MusicHubView.qml",
+        "size_bytes": 7398,
+        "sha256": "65b1a9e49925e7a60fee576e34cfc48267c8dde20b10ae9aef6c298b63b317d8"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/NavDrawer.qml",
+        "size_bytes": 3663,
+        "sha256": "464e4fe253c9e7094fcf1e1ae597b972807e7eec772bb276422f03ff00a7dce1"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/NetworkPanel.qml",
+        "size_bytes": 5372,
+        "sha256": "bb05f15e80a4913a94b57411dd1f643723dd355c3154f28d23cc5d6a4f75e8b5"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/SettingsPanel.qml",
+        "size_bytes": 4048,
+        "sha256": "509f9abe127e4b8ecdcf3563264b93466d7ab2b8d6fd8e46ae207f0f5a9a9c3c"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/StoragePanel.qml",
+        "size_bytes": 3767,
+        "sha256": "600c4a38f3693eaab8ed811b1171c459ebc132d3de6eaafd7f844c73b462a758"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/SystemInfoPanel.qml",
+        "size_bytes": 4239,
+        "sha256": "d7fb34fee1e57573ff0fc27298be3659f3b740ab5fb5f4bdd7d76656fff5aec1"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/ToolsHubView.qml",
+        "size_bytes": 6598,
+        "sha256": "9e3bdb3cc886d696da9cafc52bc69661f01b9130c59e26b397cc7bc432f98935"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/TopBar.qml",
+        "size_bytes": 4053,
+        "sha256": "cbb5da8b4a9a257e6aa13e7e9a6532100ab48b2b1548416222431bceac955adc"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/components/YouTubeView.qml",
+        "size_bytes": 8429,
+        "sha256": "f3e4fb5deed6b2a274463e3dc52148fb115292bcc27e27dec905328df4eb339e"
+      }
+    ],
+    "modified": [
+      {
+        "path": "nettv/opera/opera_dir/userjs/user.js",
+        "stock_size": 10771,
+        "modified_size": 25421,
+        "delta_bytes": 14650,
+        "stock_sha256": "ea0150d843147f1fc22d0aa0ae37ea997dfc9036231eff12e4059f114e3daadc",
+        "modified_sha256": "81e4732a51edccce5ffe09b9fd56d7c05f9ded9ff52edec27ca7dca006147a42"
+      },
+      {
+        "path": "nettv/opera/opera_home/opera.ini",
+        "stock_size": 2565,
+        "modified_size": 2565,
+        "delta_bytes": 0,
+        "stock_sha256": "f3c8cff9aa4e0e805f1e8b8c61c092c4b559fe415194d7e95c747ffe29fe4c54",
+        "modified_sha256": "25d9fdb47cdad67a8e1172bd2db4f30b3608b24405d07755d6f31c8beffa7b78"
+      },
+      {
+        "path": "nettv/opera/opera_home/urlfilter.ini",
+        "stock_size": 977,
+        "modified_size": 1906,
+        "delta_bytes": 929,
+        "stock_sha256": "5f2bc429929b1605c117a4aa642d8c1ad85c869ddcc83d68d777414287c07db0",
+        "modified_sha256": "cea181360e12266443040a1f93c6e37c21df0b5c0e63216c00fb0af3c09f23c1"
+      },
+      {
+        "path": "qt/AEDK/SystemManager/res/HomeScreen/HSMain.qml",
+        "stock_size": 32380,
+        "modified_size": 12038,
+        "delta_bytes": -20342,
+        "stock_sha256": "b7bd9dace6d995baa72082cbab188e063b6c80d5b2bed6ac1d1abf2a12cfa803",
+        "modified_sha256": "8d89071a38cf646bd6c3faf6a79e9428872c50b351ef9cc6a6f0b165cbf98b0d"
+      }
+    ]
+  },
+  "custom_payload_files": [
+    {
+      "path": "custom_payload/patches/run.sh",
+      "size_bytes": 3281,
+      "sha256": "eac306142e117c0f841533d715640c0fbec29fc3dcaf1ebecb2ff79e0d007a79"
+    },
+    {
+      "path": "custom_payload/patches/sm_config.ini",
+      "size_bytes": 33,
+      "sha256": "794f297587c129a6d183352e8a6479fbf60707c02ca85353521b7fb989246ee9"
+    },
+    {
+      "path": "custom_payload/nettv/opera_new.ini",
+      "size_bytes": 2463,
+      "sha256": "7c3441aa01082b8861202b43c1e8d5cbeb35f1b3005a7fe2e9c07b8491b3f382"
+    },
+    {
+      "path": "custom_payload/nettv/urlfilter.ini",
+      "size_bytes": 1906,
+      "sha256": "cea181360e12266443040a1f93c6e37c21df0b5c0e63216c00fb0af3c09f23c1"
+    },
+    {
+      "path": "custom_payload/nettv/user.css",
+      "size_bytes": 775,
+      "sha256": "055c96050b300f3fffa479409a7e7f71f50cdb346afdfeee8e7a325c797f545e"
+    },
+    {
+      "path": "custom_payload/nettv/user.js",
+      "size_bytes": 25421,
+      "sha256": "81e4732a51edccce5ffe09b9fd56d7c05f9ded9ff52edec27ca7dca006147a42"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/HSMain.qml",
+      "size_bytes": 12038,
+      "sha256": "8d89071a38cf646bd6c3faf6a79e9428872c50b351ef9cc6a6f0b165cbf98b0d"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/ModernLauncher.qml",
+      "size_bytes": 10332,
+      "sha256": "0e07bb30ef4fff08555cb8074fe57fd112fc051a41bdeef001351d3d2b0d0444"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/AppCard.qml",
+      "size_bytes": 3414,
+      "sha256": "dbc2659151886b49cc17d1dbef4e8263091cfe9e676c59dc180b9c69207a4713"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/ChatGPTView.qml",
+      "size_bytes": 5857,
+      "sha256": "ef4e6cf1d475d71aa765caafa8ae470e173780979ed19108858b2af0321e4858"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/ChromeWebView.qml",
+      "size_bytes": 7414,
+      "sha256": "8ecc025a371623b127606f98fae024520a942f60c46b9f67dcac39a7faa5a060"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/CinemaHubView.qml",
+      "size_bytes": 7801,
+      "sha256": "8a3143097c1052a1a073ba1ee4550b6781f6e0e65c15aa4db74e9dcc03c9a9eb"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/HeroBanner.qml",
+      "size_bytes": 1918,
+      "sha256": "6d55195bc96a1e6a5494a413f0658148a1ec1badde5f65d48ee9fb032cba8523"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/MediaBrowserPanel.qml",
+      "size_bytes": 5441,
+      "sha256": "6dcb89db7ca46e68f948bb033b2f75ec2c43c404fc0b76cd1e1b6360dadef078"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/ModernPlayerView.qml",
+      "size_bytes": 11751,
+      "sha256": "af257d819471515609b099801c14d229ecdf4c411466a2740ee3de7747e08245"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/MusicHubView.qml",
+      "size_bytes": 7398,
+      "sha256": "65b1a9e49925e7a60fee576e34cfc48267c8dde20b10ae9aef6c298b63b317d8"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/NavDrawer.qml",
+      "size_bytes": 3663,
+      "sha256": "464e4fe253c9e7094fcf1e1ae597b972807e7eec772bb276422f03ff00a7dce1"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/NetworkPanel.qml",
+      "size_bytes": 5372,
+      "sha256": "bb05f15e80a4913a94b57411dd1f643723dd355c3154f28d23cc5d6a4f75e8b5"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/SettingsPanel.qml",
+      "size_bytes": 4048,
+      "sha256": "509f9abe127e4b8ecdcf3563264b93466d7ab2b8d6fd8e46ae207f0f5a9a9c3c"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/StoragePanel.qml",
+      "size_bytes": 3767,
+      "sha256": "600c4a38f3693eaab8ed811b1171c459ebc132d3de6eaafd7f844c73b462a758"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/SystemInfoPanel.qml",
+      "size_bytes": 4239,
+      "sha256": "d7fb34fee1e57573ff0fc27298be3659f3b740ab5fb5f4bdd7d76656fff5aec1"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/ToolsHubView.qml",
+      "size_bytes": 6598,
+      "sha256": "9e3bdb3cc886d696da9cafc52bc69661f01b9130c59e26b397cc7bc432f98935"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/TopBar.qml",
+      "size_bytes": 4053,
+      "sha256": "cbb5da8b4a9a257e6aa13e7e9a6532100ab48b2b1548416222431bceac955adc"
+    },
+    {
+      "path": "custom_payload/qml_HomeScreen/components/YouTubeView.qml",
+      "size_bytes": 8429,
+      "sha256": "f3e4fb5deed6b2a274463e3dc52148fb115292bcc27e27dec905328df4eb339e"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 760" width="1180" height="760">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #0f172a; }
+      .subtitle { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13px; fill: #475569; }
+      .zone { fill: #ffffff; stroke: #64748b; stroke-width: 1.8; stroke-dasharray: 6,3; rx: 10; }
+      .act { fill: #fef2f2; stroke: #b91c1c; stroke-width: 2; rx: 8; }
+      .ctl { fill: #f0fdf4; stroke: #15803d; stroke-width: 2; rx: 8; }
+      .surf { fill: #fffbeb; stroke: #d97706; stroke-width: 2; rx: 8; }
+      .hdr { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13.5px; font-weight: bold; fill: #0f172a; }
+      .txt { font-family: 'Liberation Mono', monospace; font-size: 11px; fill: #1e293b; }
+      .arr { stroke: #b91c1c; stroke-width: 1.8; fill: none; }
+      .arr-g { stroke: #15803d; stroke-width: 1.8; fill: none; }
+    </style>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b91c1c"/>
+    </marker>
+    <marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#15803d"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1180" height="760"/>
+  <text class="title" x="36" y="40">Threat Model, Attack Surfaces &amp; Enforced Security Boundaries</text>
+  <text class="subtitle" x="36" y="62">Mapping trust boundaries (MaskROM / Secure Boot / dm-verity) vs exposed local, network, and legacy TLS/Parser surfaces</text>
+
+  <!-- Actors (Left) -->
+  <rect class="act" x="36" y="95" width="260" height="110"/>
+  <text class="hdr" x="52" y="119">T1: Physical / Local Port Actor</text>
+  <text class="txt" x="52" y="139">- USB Mass Storage / HID insert</text>
+  <text class="txt" x="52" y="157">- PCB UART pads (ttyMT0 disabled)</text>
+  <text class="txt" x="52" y="175">- Flash chip desoldering / JTAG</text>
+  <text class="txt" x="52" y="193">(Offline hardware threat)</text>
+
+  <rect class="act" x="36" y="230" width="260" height="115"/>
+  <text class="hdr" x="52" y="254">T2: Same-LAN Adjacent Actor</text>
+  <text class="txt" x="52" y="274">- DIAL HTTP REST API (dialserver)</text>
+  <text class="txt" x="52" y="292">- DLNA / UPnP / mDNSResponder</text>
+  <text class="txt" x="52" y="310">- Wi-Fi Direct / P2P media sync</text>
+  <text class="txt" x="52" y="328">- Plaintext DHCP / DNS spoofing</text>
+
+  <rect class="act" x="36" y="370" width="260" height="115"/>
+  <text class="hdr" x="52" y="394">T3: Remote Web / MITM Actor</text>
+  <text class="txt" x="52" y="414">- Opera Presto 6213 JS/HTML DOM</text>
+  <text class="txt" x="52" y="432">- OpenSSL 1.0.0d (TLS 1.0/1.1)</text>
+  <text class="txt" x="52" y="450">- Stale 186-CA store (opcacrt6.pem)</text>
+  <text class="txt" x="52" y="468">- Legacy XML/PNG/zlib parsers</text>
+
+  <!-- Attack Surfaces (Center) -->
+  <rect class="zone" x="330" y="88" width="445" height="445"/>
+  <text class="hdr" x="348" y="114">Trust Boundaries &amp; Observed Firmware Exposure</text>
+
+  <rect class="surf" x="350" y="132" width="405" height="90"/>
+  <text class="hdr" x="364" y="154">S1: Physical Debug &amp; Upgrade Parser Surface</text>
+  <text class="txt" x="364" y="172">- usb_console.sh auto-spawns root sh IF ttyUSB in cmdline</text>
+  <text class="txt" x="364" y="188">- /etc/passwd has root:x:0:0, NO /etc/shadow file present</text>
+  <text class="txt" x="364" y="204">- Outer DLM AES key (0x94102909*4) hardcoded &amp; recoverable</text>
+
+  <rect class="surf" x="350" y="242" width="405" height="90"/>
+  <text class="hdr" x="364" y="264">S2: LAN &amp; Persistent Writable Partition (/3rd_rw)</text>
+  <text class="txt" x="364" y="282">- mtd12 (/3rd_rw) &amp; mtd11 (/perm) lack dm-verity checks</text>
+  <text class="txt" x="364" y="298">- NetTV copies /3rd_rw/nettv configs -> browser runtime</text>
+  <text class="txt" x="364" y="314">- Unauthenticated LAN SSDP/DIAL triggers app launch URLs</text>
+
+  <rect class="surf" x="350" y="352" width="405" height="100"/>
+  <text class="hdr" x="364" y="374">S3: Obsolete Network Crypto &amp; C Memory Parsers</text>
+  <text class="txt" x="364" y="392">- OpenSSL 1.0.0d, curl 7.21.7, libxml2 2.7.8, expat 2.0.1,</text>
+  <text class="txt" x="364" y="408">  zlib 1.2.3, BusyBox 1.15.3, Linux 3.0.13 (all EOL &gt; 10 yr)</text>
+  <text class="txt" x="364" y="424">- Root services (dtv_svc, SystemManager, opera) run as UID 0</text>
+  <text class="txt" x="364" y="440">- opcacrt6.pem includes expired roots + distrusted WoSign</text>
+
+  <rect class="ctl" x="350" y="468" width="405" height="50"/>
+  <text class="hdr" x="364" y="489">Mitigating Cryptographic Boundary: Hardware Root of Trust</text>
+  <text class="txt" x="364" y="506">eFuse + BootROM + Kernel RSA-2048/1024 + dm-bht block persistent rootkit flash</text>
+
+  <!-- Protected Assets & Controls (Right) -->
+  <rect class="ctl" x="810" y="95" width="334" height="125"/>
+  <text class="hdr" x="826" y="119">Asset 1: Boot &amp; Rootfs Integrity</text>
+  <text class="txt" x="826" y="139">Protected By: OTP eFuse 0xf0008664,</text>
+  <text class="txt" x="826" y="157">RSA-2048 trailers, NFSB RSA-1024,</text>
+  <text class="txt" x="826" y="175">2-level dm-bht MD5 Merkle verification</text>
+  <text class="txt" x="826" y="193">Resilience: HIGH against USB reflashes</text>
+
+  <rect class="ctl" x="810" y="242" width="334" height="125"/>
+  <text class="hdr" x="826" y="266">Asset 2: DRM Keys &amp; Identity (/ro_data)</text>
+  <text class="txt" x="826" y="286">Protected By: Read-only UBIFS mount</text>
+  <text class="txt" x="826" y="304">(mount -r ubi3:ro_data /ro_data)</text>
+  <text class="txt" x="826" y="322">Exposure: Readable by any compromised</text>
+  <text class="txt" x="826" y="340">UID 0 daemon if runtime RCE occurs</text>
+
+  <rect class="surf" x="810" y="388" width="334" height="130"/>
+  <text class="hdr" x="826" y="412">Asset 3: User Privacy &amp; Network Data</text>
+  <text class="txt" x="826" y="432">Exposure: Cleartext HTTP probes,</text>
+  <text class="txt" x="826" y="450">aging root CAs, zero browser sandbox</text>
+  <text class="txt" x="826" y="468">isolation (opera/nrd run as root).</text>
+  <text class="txt" x="826" y="486">Mitigation: Network VLAN / DNS sinkhole</text>
+
+  <path class="arr" d="M 296 150 L 350 170" marker-end="url(#ar)"/>
+  <path class="arr" d="M 296 285 L 350 285" marker-end="url(#ar)"/>
+  <path class="arr" d="M 296 425 L 350 400" marker-end="url(#ar)"/>
+  <path class="arr-g" d="M 755 493 L 810 157" marker-end="url(#ag)"/>
+  <path class="arr" d="M 755 300 L 810 300" marker-end="url(#ar)"/>
+  <path class="arr" d="M 755 410 L 810 450" marker-end="url(#ar)"/>
+
+  <!-- Risk Matrix Bar -->
+  <rect fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" rx="8" x="36" y="560" width="1108" height="175"/>
+  <text class="hdr" x="54" y="586">Empirical Security Posture Summary (Strictly Evidence-Based — No Unverified Exploits Claimed)</text>
+  <text class="txt" x="54" y="610">[STRONG]  Boot &amp; Firmware Signature Enforcement: BootROM + eFuse + NFSB + exact mpuint_equal block unauthorized flash persistence.</text>
+  <text class="txt" x="54" y="630">[MEDIUM]  Static UPG AES Keys Exposed: Extracting 09291094*4 &amp; ro_data keys allows decrypting official packages, NOT signing fakes.</text>
+  <text class="txt" x="54" y="650">[HIGH]    No Privilege Separation: Core services (dtv_svc, SystemManager, Opera, DIAL) run as root without SELinux/AppArmor.</text>
+  <text class="txt" x="54" y="670">[HIGH]    10+ Year EOL Crypto &amp; C Libraries: OpenSSL 1.0.0d, curl 7.21.7, libxml2 2.7.8, expat 2.0.1 expose parsing &amp; downgrade risks.</text>
+  <text class="txt" x="54" y="690">[HIGH]    Trust Store Decay: opcacrt6.pem carries expired anchors + distrusted CAs -> breaks modern TLS &amp; weakens PKI trust.</text>
+  <text class="txt" x="54" y="710">[LIMITED] Telemetry Unobserved: Network packet capture on live hardware not run; privacy risk assessed statically from URLs/configs.</text>
+</svg>

@@ -293,3 +293,26 @@ All scripts emit deterministic verification logs into [`evidence/`](evidence/). 
   - Syntax, BusyBox, ELF32 `DT_NEEDED`, startup script, `opera.ini` delta, `node --check`, and Latin-1/QML validations ([`evidence/05_runtime_engines_and_busybox_audit.txt`](evidence/05_runtime_engines_and_busybox_audit.txt), [`06`](evidence/06_systemmanager_and_nettv_disasm.txt), [`07`](evidence/07_dmbht_and_boot_scripts_audit.txt)).
 - **Not Executed Inside Offline Analysis Environment:**
   - Live execution on physical AOC LE32S5760/20 silicon or QEMU ARM/DirectFB hardware emulation (`qemu-arm` and proprietary MediaTek/DirectFB kernel modules are absent in the offline workspace). Runtime behavior beyond static binary verification — such as live on-screen USB flash completion or live SoC eFuse state — requires controlled physical bench verification as outlined in [Chapter 6](docs/06_reproduction_guide_and_experimental_protocol.md).
+
+---
+
+## Extended Multidisciplinary Research Monograph Index (`v2.0.0`)
+
+Beyond the foundational chapters ([`docs/01..11`](docs/01_architecture_hardware_and_flash_layout.md)) and primary proof scripts ([`scripts/`](scripts/)), the repository expands into specialized, auditable engineering directories:
+
+| Research Domain | Key Deliverables | Highlights |
+|---|---|---|
+| **Hardware & Silicon** | [`hardware/`](hardware/HARDWARE_ARCHITECTURE.md) · [`HARDWARE_PHOTOGRAPHIC_DOCUMENTATION/`](hardware/HARDWARE_PHOTOGRAPHIC_DOCUMENTATION/README.md) | `MT5880` SoC, `T8032` standby MCU, Dual-Ch DDR, `10` NAND IDs, explicit unverified PCB gap (`715G7904M`) |
+| **Firmware Forensics** | [`firmware-forensics/`](firmware-forensics/FIRMWARE_FORENSIC_ANALYSIS.md) | `FIRMWARE_HASH_MANIFEST.txt`, `FIRMWARE_METADATA.json`, `47`-binary CSV, `PKG`/`NFSB`/`uImage`/`.upg` specs |
+| **Boot & Recovery** | [`boot-analysis/`](boot-analysis/BOOT_CHAIN_ANALYSIS.md) | Mask BootROM -> Thumb-2 Preloader -> `kerA/B` -> `dm_mount_root_nfsb` -> `SystemManager` sequence |
+| **Kernel Reverse Eng.** | [`kernel-analysis/`](kernel-analysis/KERNEL_DEEP_ANALYSIS.md) | `Linux 3.0.13` (`381` source paths, `8` `dtv_driver.ko` paths, `12` `.ko` `.modinfo`), mainline diff analysis |
+| **Filesystems & Storage** | [`filesystem/`](filesystem/FILESYSTEM_ARCHITECTURE.md) | Full `4,004`-entry inventory (`appfs1` + `rootfs1`), `mtd0..mtd30` `cfig` table, `/perm` & `/3rd_rw` UBIFS persistence |
+| **Security & Cryptography** | [`security/`](security/SECURITY_ASSESSMENT.md) | `SEC-01`–`SEC-09` structured findings, Bleichenbacher `e=3` immunity proof, `SEC-02` `roda` key leak, `12`-control CSV |
+| **Update Mechanism** | [`update-analysis/`](update-analysis/FIRMWARE_UPDATE_SECURITY.md) | `#DH@FiRm` DLM wrapper, `sub_404f28` `"/dev/nand_10"` `-22 ENOENT` bug, `3rdp` failover skip, anti-rollback limits |
+| **Privacy & Telemetry** | [`privacy/`](privacy/NETWORK_COMMUNICATION_ANALYSIS.md) | `291` static URLs cataloged, `DIAL`/`DLNA`/`OPCACRT6` CA audit (`57/186` expired <`2026`), uncaptured-pcap boundaries |
+| **Comparative Diffing** | [`comparative-analysis/`](comparative-analysis/FIRMWARE_BINARY_DIFF_ANALYSIS.md) | A/B mirror SHA-256 parity (`ker`/`rfs`/`3rd`), stock vs `custom_upgrade_loader.pkg`, `21+4` staging delta |
+| **Emulation & Validation** | [`emulation/`](emulation/EMULATION_RESEARCH.md) | MMIO/`dtv_driver.ko` re-hosting barriers, non-simulated QEMU blueprint, experimental cryptographic ledger |
+| **Supply Chain & SBOM** | [`sbom/`](sbom/THIRD_PARTY_COMPONENTS.md) | Valid `SPDX-2.3` (`27` pkgs) & `CycloneDX 1.5` (`26` comps) JSONs, `LD_LIBRARY_PATH` map, legacy CVEs, GPL audit |
+| **Scientific Publication** | [`scientific-research/`](scientific-research/RESEARCH_PAPER.md) | Publication monograph, [BibTeX](scientific-research/REFERENCES.bib), Costin/Firmadyne/Wright/NIST/OWASP literature synthesis |
+| **Vector Diagrams** | [`diagrams/`](diagrams/BOOT_CHAIN.svg) | 7 standalone architectural SVGs (`HARDWARE`, `BOOT`, `FIRMWARE`, `DEPENDENCIES`, `NETWORK`, `UPDATE`, `THREAT_MODEL`) |
+| **Tests, CI & Governance** | [`tests/`](tests/test_research_suite.py) · [`.github/workflows/`](.github/workflows/firmware-analysis.yml) | Automated ephemeral `.upg` CI test suite, [ETHICAL_RESEARCH.md](ETHICAL_RESEARCH.md), [RESPONSIBLE_DISCLOSURE.md](RESPONSIBLE_DISCLOSURE.md) |

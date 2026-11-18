@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 760" width="1180" height="760">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #0f172a; }
+      .subtitle { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 13px; fill: #475569; }
+      .hdr { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #0f172a; }
+      .txt { font-family: 'Liberation Mono', monospace; font-size: 11px; fill: #1e293b; }
+      .sm { font-family: 'Liberation Mono', monospace; font-size: 10.5px; fill: #334155; }
+      .b-zip { fill: #eef2ff; stroke: #4338ca; stroke-width: 2; rx: 8; }
+      .b-sec { fill: #fef2f2; stroke: #b91c1c; stroke-width: 1.8; rx: 5; }
+      .b-cfg { fill: #fffbeb; stroke: #b45309; stroke-width: 1.8; rx: 5; }
+      .b-rw { fill: #dcfce7; stroke: #15803d; stroke-width: 2; rx: 5; }
+      .b-dat { fill: #e0f2fe; stroke: #0369a1; stroke-width: 1.8; rx: 5; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1180" height="760"/>
+  <text class="title" x="36" y="40">Firmware Container &amp; NAND Partition Architecture (upgrade_loader.pkg -&gt; cfig NAND Map)</text>
+  <text class="subtitle" x="36" y="62">Verified byte offsets, sizes, SHA-256 checksums, and cfig MTD numbers (mtd1..mtd30) from LE32S5760_V2.011_V0.2.zip</text>
+
+  <!-- Outer ZIP -> PKG -->
+  <rect class="b-zip" x="36" y="88" width="1109" height="82"/>
+  <text class="hdr" x="54" y="114">1. Official Distribution Archive: LE32S5760_V2.011_V0.2.zip (285,061,005 B | SHA256: 014e235c...)</text>
+  <text class="txt" x="54" y="136">-&gt; Extracts: upgrade_loader.pkg (323,840,461 B | SHA256: 219de76d... | Timestamp: 2016-08-03 14:26:04 | CRC32: 0x195275a4)</text>
+  <text class="txt" x="54" y="154">-&gt; Outer 152-byte header (0x00..0x98) followed sequentially by 16 tagged chunks ([4B Tag | 4B Flags | 4B LE Size | Payload])</text>
+
+  <!-- Left column: 16 PKG Chunks -->
+  <rect fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" rx="8" x="36" y="190" width="540" height="535"/>
+  <text class="hdr" x="54" y="218">2. PKG Sequential Partition Stream (Verified Offsets &amp; SHA-256)</text>
+
+  <rect class="b-sec" x="54" y="232" width="504" height="54"/>
+  <text class="txt" x="64" y="252">3rdB @ 0x000000a4 | 97,738,752 B | SquashFS + NFSB v2 + dm-bht (23,767 blk)</text>
+  <text class="txt" x="64" y="270">3rdA @ 0x05d360b0 | 97,738,752 B | Identical Bank A/B SHA256: 48de787e...</text>
+
+  <rect class="b-cfg" x="54" y="294" width="504" height="54"/>
+  <text class="txt" x="64" y="314">roda @ 0x0ba6c0bc | 5,767,168 B | ro_data UBI (RSA PubKeys &amp; AES .key/.iv)</text>
+  <text class="txt" x="64" y="332">cfig @ 0x0bfec0c8 | 237 B       | Partition map (uenv:1 .. Seur:30)</text>
+
+  <rect class="b-sec" x="54" y="356" width="504" height="54"/>
+  <text class="txt" x="64" y="376">load @ 0x0bfec1c1 | 1,314,592 B | Preloader (0..0xa040) + U-Boot ARM32 + RSA</text>
+  <text class="txt" x="64" y="394">uenv @ 0x0c12d0ed | 2,384 B     | Unstripped ARM ELF .o (board/mt5880 env)</text>
+
+  <rect class="b-dat" x="54" y="418" width="504" height="54"/>
+  <text class="txt" x="64" y="438">adsp @ 0x0c12da49 | 1,272,368 B | Audio DSP firmware (nand 29)</text>
+  <text class="txt" x="64" y="456">aqda/pqda         | 131KB/11.5MB| Audio Quality (18) &amp; Panel PQ data (17)</text>
+
+  <rect class="b-sec" x="54" y="480" width="504" height="54"/>
+  <text class="txt" x="64" y="500">rfsB @ 0x0cd8452d | 51,466,240 B | RootFS + NFSB v2 + dm-bht (12,514 blk)</text>
+  <text class="txt" x="64" y="518">rfsA @ 0x0fe99539 | 51,466,240 B | Identical Bank A/B SHA256: e7273462...</text>
+
+  <rect class="b-sec" x="54" y="542" width="504" height="54"/>
+  <text class="txt" x="64" y="562">kerB @ 0x12fae545 | 2,638,124 B | uImage (HW-LZHS Linux 3.0.13) + dual RSA-2048</text>
+  <text class="txt" x="64" y="580">kerA @ 0x1323267d | 2,638,124 B | Identical Bank A/B SHA256: dd670a54...</text>
+
+  <rect class="b-cfg" x="54" y="604" width="504" height="50"/>
+  <text class="txt" x="64" y="624">usig (512 B @ 0x134b67b5) + chtD (65KB, nand 28) + chtC (65KB, nand 27)</text>
+  <text class="txt" x="64" y="642">cfig also allocates game(14), ddb(26), Seur(30) not packed as blobs in PKG</text>
+
+  <rect class="b-rw" x="54" y="662" width="504" height="44"/>
+  <text class="txt" x="64" y="682">Note: 3rdw (mtd12 /3rd_rw) is declared in cfig (nand 12) and formatted</text>
+  <text class="txt" x="64" y="698">cleanly on-device as UBIFS; absent from initial PKG image stream.</text>
+
+  <!-- Right column: On-Device Runtime NAND Map & Mount Points -->
+  <rect fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" rx="8" x="605" y="190" width="540" height="535"/>
+  <text class="hdr" x="625" y="218">3. Verified On-Device NAND Mapping (cfig -&gt; mtdblock* &amp; Mounts)</text>
+
+  <rect class="b-sec" x="625" y="232" width="500" height="72"/>
+  <text class="hdr" x="635" y="252">Boot, Kernel &amp; RootFS Banks (cfig Verified: nand 1,4,5,6,7)</text>
+  <text class="sm" x="635" y="270">mtd1 (uenv) | mtd4 (kerA) &amp; mtd5 (kerB) -&gt; LZHS uImage + dual RSA-2048</text>
+  <text class="sm" x="635" y="287">mtd6 (rfsA) &amp; mtd7 (rfsB) -&gt; SquashFS + NFSB v2 + dm-bht -&gt; / (ro)</text>
+
+  <rect class="b-sec" x="625" y="314" width="500" height="76"/>
+  <text class="hdr" x="635" y="334">Dual Application Partition (/3rd — mtd9 &amp; mtd10 dm-verity)</text>
+  <text class="sm" x="635" y="352">mtd9 (3rdA) / mtd10 (3rdB) -&gt; dmsetup create dm-1 --table "0 0 verity ..."</text>
+  <text class="sm" x="635" y="369">Mount target: /dev/mapper/dm-1 -&gt; /3rd (Opera, Qt, Netflix, Ginga, DIAL)</text>
+
+  <rect class="b-cfg" x="625" y="400" width="500" height="72"/>
+  <text class="hdr" x="635" y="420">Persistent State &amp; Read-Only Key Store (mtd11 &amp; mtd13 UBIFS)</text>
+  <text class="sm" x="635" y="438">mtd11 (perm)    -&gt; ubiattach -m 11 -d 2 -&gt; ubi2:perm    -&gt; /perm (RW)</text>
+  <text class="sm" x="635" y="455">mtd13 (ro_data) -&gt; ubiattach -m 13 -d 3 -&gt; ubi3:ro_data -&gt; /ro_data (RO)</text>
+
+  <rect class="b-rw" x="625" y="482" width="500" height="96"/>
+  <text class="hdr" x="635" y="502">Writable Overlay Target: mtd12 (3rdw -&gt; /3rd_rw UBIFS)</text>
+  <text class="sm" x="635" y="520">ubiattach /dev/ubi_ctrl -m 12 -d 4 -&gt; mount -t ubifs ubi4:3rd_rw /3rd_rw</text>
+  <text class="sm" x="635" y="537">NO NFSB / NO dm-verity check at mount time! Persistent across reboots.</text>
+  <text class="sm" x="635" y="554">dtv_svc preserves /3rd_rw/nettv if /3rd_rw/upgrade/customer_version exists.</text>
+
+  <rect fill="#f1f5f9" stroke="#64748b" stroke-width="1.5" rx="6" x="625" y="590" width="500" height="118"/>
+  <text class="hdr" x="635" y="612">Calibration &amp; Cross-Verification Metrics (100% Checked)</text>
+  <text class="sm" x="635" y="630">Additional cfig regions: mtd14(game), 17(pqda), 18(aqda), 26(ddb), 27-30</text>
+  <text class="sm" x="635" y="648">Factory A/B Mirrors: kerA==kerB, rfsA==rfsB, 3rdA==3rdB (100% bit-identical)</text>
+  <text class="sm" x="635" y="666">dm-bht Merkle Tree : rfsA=12,514 blocks | 3rdA=23,767 blocks (36,281 PASS)</text>
+  <text class="sm" x="635" y="684">Safe RW delivery   : TAG=smth, METHOD=FILE -&gt; extracts tgz into /3rd_rw</text>
+</svg>

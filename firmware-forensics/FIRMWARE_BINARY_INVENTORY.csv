@@ -1,0 +1,48 @@
+category,path,size_bytes,sha256,elf_machine,elf_bits,abi_or_type,status,evidence_source
+factory_archive,original_firmware/LE32S5760_V2.011_V0.2.zip,285061005,014e235cb9406be9d8d61cc780093d3d5196b8748f72a088b43641dc99d0d1ff,N/A,N/A,Raw / Data Binary,CONFIRMED,ZIP Archive
+factory_pkg,extracted/upgrade_loader.pkg,323840461,219de76d6dea7f62fe3648392f6262031e230cc33380c2b173c22fc667089b83,N/A,N/A,Raw / Data Binary,CONFIRMED,Unpacked OEM PKG
+pkg_partition,extracted/upgrade_loader.pkg#part:3rdB,97738752,48de787eb015934940b2d1b60c82259de129fe10759e209b9e3e453f777a196d,N/A,N/A,NFSB Verity Container,CONFIRMED,PKG offset 0xa4
+pkg_partition,extracted/upgrade_loader.pkg#part:3rdA,97738752,48de787eb015934940b2d1b60c82259de129fe10759e209b9e3e453f777a196d,N/A,N/A,NFSB Verity Container,CONFIRMED,PKG offset 0x5d360b0
+pkg_partition,extracted/upgrade_loader.pkg#part:roda,5767168,7916e6cf72e61df109abf6bc2f5e29e1e45a8514c304828d57f367d277250000,N/A,N/A,UBI Erase Counter Header,CONFIRMED,PKG offset 0xba6c0bc
+pkg_partition,extracted/upgrade_loader.pkg#part:cfig,237,99074288a38cf9b1db9fa92c508049c124daa2748c0d9134808f3e762d39d843,N/A,N/A,Raw / Data Binary,CONFIRMED,PKG offset 0xbfec0c8
+pkg_partition,extracted/upgrade_loader.pkg#part:load,1314592,88bfd15cea77fcfc8f5084a66c1729fa25f6ba33643d9205c4e80b1cf3936c76,N/A,N/A,Raw / Data Binary,CONFIRMED,PKG offset 0xbfec1c1
+pkg_partition,extracted/upgrade_loader.pkg#part:uenv,2384,baa332db950260bee4cdee4d0283997636b7272851ab4bff211820effed9fc56,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,PKG offset 0xc12d0ed
+pkg_partition,extracted/upgrade_loader.pkg#part:adsp,1272368,ea72302e2cba2c2e227b92284485c40d46c6493e4df9bb7c71baefabac1af2c4,N/A,N/A,Raw / Data Binary,CONFIRMED,PKG offset 0xc12da49
+pkg_partition,extracted/upgrade_loader.pkg#part:aqda,131216,111d81db9df8ce1c5d09b097426c6ddb138855f8f4262ba888307d139ca08d2d,N/A,N/A,Raw / Data Binary,CONFIRMED,PKG offset 0xc264485
+pkg_partition,extracted/upgrade_loader.pkg#part:pqda,11534336,8e40465fb6ca6002f816813caae48d8b8aa338329fc8422287e0542187cf6a2d,N/A,N/A,Raw / Data Binary,CONFIRMED,PKG offset 0xc284521
+pkg_partition,extracted/upgrade_loader.pkg#part:rfsB,51466240,e7273462007cbb7880f2016f9e57e685383009aa4f757e258dd2d84a32aa6b7a,N/A,N/A,NFSB Verity Container,CONFIRMED,PKG offset 0xcd8452d
+pkg_partition,extracted/upgrade_loader.pkg#part:rfsA,51466240,e7273462007cbb7880f2016f9e57e685383009aa4f757e258dd2d84a32aa6b7a,N/A,N/A,NFSB Verity Container,CONFIRMED,PKG offset 0xfe99539
+pkg_partition,extracted/upgrade_loader.pkg#part:kerB,2638124,dd670a548ae9546ecc91eacf7dc4de6a9d2ea457178af0afc68c27e1ad59dbe8,ARM (32-bit),32-bit,U-Boot uImage,CONFIRMED,PKG offset 0x12fae545
+pkg_partition,extracted/upgrade_loader.pkg#part:kerA,2638124,dd670a548ae9546ecc91eacf7dc4de6a9d2ea457178af0afc68c27e1ad59dbe8,ARM (32-bit),32-bit,U-Boot uImage,CONFIRMED,PKG offset 0x1323267d
+pkg_partition,extracted/upgrade_loader.pkg#part:usig,512,62c2ecd39fc14421e90b03b3bd3c739335841638e5eca2e1167aaa3242775d52,N/A,N/A,Raw / Data Binary,CONFIRMED,PKG offset 0x134b67b5
+pkg_partition,extracted/upgrade_loader.pkg#part:chtD,65536,1cbb642bee341b0ec5cb04b19b8bb3ab80a92f30e848b3b09c99f6e5c08c5f21,N/A,N/A,Raw / Data Binary,CONFIRMED,PKG offset 0x134b69c1
+pkg_partition,extracted/upgrade_loader.pkg#part:chtC,65536,1cbb642bee341b0ec5cb04b19b8bb3ab80a92f30e848b3b09c99f6e5c08c5f21,N/A,N/A,Raw / Data Binary,CONFIRMED,PKG offset 0x134c69cd
+bootloader,extracted/uboot.bin,1314592,88bfd15cea77fcfc8f5084a66c1729fa25f6ba33643d9205c4e80b1cf3936c76,N/A,N/A,Raw / Data Binary,CONFIRMED,PKG load partition
+kernel,scratch/vmlinux.bin,4432612,c52a4aa8bcc21fc263a44c54fdebfe95ad1de53bf1137bd4f45d934e2c63c790,ARM (32-bit),32-bit,U-Boot uImage,CONFIRMED,LZHS decompressed kerA/kerB
+service_binary,extracted/appfs1/basic/dtv_svc,4255100,c661c583bad94b004daea0d304eb0eba8c3e7fb63bfb323265cdbb95496e4a73,ARM (32-bit),32-bit,ET_EXEC (Executable),CONFIRMED,appfs1 main TV daemon
+system_binary,extracted/appfs1/bin/busybox,699524,c4c7dac66b148e05d32f132df0aeace8dd2cd1d4828c45587abffe20ce41ca54,ARM (32-bit),32-bit,ET_EXEC (Executable),CONFIRMED,appfs1 BusyBox v1.15.3
+core_lib,extracted/appfs1/basic/libmtkapp.so,32794624,817641ebfea228c6155815f88cb1b87e6bba600d6c8b192d5f01daf15d42bccb,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,UI/Upgrade middleware
+core_lib,extracted/appfs1/basic/libdtv_common.so,2153828,81dbf771cb41a02d2e38acdeb0dff669727fc19cd40482bf7186577e4efee025,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,DLM crypto & partition API
+core_lib,extracted/appfs1/basic/libnettv_proxy.so,18048,150977287d05c0f06f0c649c5122e4cd0417ee33d319a10b2a3dfd4fd7a3c57b,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,NetTV proxy shared library
+core_lib,extracted/rootfs1/nettv/libnettv.so,2749744,4d4a116fb692e0af5cc4f18607a62c5779d52dab41f4b9901db287a8280b1fcc,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,NetTV browser controller
+core_lib,extracted/appfs1/lib/libc-2.12.2.so,1197552,f83cae1fc73eba372b0d37e7c38630e09613a5de929bdbcfac64f2b1e46195b7,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,GNU C Library 2.12.2
+core_lib,extracted/appfs1/basic/lib/libssl.so.1.0.0,311724,134483cc9f5cd817785578fd631c5f0b073dc2f964e05a7fa57efdfb0ad8d9d8,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,OpenSSL 1.0.0d TLS library
+core_lib,extracted/appfs1/basic/lib/libcrypto.so.1.0.0,1563976,d33cd60f734882c86e4f9440aa83e37d861c89cdb3d1d264e3ad8c3e22057b7b,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,OpenSSL 1.0.0d crypto library
+core_lib,extracted/appfs1/basic/lib/libcurl.so.4.2.0,263392,476180922cb62db9dc3d86c246093f76d8d8d93645d8d874bd1adcd3a862025b,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,libcurl 7.21.7
+core_lib,extracted/rootfs1/lib/libxml2.so.2.7.8,1184420,17377f3d5d90a7505a653ccd27fcb9e8d0536a0b9082d359909b8da74a3ac440,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,libxml2 2.7.8
+core_lib,extracted/rootfs1/qt/lib/libQtCore.so.4.8.3,4017028,12d4845f15a2f994b88457219a937c738d339a05c422f25a4f0cbea7e107c70b,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,QtCore 4.8.3
+core_lib,extracted/rootfs1/qt/lib/libQtDeclarative.so.4.8.3,4294512,2318da9cbcd6d353654a17cbdfc4732f28d0e2f7d660df705a034c5d7e7c5211,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,QtDeclarative QML 4.8.3
+drm_lib,extracted/appfs1/basic/lib/libplayready.so,1848932,c0a082297855d463747d3cded587de875e1ffcc452f383b66473a6a9a1c21be6,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,Microsoft PlayReady DRM
+drm_lib,extracted/rootfs1/widevine/libWVStreamControlAPI.so,2062204,165d4227400debe58cc257b24a7cb2d66df2f6993b355465fa3c482c91ec2aa9,ARM (32-bit),32-bit,ET_DYN (Shared Object / PIE),CONFIRMED,Widevine DRM
+kernel_module,extracted/appfs1/basic/dtv_driver.ko,6846712,e278e0593778aa5e6976f262c3ceef52da93452575da26c5526097ee22507f09,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/fusion.ko,47312,c3b7c13436542e28fd4c457881b39cfbbc1a3666c9ab9b83c29ea2722fa3ff73,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/modules/fuse.ko,71776,a760c5201d1d587ea2427a03a32ae1100a593e17268dbb2a895ff1a096dbe362,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/modules/joydev.ko,12912,9526166ad36e87d435f0cb394cc483d6157aaf0bc275d4831d03a2e73d1be91d,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/modules/met.ko,22640,ec5904a53fe911b2e38ffe4af1c5c9d7519f26c6854d2dbe7e5b0063cfb38384,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/modules/mtk_mmap.ko,3220,f193428610834dd29f5ebb4558200b6ee865dbbc89246367e63efa0a015b6ff6,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/modules/ntfs.ko,104264,390c4e02b1e2fe1d72aa9d4feaafd1ea6161991cfed11a26f776bc83645074d7,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/modules/usbhid.ko,30172,575d0e51e14f046761ce7a2c5c083f23f4f4e759dee2bb6c489221dd8f0c7090,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/wifi_ko/rt5572sta.ko,1655384,7fce3f7706c45ee139a9b4f2b4a5904f94e5811fa257d481a316ffc7f7045a97,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/wifi_ko/rtnet5572sta.ko,57840,112561fdda3eb496a388150dbf48bc77479bca918a1fc3aaa774c8702d8ad683,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/basic/wifi_ko/rtutil5572sta.ko,46312,ac0135d0e2bdc39f8c6078770698e26afe36f2a183f8b63e16c4f9977ba35dbf,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1
+kernel_module,extracted/appfs1/home/fusion.ko,50264,b2dc8f5257f3597eac3a56e6d060d25d97a0867d012c89dda111fd0481cec763,ARM (32-bit),32-bit,ET_REL (Relocatable),CONFIRMED,Linux 3.0.13 appfs1

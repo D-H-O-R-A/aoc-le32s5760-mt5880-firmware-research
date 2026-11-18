@@ -1,0 +1,45 @@
+name: Firmware Research Verification CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python and Node
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify tracked file SHA-256 manifest (CI offline mode)
+        run: |
+          python3 scripts/hash_verification.py --ci
+
+      - name: Run automated firmware research test suite
+        run: |
+          python3 -m unittest discover -s tests -v
+
+      - name: Validate BibTeX & Markdown corpus completeness
+        run: |
+          python3 - <<'EOF'
+          from pathlib import Path
+          root = Path(".")
+          required_dirs = [
+              "hardware", "firmware-forensics", "boot-analysis",
+              "kernel-analysis", "filesystem", "security",
+              "update-analysis", "privacy", "comparative-analysis",
+              "emulation", "sbom", "scientific-research",
+              "diagrams", "scripts", "evidence", "custom_payload", "docs", "tests"
+          ]
+          missing = [d for d in required_dirs if not (root / d).is_dir()]
+          assert not missing, f"Missing directories: {missing}"
+          md_count = len(list(root.rglob("*.md")))
+          print(f"Verified {len(required_dirs)} architectural directories and {md_count} Markdown documents.")
+          EOF
